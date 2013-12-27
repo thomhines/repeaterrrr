@@ -42,7 +42,7 @@ if($_GET['set']) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en-us" manifest="cache.manifesto">
+<html lang="en-us" manifest="cache.manifest">
 <head>
 <title>Repeaterrrr | <?php if($set['info']['title']) echo $set['info']['title']; else echo 'The simple, clean, and easy repeating timer.'; ?></title>
 <meta charset="utf-8" />

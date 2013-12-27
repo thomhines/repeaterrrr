@@ -404,7 +404,7 @@ $(function() {
 	
 	// CREATE URL TO TIMER BASED ON TIMER SETTINGS
 	function makeJsonUrl(title, description, steps) {
-		var url = 'http://repeater.thomhines.com/?set={"info":{"title":"'+encodeUrlEntities($('.title').val())+'","description":"'+encodeUrlEntities($('.description').val())+'","repeat":'+encodeUrlEntities($('.repeat').val())+'},"steps":[';
+		var url = 'http://repeaterrrr.com/?set={"info":{"title":"'+encodeUrlEntities($('.title').val())+'","description":"'+encodeUrlEntities($('.description').val())+'","repeat":'+encodeUrlEntities($('.repeat').val())+'},"steps":[';
 		var valid_row = false
 		$('table tr').each(function() {
 			if($(this).find('.name').val() && $(this).find('.time').val()) {
@@ -460,7 +460,7 @@ $(function() {
 		})
 		.done(function(response) {
 			// BUILD EMAIL TEMPLATE WITH TIMER INFO
-			mailto_template = 'mailto:?subject={title} [Repeater]&body={title}%0d%0a{description}%0d%0a%0d%0a{timer_url}%0d%0a%0d%0a--%0d%0aInterval time by Repeater%0d%0ahttp://repeater.thomhines.com/';
+			mailto_template = 'mailto:?subject={title} [Repeater]&body={title}%0d%0a{description}%0d%0a%0d%0a{timer_url}%0d%0a%0d%0a--%0d%0aInterval time by Repeater%0d%0ahttp://repeaterrrr.com/';
 	
 			url = mailto_template.replace(/\{title\}/g, title);
 			url = url.replace(/\{description\}/g, description);
