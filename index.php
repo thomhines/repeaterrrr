@@ -42,7 +42,7 @@ if($_GET['set']) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en-us" manifest="cache.manifest">
+<html lang="en-us" manifest="cache.manifesto">
 <head>
 <title>Repeaterrrr | <?php if($set['info']['title']) echo $set['info']['title']; else echo 'The simple, clean, and easy repeating timer.'; ?></title>
 <meta charset="utf-8" />
@@ -71,7 +71,7 @@ if($_GET['set']) {
 
 <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css'> -->
 <link rel="Stylesheet" href="/cinch/?files=/css/fonts.css,/css/style.scss&debug=true" type="text/css" media="all" />
-<script src="/cinch/?files=[jquery],[html5shiv],!/js/jquery.noclickdelay.js,!/js/scripts.js&debug=true"></script>
+<script src="/cinch/?files=[jquery],[html5shiv],!/js/jquery.noclickdelay.js,/js/scripts.js&debug=true"></script>
 <script type="text/javascript">
 	// SAVE STEPS TO JAVASCRIPT VAR
 	<?php if($_GET['set']) { ?>var steps = <?php echo $json; ?>;<?php } ?>
@@ -91,7 +91,7 @@ if($_GET['set']) {
 			<br>
 			<h6>
 				Feel free to try out one of these example timers:<br>
-				<a class="small" href="http://bit.ly/1c8S0Tb">Pomodoro</a> | <a class="small " href="http://bit.ly/1c8UNvn">7-min Circuit Training</a> | <a class="small " href="http://bit.ly/1c8U8Kp">10-20-30 Intervals</a>
+				<a class="small" href="http://bit.ly/1de0Ik5">Pomodoro</a> | <a class="small " href="http://bit.ly/1eJKtP7">7-min Circuit Training</a> | <a class="small " href="http://bit.ly/1cuYzjP">10-20-30 Intervals</a>
 			</h6>
 			<h6>OR</h6>		
 			<p><a class="button" href="/edit/">Make a timer</a></p>
