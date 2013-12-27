@@ -1,0 +1,553 @@
+/*----------------------------------------------------------------------*
+
+	REPEATERRRR
+	http://repeaterrrr.com/
+	https://github.com/thomhines/repeaterrrr
+	
+	The clean and easy repeating timer.
+
+	Copyright 2014, Thom Hines
+	MIT License
+	
+*----------------------------------------------------------------------*/
+
+$white: #eee;
+$black: #333;
+$semi-black: rgba(50,50,50,.3);
+$gray: $white / 1.2;
+$red: #ee9494;
+$blue: #94d7ea;
+$green: #8ed994;
+$yellow: #ecf298;
+$width: 500px;
+
+@import '../cinch/libraries/bourbon/_bourbon.scss';
+
+/*----------------------------------------------------------------------*
+
+	STANDARD ELEMENTS
+
+*----------------------------------------------------------------------*/
+
+*, *:before, *:after {
+box-sizing: border-box;
+}
+
+html, body {
+	min-height: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: $white;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 20px;
+	text-align: center;
+	transition: all 1s ease-in-out;
+	
+	@media screen and (max-device-width: 400px) {
+		font-size: 24px;
+	}
+}
+
+
+h1 {
+	float: right;
+	width: 92px;
+	height: 25px;	
+	margin: .3em 0 0 .5em;
+	font-size: 1.3em;
+	background: url(/img/logo.png) center center no-repeat;
+	text-indent: -9999px;
+	overflow: hidden;
+
+	/* use retina images when available */
+	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+		background: url(/img/logo@2x.png) center center no-repeat;
+		background-size: 100%;
+	}
+}
+
+h2 {
+	display: table-cell;
+	width: $width;
+	height: 60px;
+	margin: auto;
+	font-size: 14px;
+	line-height: 60px;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+h3 {
+	font-size: 1.8em;
+}
+
+h4 {
+	font-size: 1.6em;
+}
+
+h5 {
+	margin: 1em 0 0;
+	font-size: 1.2em;
+}
+
+h3, h4, h5 {
+	font-weight: 300;
+	margin: 0;
+}
+
+p {
+	margin: 0 auto 3em;
+}
+
+a {
+	color: $black - 90;
+	&:hover {
+		color: $black;
+	}
+}
+
+footer {
+	position: fixed;
+	bottom: 15px;
+	right: 35px;
+	span, a {
+		display: inline-block;
+		margin-right: .3em;
+		font-size: 1.1em;
+		color: $black;
+		opacity: .6;
+		cursor: pointer;
+		text-decoration: none;
+		
+		&:hover {
+			opacity: 1;
+		}
+		
+		&.title {
+			float: right;
+		}
+		
+		&[href*="edit"] {
+			margin-top: .35em;
+		}
+	}
+	i {
+	}
+}
+
+
+
+/*----------------------------------------------------------------------*
+
+	TIMER PAGE
+
+*----------------------------------------------------------------------*/
+
+.container {
+	/* center container vertically and horizontally in page */
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	width: $width;
+	padding: 60px 30px;
+	color: $black;
+	transition: all 1s ease-in-out;
+}
+
+
+.intro {
+	h1, h2, h3, h4, h5, h6, p {
+		float: none;
+		text-align: center;
+		margin: 0 auto 1em;
+	}
+	p {
+		font-size: .8em;
+	}
+	.button {
+		margin: 0 0 1em;
+	}
+}
+
+// HIDE TIMER AND COMPLETE SECTIONS
+.timer, .complete {
+	display: none;
+}
+
+.progress_bar {
+	display: block;
+	width: 300px;
+	height: 40px;
+	margin: 1em auto 0;
+	padding: 6px;
+	background: $black;
+	border-radius: 3px;
+	text-align: left;
+	
+	@media screen and (max-device-width: 400px) {
+		width: 100%;
+	}
+
+	span {
+		display: block;
+		height: 28px;
+		border-radius: 2px;
+		overflow: hidden;
+		transition: background-color .1s ease-in-out;
+	}
+}
+
+.total_progress {
+	margin: 6px auto;
+	padding: 0;
+	height: 8px;
+	background: $semi-black;
+
+	span {
+		height: 8px;
+		background: $black;
+		border-radius: 3px;
+	}
+}
+
+.seconds {
+	font-weight: 700;
+}
+
+
+
+/*----------------------------------------------------------------------*
+
+	EDIT PAGE
+
+*----------------------------------------------------------------------*/
+
+
+.editor {
+	height: auto;
+	width: $width+40;
+	margin: auto;
+	padding: 20px 20px 40px;
+	text-align: left;
+	h4 {
+		margin: 1em 0 .6em;
+		clear: both;
+		font-size: 1.2em;
+		border-bottom: 1px solid $black;
+	}
+	h5 {
+		margin: 0 0 .2em;
+		font-size: 1em;
+	}
+	p {
+		margin: .2em 0;
+		font-size: .6em;
+	}
+}
+
+label {
+	display: block;
+	font-size: .8em;
+	clear: both;
+}
+
+input, textarea, select {
+	font-family: 'Open Sans', sans-serif;
+	display: block;
+	width: 100%;
+	margin: 0 0 15px;
+	padding: 5px 9px;
+	font-size: .8em;
+	background: $fff;
+	border: 1px solid $white*.8;
+	border-radius: 3px;
+	
+	&.title {
+		font-size: 1.3em;
+	}
+	&.name {
+		width: 150px;
+	}
+	&.time {
+		width: 70px;
+		text-align: center;
+	}
+	
+	&.repeat {
+		display: inline-block;
+		width: 58px;
+		padding-left: .3em;
+		padding-right: .3em;
+		text-align: center;
+	}
+	&.timer_url {
+		display: inline-block;
+		width: 55%;
+		padding: .7em;
+		font-size: .5em;
+	}
+}
+
+textarea {
+	height: 150px;
+	width: 100%;
+}
+
+select {
+	padding: 5px;
+	font-size: .8em;
+	background: url(/img/dropdown.png), #fff;
+	background-position: 93% 53%;        
+	background-repeat: no-repeat;
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+
+	/* use retina images when available */
+	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+		background: url(/img/dropdown@2x.png), #fff;
+		background-size: 7px 4px;
+		background-position: 93% 53%;        
+		background-repeat: no-repeat;
+	}
+}
+
+option {
+	background: $white;
+}
+
+table {
+	width: 100%;
+	margin: 0 0 15px;
+	padding: 0 0 15px;
+	text-align: center;
+	border-collapse:collapse;
+	
+	input, select {
+		display: inline-block;
+		width: 80px;
+		margin: 0;
+	}
+	input[type='text'] {
+		width: 200px;
+	}
+}
+
+.dragging {
+	top: -10px;
+	left: -10px;
+	background-color: $semi-black;
+}
+
+th, td {
+	margin: 0;
+	padding: 2px 0 2px 3px;
+	vertical-align: top;
+	@include user-select();
+	border: none;
+	
+	&:nth-child(1) {
+		width: 50px;
+	}
+	&:nth-child(3) {
+		width: 200px;
+	}
+	span {
+		display: block;
+		margin-top: -3px;
+		font-size: 0.6em;
+	}
+}
+
+th {
+	font-size: .7em;
+}
+
+.drag_handle {
+	padding: 0.6em 0;
+	font-family: "fontello";
+	font-size: .7em;
+}
+
+.editor .repeat_container {
+	float: left;
+	margin: 1em 0 .5em;
+}
+
+.save.button {
+	float: right;
+	margin-top: .7em;
+}
+
+.error {
+	display: block;
+	float: right;
+	clear: both;
+	margin-top: -2em;
+	padding: .3em .6em;
+	opacity: 0;
+	text-align: right;
+	font-size: .8em;
+	background: $red;
+	border-radius: 2px;
+}
+
+.disabled + .error {
+	opacity: 1;
+}
+
+
+.share_container {
+	clear: both;
+	margin: 20px 0;
+}
+
+.ajax, .row_template {
+	display: none;
+}
+
+
+
+
+
+
+
+/*----------------------------------------------------------------------*
+
+	COMMON CLASSES
+
+*----------------------------------------------------------------------*/
+
+.button {
+	display: inline-block;
+	margin: 2em .2em;
+	padding: .4em 1em;
+	background: $black;
+	color: $white;
+	font-size: 1.2em;
+	line-height: 1em;
+	cursor: pointer;
+	border-radius: 3px;
+	text-decoration: none;
+	vertical-align: middle;
+	@include user-select();
+	transition: all .1s ease-in-out;
+	
+	&.small {
+		font-size: .7em;
+		margin: 0 0 0 .3em;
+		padding: .4em .6em;
+	}
+	&.smaller {
+		font-size: .7em;
+		margin: 0 0 0 .3em;
+		padding: .55em .3em;
+	}
+	&.smallest {
+		font-size: .6em;
+		margin: 0 0 0 .3em;
+		padding: .1em;
+	}
+	&.success {
+		background: $green*.8;
+	}
+	&.disabled, &.disabled:hover {
+		background: $black;
+		color: $white;
+		opacity: .3;
+		cursor: default;
+		pointer-events: none;		
+	}
+}
+.pause i, .skip i {
+	font-size: .7em;
+}
+.button:hover, .button.button_hover, .zeroclipboard-is-hover {
+	color: $black;
+	background: $semi-black;
+}
+
+.white {
+	background-color: $white;
+	
+	.current_progress span {
+		background-color: $white;
+	}
+	
+	tr& {
+		background-color: $white;
+		input, select {
+			background-color: white;
+		}
+	}
+
+}
+
+.red {
+	background-color: $red;
+	
+	.current_progress span {
+		background-color: $red * 1.6;
+	}
+	
+	tr& {
+		background-color: $white;
+		input, select {
+			background-color: $red;
+		}
+	}
+}
+
+.yellow {
+	background-color: $yellow;
+	
+	.current_progress span {
+		background-color: $yellow * 1.6;
+	}
+	
+	tr& {
+		background-color: $white;
+		input, select {
+			background-color: $yellow;
+		}
+	}
+}
+
+.green {
+	background-color: $green;
+	
+	.current_progress span  {
+		background-color: $green * 1.6;
+	}
+	
+	tr& {
+		background-color: $white;
+		input, select {
+			background-color: $green;
+		}
+	}
+}
+
+.blue {
+	background-color: $blue;
+	
+	.current_progress span  {
+		background-color: $blue * 1.6;
+	}
+	
+	tr& {
+		background-color: $white;
+		input, select {
+			background-color: $blue;
+		}
+	}
+}
+
+.left {
+	text-align: left;
+}
+
+

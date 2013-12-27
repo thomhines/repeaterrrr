@@ -1,0 +1,7 @@
+# HANDLE APPLICATION CACHE
+AddType text/cache-manifest .manifest
+
+#<FilesMatch "\.(manifest)$">
+#ExpiresActive On
+#ExpiresDefault "access"
+#</FilesMatch>
