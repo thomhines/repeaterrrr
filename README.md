@@ -1,7 +1,7 @@
-Repeaterrrr
+repeaterrrr
 ===========
 
-Repeaterrrr lets you create no-frills timers for any activity that requires keeping track of time in regular intervals.
+repeaterrrr lets you create no-frills timers for any activity that requires keeping track of time in regular intervals.
 
 Plus, all your timer settings are stored in the URL, so it's easy to create, customize and share.
 
