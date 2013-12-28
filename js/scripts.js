@@ -12,7 +12,7 @@
 *----------------------------------------------------------------------*/
 
 
-var timer_interval, current_step, current_seconds, prev_seconds, next_step, step_seconds = 0, prev_time, total_seconds = 0, total_seconds_so_far = -10, sound_start, sound_length;
+var timer_interval, current_step, current_seconds, prev_seconds, next_step, step_seconds = 0, prev_time, total_seconds = 0, total_seconds_so_far = 0, sound_start, sound_length;
 
 
 $(function() {
@@ -42,7 +42,6 @@ $(function() {
 			for(var x = 0; x < steps.length; x++) {
 				total_seconds += parseInt(steps[x]['time']);
 			}
-			total_seconds -= 10; // to account for 'get ready' step
 		}
 		
 		// TEXT FORMATTING
@@ -109,7 +108,8 @@ $(function() {
 		step_seconds = 0;
 		prev_time = new Date();
 		total_seconds_so_far = 0;
-		next_step = steps[1]['title'];
+		if(steps[1]) next_step = steps[1]['title'];
+		else next_step = "DONE!";
 		
 		$('.current_activity').html(steps[0]['title']);
 		$('.next_activity').html(next_step);
@@ -175,7 +175,7 @@ $(function() {
 	function nextStep() {
 			
 		// CALCULATE TOTAL SECONDS BASED ON CURRENT AND PREVIOUS STEPS
-		total_seconds_so_far = -10; // to compensate for 'get ready' step
+		total_seconds_so_far = 0;
 		for(x = 0; x < current_step+1; x++) {
 			total_seconds_so_far += steps[x]['time'];
 		}
@@ -195,6 +195,7 @@ $(function() {
 				$('.complete').fadeIn(300);
 				fixHeaderFontSize();
 			});
+			$('title').html("repeaterrrr | " + $('.ready h2').text());
 			
 		// OTHERWISE, LOAD UP NEXT STEP
 		} else {

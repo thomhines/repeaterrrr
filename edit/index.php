@@ -24,7 +24,7 @@ if($_GET['set']) {
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-<title>Repeaterrrr - Edit Timer</title>
+<title>repeaterrrr | Edit Timer</title>
 <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -52,7 +52,7 @@ if($_GET['set']) {
 </head>
 
 <body class="editor">
-	<a href="/"><h1>Repeaterrrr</h1></a>
+	<a href="/"><h1><img src="/img/logo.svg" alt="repeaterrrr"></h1></a>
 
 
 	<h4>Timer Info</h4>
@@ -124,7 +124,7 @@ if($_GET['set']) {
 
 	<h5 class="repeat_container">Repeat all steps <input type="number" class="repeat" min="1" value="<?php if($set['info']['repeat']) echo $set['info']['repeat']; else echo '1'; ?>"> times</h5>
 	
-	<a class="button save disabled" role="button" href='/?set=<?php echo urlencode($_GET['set']); ?>'>Use Timer</a>
+	<a class="special button save disabled" role="button" href='/?set=<?php echo urlencode($_GET['set']); ?>'>Use Timer</a>
 	<span class="error"></span>
 
 

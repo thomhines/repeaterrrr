@@ -13,12 +13,13 @@
 
 $white: #eee;
 $black: #333;
-$semi-black: rgba(50,50,50,.3);
+$semi-black: rgba(50,50,50,.2);
 $gray: $white / 1.2;
 $red: #ee9494;
 $blue: #94d7ea;
 $green: #8ed994;
 $yellow: #ecf298;
+$orange: #f5a45d;
 $width: 500px;
 
 @import '../cinch/libraries/bourbon/_bourbon.scss';
@@ -54,17 +55,8 @@ h1 {
 	float: right;
 	width: 92px;
 	height: 25px;	
-	margin: .3em 0 0 .5em;
-	font-size: 1.3em;
-	background: url(/img/logo.png) center center no-repeat;
-	text-indent: -9999px;
-	overflow: hidden;
-
-	/* use retina images when available */
-	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
-		background: url(/img/logo@2x.png) center center no-repeat;
-		background-size: 100%;
-	}
+	margin: 0 0 0 .5em;
+	font-size: 1.7em;
 }
 
 h2 {
@@ -89,6 +81,10 @@ h4 {
 h5 {
 	margin: 1em 0 0;
 	font-size: 1.2em;
+}
+
+h6 {
+	text-transform: uppercase;
 }
 
 h3, h4, h5 {
@@ -128,7 +124,7 @@ footer {
 			float: right;
 		}
 		
-		&[href*="edit"] {
+		&[href*="edit"], &[href*="thomhines"] {
 			margin-top: .35em;
 		}
 	}
@@ -160,6 +156,7 @@ footer {
 .intro {
 	h1, h2, h3, h4, h5, h6, p {
 		float: none;
+		width: auto;
 		text-align: center;
 		margin: 0 auto 1em;
 	}
@@ -298,21 +295,13 @@ textarea {
 select {
 	padding: 5px;
 	font-size: .8em;
-	background: url(/img/dropdown.png), #fff;
+	background: url(/img/dropdown.svg), #fff;
 	background-position: 93% 53%;        
 	background-repeat: no-repeat;
 	-webkit-appearance: none;
     -moz-appearance: none;
     text-indent: 0.01px;
     text-overflow: '';
-
-	/* use retina images when available */
-	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
-		background: url(/img/dropdown@2x.png), #fff;
-		background-size: 7px 4px;
-		background-position: 93% 53%;        
-		background-repeat: no-repeat;
-	}
 }
 
 option {
@@ -438,7 +427,7 @@ th {
 	
 	&.small {
 		font-size: .7em;
-		margin: 0 0 0 .3em;
+		margin: 0 0 .5em .3em;
 		padding: .4em .6em;
 	}
 	&.smaller {
@@ -451,12 +440,18 @@ th {
 		margin: 0 0 0 .3em;
 		padding: .1em;
 	}
+	&.special {
+		background: $orange;/* saturate($blue*.6, 20%); */
+		color: $white;
+		&:hover {
+			background: $orange * 1.1;/* saturate($blue*.7, 20%); */
+			color: $white;
+		}
+	}
 	&.success {
 		background: $green*.8;
 	}
 	&.disabled, &.disabled:hover {
-		background: $black;
-		color: $white;
 		opacity: .3;
 		cursor: default;
 		pointer-events: none;		

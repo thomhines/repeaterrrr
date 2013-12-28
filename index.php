@@ -34,9 +34,6 @@ if($_GET['set']) {
 	elseif($duration <= 3600) $duration = round($duration/60, 1) . " min";
 	else $duration = round($duration/3600, 1) . " hr";
 	
-	// ADD 'GET READY' STEP TO BEGINNING OF STEP ARRAY
-	array_unshift($set['steps'], array('title' => 'Get Ready', 'time' => 10, 'color' => 'white', 'sound' => 'none' ));
-	
 	// RECONVERT TO JSON FOR JAVASCRIPT TO HANDLE
 	$json = json_encode($set['steps']);
 }
@@ -44,7 +41,7 @@ if($_GET['set']) {
 <!DOCTYPE html>
 <html lang="en-us" manifest="cache.manifesto">
 <head>
-<title>Repeaterrrr | <?php if($set['info']['title']) echo $set['info']['title']; else echo 'The simple, clean, and easy repeating timer.'; ?></title>
+<title>repeaterrrr | <?php if($set['info']['title']) echo $set['info']['title']; else echo 'The simple, clean, and easy repeating timer.'; ?></title>
 <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -83,23 +80,23 @@ if($_GET['set']) {
 		<?php // IF NO SET IS GIVEN IN URL, PROVIDE SPLASH SCREEN
 		if(!$_GET['set']) { ?>
 		<div class="intro">
-			<h1>Repeaterrrr</h1>
+			<h1><img src="img/logo.svg" alt="repeaterrrr" width="200"></h1>
 			<h5>The clean and easy repeating timer.</h5>
 			
 			<p>Repeaterrrr lets you create no-frills timers for any activity that requires keeping track of time in regular intervals.</p>
 			<p>Plus, all your timer settings are stored in the URL, so it's easy to create, customize and share.</p>
 			<br>
-			<h6>
-				Feel free to try out one of these example timers:<br>
-				<a class="small" href="http://bit.ly/1de0Ik5">Pomodoro</a> | <a class="small " href="http://bit.ly/1eJKtP7">7-min Circuit Training</a> | <a class="small " href="http://bit.ly/1cuYzjP">10-20-30 Intervals</a>
-			</h6>
+			<h6>You can try out one of these example timers:</h6>
+			<a class="small button" href="http://bit.ly/1de0Ik5">Pomodoro</a> <a class="small button" href="http://bit.ly/1aeRpMy">7-min Circuit Training</a> <a class="small button" href="http://bit.ly/1cuYzjP">10-20-30 Intervals</a> <a class="small button" href="http://bit.ly/1aeSpQC">1 Minute Timer</a> <a class="small button" href="http://bit.ly/1buKQ8l">Tabata Interval Training</a> 
+
 			<h6>OR</h6>		
-			<p><a class="button" href="/edit/">Make a timer</a></p>
+			<a class="special button" href="/edit/">Make a timer</a>
 		</div>
 	</div>
 	<footer>
-		<a href="https://github.com/thomhines/repeaterrrr"><i class="icon-github-circled"></i></a>
+		<a class="title" href="/"><h1><img src="img/logo.svg" alt="repeaterrrr"></h1></a>
 		<a href="http://thomhines.com/">thom</a>
+		<a href="https://github.com/thomhines/repeaterrrr"><i class="icon-github-circled"></i></a>
 	</footer>
 		
 		<?php } else { ?>
@@ -140,7 +137,7 @@ if($_GET['set']) {
 	
 	
 	<footer>
-		<a class="title" href="/"><h1>Repeaterrrr</h1></a>
+		<a class="title" href="/"><h1><img src="img/logo.svg" alt="repeaterrrr"></h1></a>
 		<a href='/edit/?set=<?php echo urlencode($_GET['set']); ?>'><i class="icon-edit"></i></a>
 		<a class="email_timer"><i class="icon-mail"></i></a>
 		<span class="icon-volume-up mute"></span>
