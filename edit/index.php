@@ -92,7 +92,7 @@ if($_GET['set']) {
 		</td>	
 	</tr>
 	<?php } ?>
-	<tr class="nodrop nodrag"><td></td><td colspan="5" class="left"><span class="small button add_step" role="button">+ Add New Row</span></td></tr>
+	<tr class="nodrop nodrag"><td></td><td colspan="5" class="left"><span class="medium button add_step" role="button">+ Add New Row</span></td></tr>
 
 	<!-- EMPTY ROW TEMPLATE FOR ADDING NEW STEP ROWS -->
 	<tr class="row_template">
@@ -125,17 +125,16 @@ if($_GET['set']) {
 	<h5 class="repeat_container">Repeat all steps <input type="number" class="repeat" min="1" value="<?php if($set['info']['repeat']) echo $set['info']['repeat']; else echo '1'; ?>"> times</h5>
 	
 	<a class="special button save disabled" role="button" href='/?set=<?php echo urlencode($_GET['set']); ?>'>Use Timer</a>
-	<span class="error"></span>
+	<span class="error_message"></span>
 
 
 	<div class="share_container">
 		<h5>Save/Share:</h5>
 		<p>To save your timer, just bookmark the link below. All your settings are saved right there.</p>
 		<input type="text" class="timer_url" value=''>
-		<a class="small button short_url" role="button">Shorten URL</a>
-		<a class="small button copy_url" role="button" data-clipboard-text=""><i class="icon-docs"></i></a>
-		
-		<a class="small button email_timer" role="button"><i class="icon-mail"></i></a>
+		<a class="medium button short_url" role="button">Shorten URL</a>
+		<a class="medium button copy_url" role="button" data-clipboard-text=""><i class="icon-docs"></i></a>
+		<a class="medium button email_timer" role="button"><i class="icon-mail"></i></a>
 	</div>
 	
 	

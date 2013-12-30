@@ -87,7 +87,7 @@ if($_GET['set']) {
 			<p>Plus, all your timer settings are stored in the URL, so it's easy to create, customize and share.</p>
 			<br>
 			<h6>You can try out one of these example timers:</h6>
-			<a class="small button" href="http://bit.ly/1de0Ik5">Pomodoro</a> <a class="small button" href="http://bit.ly/1aeRpMy">7-min Circuit Training</a> <a class="small button" href="http://bit.ly/1cuYzjP">10-20-30 Intervals</a> <a class="small button" href="http://bit.ly/1aeSpQC">1 Minute Timer</a> <a class="small button" href="http://bit.ly/1buKQ8l">Tabata Interval Training</a> 
+			<a class="small button" href="http://bit.ly/1de0Ik5">Pomodoro</a> <a class="small button" href="http://bit.ly/1aeRpMy">7-min Circuit Training</a> <a class="small button" href="http://bit.ly/1cuYzjP">10-20-30 Intervals</a> <a class="small button" href="http://bit.ly/1aeSpQC">1 Minute Timer</a> <a class="small button" href="http://bit.ly/1dNmWaJ">Tabata Interval Training</a> 
 
 			<h6>OR</h6>		
 			<a class="special button" href="/edit/">Make a timer</a>

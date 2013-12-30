@@ -371,7 +371,7 @@ th {
 	margin-top: .7em;
 }
 
-.error {
+.error_message {
 	display: block;
 	float: right;
 	clear: both;
@@ -384,7 +384,7 @@ th {
 	border-radius: 2px;
 }
 
-.disabled + .error {
+.disabled + .error_message {
 	opacity: 1;
 }
 
@@ -424,7 +424,12 @@ th {
 	vertical-align: middle;
 	@include user-select();
 	transition: all .1s ease-in-out;
-	
+		
+	&.medium {
+		font-size: .7em;
+		margin: 0 0 0 .3em;
+		padding: .55em;
+	}
 	&.small {
 		font-size: .7em;
 		margin: 0 0 .5em .3em;
@@ -450,6 +455,9 @@ th {
 	}
 	&.success {
 		background: $green*.8;
+	}
+	&.error {
+		background: $red*.8;
 	}
 	&.disabled, &.disabled:hover {
 		opacity: .3;

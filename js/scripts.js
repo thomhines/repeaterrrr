@@ -389,7 +389,7 @@ $(function() {
 	
 	// UPDATE ALL LINKS IN THE PAGE WITH THE MOST RECENT TIMER SETTINGS
 	function updateLinks(url) {
-		$('.error').html(''); // CLEAR ERRORS
+		$('.error_message').html(''); // CLEAR ERRORS
 	
 		if(!url) url = makeJsonUrl();
 		$('.timer_url').val(url);
@@ -397,9 +397,9 @@ $(function() {
 		$('.copy_url').attr('data-clipboard-text', url);
 
 		// MAKE SURE MINIMUM REQUIREMENTS ARE MET, OTHERWISE DISABLE TIMER BUTTON
-		if($('.title').val() == "") $('.error').html('This timer needs a title!');
+		if($('.title').val() == "") $('.error_message').html('This timer needs a title!');
 		
-		if($('.error').html() != "") $('.save, .short_url, .copy_url, .email_timer').addClass('disabled');
+		if($('.error_message').html() != "") $('.save, .short_url, .copy_url, .email_timer').addClass('disabled');
 		else $('.save, .short_url, .copy_url, .email_timer').removeClass('disabled');
 	}
 	
@@ -413,7 +413,7 @@ $(function() {
 				valid_row = true;
 			}
 		});
-		if(!valid_row) $('.error').html('This timer needs at least one working step!');
+		if(!valid_row) $('.error_message').html('This timer needs at least one working step!');
 		url = url.substring(0, url.length - 1);
 		url += "]}";
 		return url;
@@ -429,12 +429,19 @@ $(function() {
 			data: { url: encodeURIComponent(json_url) }
 		})
 		.done(function(response) {
-			updateLinks(response); // update all links with short url
-			$(".short_url").addClass('success').html('Shortened!');
-			setTimeout(function() {
-				$(".short_url").removeClass('success').html('Shorten URL')
-			}, 2000);
-			
+			if(response == 'INVALID_URI') {
+				$(".short_url").addClass('error').html('Timer too long');
+				setTimeout(function() {
+					$(".short_url").removeClass('error').html('Shorten URL')
+				}, 2000);
+				
+			} else {
+				updateLinks(response); // update all links with short url
+				$(".short_url").addClass('success').html('Shortened!');
+				setTimeout(function() {
+					$(".short_url").removeClass('success').html('Shorten URL')
+				}, 2000);
+			}
 		});
 	}
 	
@@ -460,15 +467,18 @@ $(function() {
 			data: { url: json_url }
 		})
 		.done(function(response) {
-			// BUILD EMAIL TEMPLATE WITH TIMER INFO
-			mailto_template = 'mailto:?subject={title} [Repeater]&body={title}%0d%0a{description}%0d%0a%0d%0a{timer_url}%0d%0a%0d%0a--%0d%0aInterval time by Repeater%0d%0ahttp://repeaterrrr.com/';
+			
+			if(response == 'INVALID_URI') alert("Sorry, but the URL for this timer is too long and can't be sent as a link.");
+			else {
+				// BUILD EMAIL TEMPLATE WITH TIMER INFO
+				mailto_template = 'mailto:?subject={title} [Repeater]&body={title}%0d%0a{description}%0d%0a%0d%0a{timer_url}%0d%0a%0d%0a--%0d%0aInterval time by Repeater%0d%0ahttp://repeaterrrr.com/';
+				url = mailto_template.replace(/\{title\}/g, title);
+				url = url.replace(/\{description\}/g, description);
+				url = url.replace(/\{timer_url\}/g, response.trim());
 	
-			url = mailto_template.replace(/\{title\}/g, title);
-			url = url.replace(/\{description\}/g, description);
-			url = url.replace(/\{timer_url\}/g, response.trim());
-
-			// LOAD EMAIL LINK
-			window.location = url;
+				// LOAD EMAIL LINK
+				window.location = url;
+			}
 		});
 	}
 	
