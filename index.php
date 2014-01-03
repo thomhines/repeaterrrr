@@ -12,6 +12,20 @@
 	
 *----------------------------------------------------------------------*/
 
+// SAVE PAGE TO CACHE (THANKS CSS-TRICKS! http://css-tricks.com/snippets/php/intelligent-php-cache-control/)
+$lastModified=filemtime($_SERVER['SCRIPT_FILENAME']);
+$etagFile = md5_file($_SERVER['SCRIPT_FILENAME']);
+$ifModifiedSince=(isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? $_SERVER['HTTP_IF_MODIFIED_SINCE'] : false);
+$etagHeader=(isset($_SERVER['HTTP_IF_NONE_MATCH']) ? trim($_SERVER['HTTP_IF_NONE_MATCH']) : false);
+header("Last-Modified: ".gmdate("D, d M Y H:i:s", $lastModified)." GMT");
+header("Etag: $etagFile");
+header('Cache-Control: public');
+if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])==$lastModified || $etagHeader == $etagFile) {
+   header("HTTP/1.1 304 Not Modified");
+   exit;
+}
+
+
 if($_GET['set']) {
 	// CONVERT JSON INTO PHP ARRAY
 	$set = json_decode($_GET['set'], true);
@@ -39,13 +53,13 @@ if($_GET['set']) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en-us" manifest="cache.manifesto">
+<html lang="en-us">
 <head>
 <title>repeaterrrr | <?php if($set['info']['title']) echo $set['info']['title']; else echo 'The simple, clean, and easy repeating timer.'; ?></title>
 <meta charset="utf-8" />
-<meta name="description" content="" />
-<meta name="keywords" content="" />
+<meta name="description" content="The clean and easy repeating timer." />
 <meta name="viewport" content="user-scalable=no, width=500">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
@@ -80,7 +94,7 @@ if($_GET['set']) {
 		<?php // IF NO SET IS GIVEN IN URL, PROVIDE SPLASH SCREEN
 		if(!$_GET['set']) { ?>
 		<div class="intro">
-			<h1><img src="img/logo.svg" alt="repeaterrrr" width="200"></h1>
+			<h1><img src="img/logo.svg" alt="repeaterrrr" width="200" onerror="this.onerror=null; this.src='img/logo.png'"></h1>
 			<h5>The clean and easy repeating timer.</h5>
 			
 			<p>Repeaterrrr lets you create no-frills timers for any activity that requires keeping track of time in regular intervals.</p>
@@ -94,8 +108,8 @@ if($_GET['set']) {
 		</div>
 	</div>
 	<footer>
-		<a class="title" href="/"><h1><img src="img/logo.svg" alt="repeaterrrr"></h1></a>
-		<a href="http://thomhines.com/">thom</a>
+		<a class="title" href="/"><h1><img src="img/logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/logo.png'"></h1></a>
+		<a href="http://thomhines.com/">th</a>
 		<a href="https://github.com/thomhines/repeaterrrr"><i class="icon-github-circled"></i></a>
 	</footer>
 		
@@ -130,6 +144,8 @@ if($_GET['set']) {
 			<h2>All done!</h2>
 			<h4>Well, you can check that off your list for today.<br>Or you could...</h4>
 			<div class="start button" role="button">Do it again</div>
+			<!-- SHOW SAVE TO HOMEPAGE INFO FOR IOS DEVICES -->
+			<h6 class="ios">Like the timer? Add it to your home screen for easy access and to use it full screen!</h6>
 		</div>
 	
 	
@@ -137,14 +153,20 @@ if($_GET['set']) {
 	
 	
 	<footer>
-		<a class="title" href="/"><h1><img src="img/logo.svg" alt="repeaterrrr"></h1></a>
+		<a class="title" href="/"><h1><img src="img/logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/logo.png'"></h1></a>
 		<a href='/edit/?set=<?php echo urlencode($_GET['set']); ?>'><i class="icon-edit"></i></a>
 		<a class="email_timer"><i class="icon-mail"></i></a>
 		<span class="icon-volume-up mute"></span>
 	</footer>
 	
 	<!-- INVISIBLE ELEMENTS -->
-	<audio class="sounds"><source src="/audio/sounds.mp3" type="audio/mp3" /><source src="/audio/sounds.ogg" type="audio/ogg" /></audio>
+<!-- 	<audio class="sounds" preload="auto"><source src="/audio/sounds.mp3" type="audio/mpeg" /><source src="/audio/sounds.ogg" type="audio/ogg" /></audio> -->
+	<audio class="sounds">
+		<source src="/audio/sounds.mp3" type='audio/mpeg; codecs="mp3"'>
+		<source src="/audio/sounds.ogg" type='audio/ogg; codecs="vorbis"'>
+		Sorry, but your browser failed to load the audio file!
+	</audio>
+	
 	<div class="ajax"></div>
 	
 	

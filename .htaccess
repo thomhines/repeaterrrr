@@ -1,6 +1,8 @@
-# HANDLE APPLICATION CACHE
 AddType text/cache-manifest .manifest
+AddType audio/mpeg mp3
+AddType audio/ogg ogg
 
+# HANDLE APPLICATION CACHE
 #<FilesMatch "\.(manifest)$">
 #ExpiresActive On
 #ExpiresDefault "access"

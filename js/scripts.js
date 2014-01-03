@@ -24,7 +24,6 @@ $(function() {
 	*----------------------------------------------------------------------*/
 	
 	if($('.timer').size()) {
-		sounds = $('.sounds')[0];
 	
 		// OPTIMIZE FOR TOUCH SCREENS
 		$('body').on('touchmove', function(e) { // DISABLE SCROLLING ON TOUCH DEVICES
@@ -47,6 +46,11 @@ $(function() {
 		// TEXT FORMATTING
 		fixHeaderFontSize(); // adjust font size of title
 		$('.ready h5').html(markDown($('.ready h5').html())); // convert descript from markdown to html
+		
+		// IF RUN AS A FULL SCREEN APP IN MOBILE SAFARI, HIDE 'ADD TO HOME' MESSAGE ON TIMER PAGE
+		if(window.navigator.standalone) {
+			$('.ios').remove();
+		}
 	
 	}	
 		
@@ -56,8 +60,8 @@ $(function() {
 		
 	
 	$('.start').click(function() {
-		sounds.play(); // PRE-LOAD AUDIO FILE
-		sounds.pause();
+		$('.sounds')[0].play(); // PRE-LOAD AUDIO FILE
+		$('.sounds')[0].pause();
 		init();
 	});
 	
@@ -144,11 +148,13 @@ $(function() {
 		// ONCE CURRENT STEP HAS 0 SECONDS LEFT, GO TO NEXT STEP
 		if(current_seconds <= 0) {
 			nextStep();
-		}
 		
-		var current_percent = 100-(current_seconds/step_seconds*100);
-		if(current_percent > 100) current_percent = 100;
-		updateClock();
+		// UPDATE CLOCK AND PROGRESS BARS
+		} else {
+			var current_percent = 100-(current_seconds/step_seconds*100);
+			if(current_percent > 100) current_percent = 100;
+			updateClock();
+		}
 		
 		// SMOOTH OUT STEP PROGRESS BAR MOTION
 		// IF TIMER IS FOR LONGER PERIOD OF TIME, REMOVE ANIMATION TO REDUCE WEIRD WOBBLY MOVEMENT
@@ -261,26 +267,51 @@ $(function() {
 		// IN ORDER TO WORK ON MOBILE DEVICES, A SINGLE AUDIO FILE IS USED FOR ALL SOUNDS
 		// BELOW ARE THE START AND LENGTH VALUES FOR EACH SOUND USED WITHIN THE AUDIO
 		// SPRITE. VALUES ARE IN SECONDS.
-		if(sound == 'none' || $('.mute').hasClass('muted')) { return null; }
-		else if(sound == 'tock') { sound_start = 0; sound_length = .11; }
-		else if(sound == 'single') { sound_start = .25; sound_length = .12; }
-		else if(sound == 'double') { sound_start = .55; sound_length = .22; }
-		else if(sound == 'triple') { sound_start = 1; sound_length = .4; }
-		else if(sound == 'short') { sound_start = 1.63; sound_length = .51; }
-		else if(sound == 'long') { sound_start = 2.4; sound_length = 1.11; }
 		
-		sounds.currentTime = sound_start;
-		sounds.play();
+		var audio = $('.sounds').get(0);
+		
+		if(sound == 'none' || $('.mute').hasClass('muted')) { return null; }
+		else if(sound == 'tock') { sound_start = .07; sound_length = .2; }
+		else if(sound == 'single') { sound_start = .9; sound_length = .2; }
+		else if(sound == 'double') { sound_start = 1.65; sound_length = .3; }
+		else if(sound == 'triple') { sound_start = 2.53; sound_length = .5; }
+		else if(sound == 'short') { sound_start = 3.63; sound_length = .6; }
+		else if(sound == 'long') { sound_start = 5; sound_length = 1.2; }
+		else { sound_start = 0; sound_length = 0; }
+		
+		console.log(audio.readyState); // HELPS MOBILE SAFARI NOT ERROR OUT (WTF???)
+		
+		if(audio.readyState == 4) {
+			audio.currentTime = sound_start;
+			audio.play();
+		}
 	}
 	
 	// STOP SOUND AFTER IT HAS PLAYED ITS ENTIRE LENGTH
 	function stopSound() {
-		if(sounds.currentTime >= sound_start + sound_length) {
-			sounds.pause();
+		if($('.sounds').get(0).currentTime >= sound_start + sound_length) {
+			$('.sounds').get(0).pause();
 		}
 	}
-	if($('.timer').size()) sounds.addEventListener('timeupdate', stopSound, false);
+	if($('.sounds').size()) {
+		$('.sounds').get(0).addEventListener('timeupdate', stopSound, false);
 	
+/*
+		$('audio')[0].addEventListener("canplay", function() {
+	        console.log('can play');      
+	     },true);
+	     
+     	// RELOAD AUDIO IN CASE IT STALLS	
+		$("audio").bind("stalled", function() { 
+			console.log('stall');
+			var sounds = $(this)[0];
+			sounds.load();
+			sounds.play();
+			sounds.pause();
+		});
+*/
+
+	}
 	
 	/*----------------------------------------------------------------------*
 	

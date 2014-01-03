@@ -19,7 +19,7 @@ $red: #ee9494;
 $blue: #94d7ea;
 $green: #8ed994;
 $yellow: #ecf298;
-$orange: #f5a45d;
+$orange: #cf7127;
 $width: 500px;
 
 @import '../cinch/libraries/bourbon/_bourbon.scss';
@@ -51,6 +51,11 @@ html, body {
 }
 
 
+h3, h4, h5 {
+	font-weight: 300;
+	margin: 0;
+}
+
 h1 {
 	float: right;
 	width: 92px;
@@ -71,26 +76,22 @@ h2 {
 }
 
 h3 {
-	font-size: 1.8em;
+	font-size: 1.9em;
 }
 
 h4 {
-	font-size: 1.6em;
+	font-size: 1.5em;
 }
 
 h5 {
 	margin: 1em 0 0;
-	font-size: 1.2em;
+	font-size: 1.1em;
 }
 
 h6 {
 	text-transform: uppercase;
 }
 
-h3, h4, h5 {
-	font-weight: 300;
-	margin: 0;
-}
 
 p {
 	margin: 0 auto 3em;
@@ -553,4 +554,20 @@ th {
 	text-align: left;
 }
 
+// SHOW SAVE TO HOMEPAGE INFO FOR IOS DEVICES
+.ios {
+	display: none;
 
+	/* iPad */
+	@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+		display: block;
+	}
+	/* iPhone 2G-4S */
+	@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+		display: block;
+	}
+	/* iPhone 5 */
+	@media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
+		display: block;
+	}
+}

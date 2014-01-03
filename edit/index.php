@@ -26,9 +26,8 @@ if($_GET['set']) {
 <head>
 <title>repeaterrrr | Edit Timer</title>
 <meta charset="utf-8" />
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-<meta name="viewport" content="width=device-width">
+<meta name="description" content="The clean and easy repeating timer." />
+<meta name="viewport" content="user-scalable=no, width=500">
 
 <link rel="apple-touch-icon" sizes="57x57" href="../img/favicons/apple-touch-icon-57x57.png" />
 <link rel="apple-touch-icon" sizes="114x114" href="../img/favicons/apple-touch-icon-114x114.png" />
@@ -52,7 +51,7 @@ if($_GET['set']) {
 </head>
 
 <body class="editor">
-	<a href="/"><h1><img src="/img/logo.svg" alt="repeaterrrr"></h1></a>
+	<a href="/"><h1><img src="/img/logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/logo.png'"></h1></a>
 
 
 	<h4>Timer Info</h4>
