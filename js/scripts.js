@@ -397,7 +397,6 @@ $(function() {
 				data: { json: json_url }
 			})
 			.done(function(response) {
-				console.log(response);
 				window.location = "/"+response;
 			});
 			
@@ -415,7 +414,7 @@ $(function() {
 
 	// MAKE SURE MINIMUM REQUIREMENTS ARE MET, OTHERWISE DISABLE SAVE BUTTON
 	function verifyForm() {
-		if($('.title').val() == "") $('.error_message').html('This timer needs a title!');
+		var error_msg = "";
 		
 		var valid_row = false
 		$('table tr').each(function() {
@@ -423,9 +422,14 @@ $(function() {
 				valid_row = true;
 			}
 		});
-		if(!valid_row) $('.error_message').html('This timer needs at least one working step!');
+		if(!valid_row) error_msg = 'This timer needs at least one working step!';
+		if($('.title').val() == "") error_msg = 'This timer needs a title!';
 		
-		if($('.error_message').html() != "") $('.save, .short_url, .copy_url, .email_timer').addClass('disabled');
+		
+		if(error_msg) {
+			$('.error_message').html(error_msg);
+			$('.save, .short_url, .copy_url, .email_timer').addClass('disabled');
+		}
 		else $('.save, .short_url, .copy_url, .email_timer').removeClass('disabled');
 	}
 
