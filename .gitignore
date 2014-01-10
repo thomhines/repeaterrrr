@@ -1,4 +1,5 @@
 error_log
 .DS_Store
 *.sql
+db.php
 ajax.php

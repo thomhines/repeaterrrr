@@ -7,3 +7,10 @@ AddType audio/ogg ogg
 #ExpiresActive On
 #ExpiresDefault "access"
 #</FilesMatch>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	
+	RewriteRule ^([a-zA-Z0-9]*)$ index.php?set=$1 [L]
+	RewriteRule ^edit/([a-zA-Z0-9]*)$ edit.php?set=$1 [L]
+</IfModule>

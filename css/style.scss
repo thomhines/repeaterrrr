@@ -44,10 +44,6 @@ html, body {
 	font-size: 20px;
 	text-align: center;
 	transition: all 1s ease-in-out;
-	
-	@media screen and (max-device-width: 400px) {
-		font-size: 24px;
-	}
 }
 
 
@@ -58,8 +54,6 @@ h3, h4, h5 {
 
 h1 {
 	float: right;
-	width: 92px;
-	height: 25px;	
 	margin: 0 0 0 .5em;
 	font-size: 1.7em;
 }
@@ -106,8 +100,12 @@ a {
 
 footer {
 	position: fixed;
-	bottom: 15px;
-	right: 35px;
+	width: 100%;
+	padding: 15px 35px;
+	bottom: 0;
+	right: 0;
+	text-align: right;
+	
 	span, a {
 		display: inline-block;
 		margin-right: .3em;
@@ -183,10 +181,6 @@ footer {
 	background: $black;
 	border-radius: 3px;
 	text-align: left;
-	
-	@media screen and (max-device-width: 400px) {
-		width: 100%;
-	}
 
 	span {
 		display: block;
@@ -465,6 +459,10 @@ th {
 		cursor: default;
 		pointer-events: none;		
 	}
+	&.working {
+		background: $green*.8;
+		pointer-events: none;
+	}
 }
 .pause i, .skip i {
 	font-size: .7em;
@@ -554,7 +552,7 @@ th {
 	text-align: left;
 }
 
-// SHOW SAVE TO HOMEPAGE INFO FOR IOS DEVICES
+// SHOW "SAVE TO HOMEPAGE" INFO FOR IOS DEVICES
 .ios {
 	display: none;
 
@@ -569,5 +567,58 @@ th {
 	/* iPhone 5 */
 	@media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
 		display: block;
+	}
+}
+
+
+
+
+
+// FILL PHONE SIZE BROWSERS BETTER
+@media screen and (max-device-width: 400px) {
+	html, body {
+		font-size: 24px;
+	}
+	.progress_bar {
+		width: 100%;
+	}
+}
+
+// DEAL WITH SHORT OR LANDSCAPE BROWSERS
+@media screen and (max-height: 600px){
+	html, body {
+		font-size: 14px;
+	}
+	h2 {
+		height: 30px;
+		line-height: 30px;
+	}
+	.button {
+		font-size: 1.3em;
+		margin: 1em .2em;
+	}
+	.current_progress {
+		height: 20px;
+		padding: 3px;
+	}
+	.current_progress span {
+		height: 14px;
+	}
+	footer {
+		bottom: auto;
+		top: 0;
+		padding: 5px 0 0 15px;
+		text-align: left;
+		
+		img {
+			width: 70%;
+		}
+	}
+}
+
+
+@media screen and (max-height: 600px){
+	html, body {
+		font-size: 11px;
 	}
 }

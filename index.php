@@ -12,7 +12,18 @@
 	
 *----------------------------------------------------------------------*/
 
+if($_GET['set']) {
+	// LOAD JSON FROM SERVER
+	include_once('db.php');
+	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$_GET['set']."';");
+	
+	// COUNT HOW MANY TIMES TIMER IS USED
+	if($set_result) sql("UPDATE `sets` SET `use_counter` = use_counter + 1 WHERE `slug` = '".$_GET['set']."';");
+}
+
+
 // SAVE PAGE TO CACHE (THANKS CSS-TRICKS! http://css-tricks.com/snippets/php/intelligent-php-cache-control/)
+/*
 $lastModified=filemtime($_SERVER['SCRIPT_FILENAME']);
 $etagFile = md5_file($_SERVER['SCRIPT_FILENAME']);
 $ifModifiedSince=(isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? $_SERVER['HTTP_IF_MODIFIED_SINCE'] : false);
@@ -24,11 +35,14 @@ if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])==$lastModified || $etagHeader
    header("HTTP/1.1 304 Not Modified");
    exit;
 }
-
-
-if($_GET['set']) {
+*/
+	
+if($set_result) {
+	// COUNT HOW MANY TIMES TIMER IS USED
+	sql("UPDATE `sets` SET `use_counter` = use_counter + 1 WHERE `slug` = '".$_GET['set']."';");
+	
 	// CONVERT JSON INTO PHP ARRAY
-	$set = json_decode($_GET['set'], true);
+	$set = json_decode($set_result['json'], true);
 	
 	// MULTIPLY STEPS IF SET TO REPEAT
 	$repeat_steps = array();
@@ -51,6 +65,7 @@ if($_GET['set']) {
 	// RECONVERT TO JSON FOR JAVASCRIPT TO HANDLE
 	$json = json_encode($set['steps']);
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en-us">
@@ -85,14 +100,14 @@ if($_GET['set']) {
 <script src="/cinch/?files=[jquery],[html5shiv],!/js/jquery.noclickdelay.js,/js/scripts.js&debug=true"></script>
 <script type="text/javascript">
 	// SAVE STEPS TO JAVASCRIPT VAR
-	<?php if($_GET['set']) { ?>var steps = <?php echo $json; ?>;<?php } ?>
+	<?php if($set_result) { ?>var steps = <?php echo $json; ?>;<?php } ?>
 </script>
 </head>
 
-<body <?php if(!$_GET['set']) echo 'class="blue"'; ?>>
+<body <?php if(!$set_result) echo 'class="blue"'; ?>>
 	<div class="container">
 		<?php // IF NO SET IS GIVEN IN URL, PROVIDE SPLASH SCREEN
-		if(!$_GET['set']) { ?>
+		if(!$set_result) { ?>
 		<div class="intro">
 			<h1><img src="img/logo.svg" alt="repeaterrrr" width="200" onerror="this.onerror=null; this.src='img/logo.png'"></h1>
 			<h5>The clean and easy repeating timer.</h5>
@@ -101,14 +116,13 @@ if($_GET['set']) {
 			<p>Plus, all your timer settings are stored in the URL, so it's easy to create, customize and share.</p>
 			<br>
 			<h6>You can try out one of these example timers:</h6>
-			<a class="small button" href="http://bit.ly/1de0Ik5">Pomodoro</a> <a class="small button" href="http://bit.ly/1aeRpMy">7-min Circuit Training</a> <a class="small button" href="http://bit.ly/1cuYzjP">10-20-30 Intervals</a> <a class="small button" href="http://bit.ly/1aeSpQC">1 Minute Timer</a> <a class="small button" href="http://bit.ly/1dNmWaJ">Tabata Interval Training</a> 
+			<a class="small button" href="http://repeaterrrr.com/6LeTMUM">Pomodoro</a> <a class="small button" href="http://repeaterrrr.com/PKLaZA0">7-min Circuit Training</a> <a class="small button" href="http://repeaterrrr.com/FAC0IS3">10-20-30 Intervals</a> <a class="small button" href="http://repeaterrrr.com/uunoYIU">1 Minute Timer</a> <a class="small button" href="http://repeaterrrr.com/lGzsxUl">Tabata Interval Training</a> 
 
 			<h6>OR</h6>		
 			<a class="special button" href="/edit/">Make a timer</a>
 		</div>
 	</div>
 	<footer>
-		<a class="title" href="/"><h1><img src="img/logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/logo.png'"></h1></a>
 		<a href="http://thomhines.com/">th</a>
 		<a href="https://github.com/thomhines/repeaterrrr"><i class="icon-github-circled"></i></a>
 	</footer>
@@ -154,8 +168,8 @@ if($_GET['set']) {
 	
 	<footer>
 		<a class="title" href="/"><h1><img src="img/logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/logo.png'"></h1></a>
-		<a href='/edit/?set=<?php echo urlencode($_GET['set']); ?>'><i class="icon-edit"></i></a>
-		<a class="email_timer"><i class="icon-mail"></i></a>
+		<a href='/edit/<?php echo $_GET['set']; ?>'><i class="icon-edit"></i></a>
+		<a class="email_timer" target="_blank" href="mailto:?subject=<?php echo $set['info']['title']; ?> [repeaterrrr]&body=<?php echo $set['info']['title']; ?>%0d%0a<?php echo $set['info']['description']; ?>%0d%0a%0d%0ahttp://repeaterrrr.com/<?php echo $_GET['set']; ?>%0d%0a%0d%0a--%0d%0aRepeating timers by repeaterrrr%0d%0ahttp://repeaterrrr.com/"><i class="icon-mail"></i></a>
 		<span class="icon-volume-up mute"></span>
 	</footer>
 	
@@ -170,7 +184,7 @@ if($_GET['set']) {
 	<div class="ajax"></div>
 	
 	
-	<?php } // if($_GET['set']) ?>
+	<?php } // if($set_result) ?>
 	
 	
 	<!-- GOOGLE ANALYTICS -->

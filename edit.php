@@ -14,8 +14,11 @@
 
 
 if($_GET['set']) {
+	// LOAD JSON FROM SERVER
+	include_once('db.php');
+	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$_GET['set']."';");
 	// CONVERT JSON INTO PHP ARRAY
-	$set = json_decode($_GET['set'], true);
+	$set = json_decode($set_result['json'], true);
 } else {
 	// FOR THE SAKE OF GIVING A BLANK STEP ROW ON NEW TIMERS
 	$set['steps'] = array('name' => '');
@@ -29,21 +32,21 @@ if($_GET['set']) {
 <meta name="description" content="The clean and easy repeating timer." />
 <meta name="viewport" content="user-scalable=no, width=500">
 
-<link rel="apple-touch-icon" sizes="57x57" href="../img/favicons/apple-touch-icon-57x57.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="../img/favicons/apple-touch-icon-114x114.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="../img/favicons/apple-touch-icon-72x72.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="../img/favicons/apple-touch-icon-144x144.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="../img/favicons/apple-touch-icon-60x60.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="../img/favicons/apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="../img/favicons/apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="../img/favicons/apple-touch-icon-152x152.png" />
-<link rel="icon" type="image/png" href="../img/favicons/favicon-196x196.png" sizes="196x196" />
-<link rel="icon" type="image/png" href="../img/favicons/favicon-160x160.png" sizes="160x160" />
-<link rel="icon" type="image/png" href="../img/favicons/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/png" href="../img/favicons/favicon-32x32.png" sizes="32x32" />
-<link rel="icon" type="image/png" href="../img/favicons/favicon-16x16.png" sizes="16x16" />
+<link rel="apple-touch-icon" sizes="57x57" href="img/favicons/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="img/favicons/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="img/favicons/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="img/favicons/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="img/favicons/apple-touch-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="img/favicons/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="img/favicons/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="img/favicons/apple-touch-icon-152x152.png" />
+<link rel="icon" type="image/png" href="img/favicons/favicon-196x196.png" sizes="196x196" />
+<link rel="icon" type="image/png" href="img/favicons/favicon-160x160.png" sizes="160x160" />
+<link rel="icon" type="image/png" href="img/favicons/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/png" href="img/favicons/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="img/favicons/favicon-16x16.png" sizes="16x16" />
 <meta name="msapplication-TileColor" content="#b91d47" />
-<meta name="msapplication-TileImage" content="../img/favicons/mstile-144x144.png" />
+<meta name="msapplication-TileImage" content="img/favicons/mstile-144x144.png" />
 
 <link rel="Stylesheet" href="/cinch/?files=/css/fonts.css,/css/style.scss" type="text/css" media="all" />
 <script src="/cinch/?files=[jquery],[html5shiv],!/js/jquery.noclickdelay.js,!/js/ZeroClipboard.min.js,!/js/jquery.tablednd.js,/js/scripts.js&debug=true"></script>
@@ -123,19 +126,8 @@ if($_GET['set']) {
 
 	<h5 class="repeat_container">Repeat all steps <input type="number" class="repeat" min="1" value="<?php if($set['info']['repeat']) echo $set['info']['repeat']; else echo '1'; ?>"> times</h5>
 	
-	<a class="special button save disabled" role="button" href='/?set=<?php echo urlencode($_GET['set']); ?>'>Use Timer</a>
+	<a class="special button save disabled" role="button" href='/?set=<?php echo urlencode($_GET['set']); ?>'>Save</a>
 	<span class="error_message"></span>
-
-
-	<div class="share_container">
-		<h5>Save/Share:</h5>
-		<p>To save your timer, just bookmark the link below. All your settings are saved right there.</p>
-		<input type="text" class="timer_url" value=''>
-		<a class="medium button short_url" role="button">Shorten URL</a>
-		<a class="medium button copy_url" role="button" data-clipboard-text=""><i class="icon-docs"></i></a>
-		<a class="medium button email_timer" role="button"><i class="icon-mail"></i></a>
-	</div>
-	
 	
 	<div class="ajax"></div>
 </body>

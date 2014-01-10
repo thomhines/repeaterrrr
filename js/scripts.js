@@ -22,7 +22,6 @@ $(function() {
 		TIMER PAGE SCRIPTS
 	
 	*----------------------------------------------------------------------*/
-	
 	if($('.timer').size()) {
 	
 		// OPTIMIZE FOR TOUCH SCREENS
@@ -253,12 +252,12 @@ $(function() {
 	// ADJUST TITLE FONT SIZE BASED ON NUMBER OF CHARACTERS IN TITLE
 	function fixHeaderFontSize() {
 		$('h2:visible').each(function() {
-			if($(this).text().length < 10) $(this).css('font-size', '62px');
-			else if($(this).text().length < 15) $(this).css('font-size', '45px');
-			else if($(this).text().length < 20) $(this).css('font-size', '35px');
-			else if($(this).text().length < 25) $(this).css('font-size', '28px');
-			else if($(this).text().length < 35) $(this).css('font-size', '22px');
-			else if($(this).text().length < 45) $(this).css('font-size', '18px');
+			if($(this).text().length < 10) $(this).css('font-size', '3.1em'); 
+			else if($(this).text().length < 15) $(this).css('font-size', '2.25em');
+			else if($(this).text().length < 20) $(this).css('font-size', '1.75em');
+			else if($(this).text().length < 25) $(this).css('font-size', '2.5em');
+			else if($(this).text().length < 35) $(this).css('font-size', '1.1em');
+			else if($(this).text().length < 45) $(this).css('font-size', '.9em');
 		});
 	}
 
@@ -295,24 +294,17 @@ $(function() {
 	}
 	if($('.sounds').size()) {
 		$('.sounds').get(0).addEventListener('timeupdate', stopSound, false);
-	
-/*
-		$('audio')[0].addEventListener("canplay", function() {
-	        console.log('can play');      
-	     },true);
-	     
-     	// RELOAD AUDIO IN CASE IT STALLS	
-		$("audio").bind("stalled", function() { 
-			console.log('stall');
-			var sounds = $(this)[0];
-			sounds.load();
-			sounds.play();
-			sounds.pause();
-		});
-*/
 
 	}
-	
+
+
+
+
+
+
+
+
+
 	/*----------------------------------------------------------------------*
 	
 		EDITOR PAGE SCRIPTS
@@ -322,7 +314,8 @@ $(function() {
 	if($('.editor').size()) {
 	
 		// UPDATE LINKS ON LOAD
-		updateLinks();
+		//updateLinks();
+		verifyForm();
 	
 	
 		// BUTTON ACTIONS
@@ -330,7 +323,8 @@ $(function() {
 		
 		// UPDATE TIMER URL WHEN ANY INFO IS UPDATED
 		$(document).on('change keyup paste', 'input:not(.timer_url), textarea, select', function() {
-			updateLinks();
+			//updateLinks();
+			verifyForm();
 		});
 		
 		// CHANGE COLOR OF ROW IF COLOR SELECTOR IS CHANGED
@@ -361,7 +355,8 @@ $(function() {
 			    dragHandle: ".drag_handle",
 			    onDragClass: 'dragging',
 			    onDrop: function(table, row) {
-			       updateLinks();
+			       //updateLinks();
+					verifyForm();
 			    }
 			});
 		} 
@@ -374,7 +369,8 @@ $(function() {
 			    dragHandle: ".drag_handle",
 			    onDragClass: 'dragging',
 			    onDrop: function(table, row) {
-			       updateLinks();
+			       //updateLinks();
+					verifyForm();
 			    }
 			});
 		});
@@ -383,32 +379,31 @@ $(function() {
 		$(document).on('click', '.delete_step', function() {
 			$(this).closest('tr').fadeOut(300, function() {
 				$(this).remove();
-				updateLinks();
+				//updateLinks();
+				verifyForm();
 			});
 		});
 	
-		
-		// CREATE SHORT URL
-		$('.short_url').click(function() {
-			shortenUrl();
+	
+		// ON SAVE, CREATE SHORT LINK AND DIRECT USER TO NEW TIMER
+		$(document).on('click', '.save', function(e) {
+			e.preventDefault();
+			var json_url = makeJson();
+			$(this).addClass('working').html('Saving...');
+			
+			$.ajax({
+				type: "POST",
+				url: "/ajax.php", // shortens URL and stores it to database
+				data: { json: json_url }
+			})
+			.done(function(response) {
+				console.log(response);
+				window.location = "/"+response;
+			});
+			
+			
 		});
 			
-		// SET UP COPY LINK BUTTON
-		if($(".copy_url").size()) {
-			var clip = new ZeroClipboard($(".copy_url"), { moviePath: '../js/ZeroClipboard.swf' });
-			clip.on( "load", function(client) {
-				// MAKE NICE LITTLE ANIMATION TO SHOW USER THAT THE OPERATION COMPLETED SUCCESSFULLY
-				client.on( "complete", function(client, args) {
-					$(".copy_url").addClass('success')
-						.find('i').removeClass('icon-docs').addClass('icon-ok');
-					setTimeout(function() {
-						$(".copy_url").removeClass('success')
-							.find('i').addClass('icon-docs').removeClass('icon-ok');
-					}, 2000);
-				});
-			});
-		}
-		
 	}
 	
 	
@@ -417,102 +412,39 @@ $(function() {
 	// FUNCTIONS
 	//----------------------------------------------------------------------
 	
-	
-	// UPDATE ALL LINKS IN THE PAGE WITH THE MOST RECENT TIMER SETTINGS
-	function updateLinks(url) {
-		$('.error_message').html(''); // CLEAR ERRORS
-	
-		if(!url) url = makeJsonUrl();
-		$('.timer_url').val(url);
-		$('.save').attr('href', url);
-		$('.copy_url').attr('data-clipboard-text', url);
 
-		// MAKE SURE MINIMUM REQUIREMENTS ARE MET, OTHERWISE DISABLE TIMER BUTTON
+	// MAKE SURE MINIMUM REQUIREMENTS ARE MET, OTHERWISE DISABLE SAVE BUTTON
+	function verifyForm() {
 		if($('.title').val() == "") $('.error_message').html('This timer needs a title!');
 		
-		if($('.error_message').html() != "") $('.save, .short_url, .copy_url, .email_timer').addClass('disabled');
-		else $('.save, .short_url, .copy_url, .email_timer').removeClass('disabled');
-	}
-	
-	// CREATE URL TO TIMER BASED ON TIMER SETTINGS
-	function makeJsonUrl(title, description, steps) {
-		var url = 'http://repeaterrrr.com/?set={"info":{"title":"'+encodeUrlEntities($('.title').val())+'","description":"'+encodeUrlEntities($('.description').val())+'","repeat":'+encodeUrlEntities($('.repeat').val())+'},"steps":[';
 		var valid_row = false
 		$('table tr').each(function() {
 			if($(this).find('.name').val() && $(this).find('.time').val()) {
-				url += '{"title":"'+encodeUrlEntities($(this).find('.name').val())+'","time":'+$(this).find('.time').val()+',"color":"'+$(this).find('.color').val()+'","sound":"'+$(this).find('.tone').val()+'"},';
 				valid_row = true;
 			}
 		});
 		if(!valid_row) $('.error_message').html('This timer needs at least one working step!');
-		url = url.substring(0, url.length - 1);
-		url += "]}";
-		return url;
-	}
-	
-	// CREATE SHORT VERSION OF TIMER URL USING BIT.LY
-	function shortenUrl() {
-		var json_url = makeJsonUrl();
-		$('.short_url').html('Loading...');
-		$.ajax({
-			type: "POST",
-			url: "/ajax.php", // bit.ly API caller. Not included in git repo because it contains a personal API key
-			data: { url: encodeURIComponent(json_url) }
-		})
-		.done(function(response) {
-			if(response == 'INVALID_URI') {
-				$(".short_url").addClass('error').html('Timer too long');
-				setTimeout(function() {
-					$(".short_url").removeClass('error').html('Shorten URL')
-				}, 2000);
-				
-			} else {
-				updateLinks(response); // update all links with short url
-				$(".short_url").addClass('success').html('Shortened!');
-				setTimeout(function() {
-					$(".short_url").removeClass('success').html('Shorten URL')
-				}, 2000);
-			}
-		});
-	}
-	
-	// BUILD SHORT VERSION OF TIMER URL AND THEN CREATE MAILTO: WITH LINK TO TIMER
-	function emailLink() {
-		// LOAD TIMER INFO
-		if($('.editor').size()) { // for editor page
-			json_url = encodeURIComponent(makeJsonUrl());
-			title = $('.title').val();
-			description = $('.description').val();
-		} else { // for timer page
-			json_url = window.location.href;
-			title = $('.ready h2').text();
-			description = $('.ready h5').text();
-		}
-		title = encodeUrlEntities(title).replace(/\\\"/g, '"');
-		description = encodeUrlEntities(description).replace(/\\\"/g, '"');
 		
-		// GET SHORT URL
-		$.ajax({
-			type: "POST",
-			url: "/ajax.php", // bit.ly API caller. Not included in git repo because it contains a personal API key
-			data: { url: json_url }
-		})
-		.done(function(response) {
-			
-			if(response == 'INVALID_URI') alert("Sorry, but the URL for this timer is too long and can't be sent as a link.");
-			else {
-				// BUILD EMAIL TEMPLATE WITH TIMER INFO
-				mailto_template = 'mailto:?subject={title} [Repeater]&body={title}%0d%0a{description}%0d%0a%0d%0a{timer_url}%0d%0a%0d%0a--%0d%0aInterval time by Repeater%0d%0ahttp://repeaterrrr.com/';
-				url = mailto_template.replace(/\{title\}/g, title);
-				url = url.replace(/\{description\}/g, description);
-				url = url.replace(/\{timer_url\}/g, response.trim());
-	
-				// LOAD EMAIL LINK
-				window.location = url;
+		if($('.error_message').html() != "") $('.save, .short_url, .copy_url, .email_timer').addClass('disabled');
+		else $('.save, .short_url, .copy_url, .email_timer').removeClass('disabled');
+	}
+
+	// CREATE JSON BASED ON FORM DATA
+	function makeJson(title, description, steps) {
+		var json = '{"info":{"title":"'+encodeUrlEntities($('.title').val())+'","description":"'+encodeUrlEntities($('.description').val())+'","repeat":'+encodeUrlEntities($('.repeat').val())+'},"steps":[';
+		var valid_row = false
+		$('table tr').each(function() {
+			if($(this).find('.name').val() && $(this).find('.time').val()) {
+				json += '{"title":"'+encodeUrlEntities($(this).find('.name').val())+'","time":'+$(this).find('.time').val()+',"color":"'+$(this).find('.color').val()+'","sound":"'+$(this).find('.tone').val()+'"},';
+				valid_row = true;
 			}
 		});
+		if(!valid_row) $('.error_message').html('This timer needs at least one working step!');
+		json = json.substring(0, json.length - 1);
+		json += "]}";
+		return json;
 	}
-	
+		
 	// FIX ENCODING OF SPECIAL CHARACTERS WHEN USING IN URL
 	function encodeUrlEntities(string) {
 		if(!string) return '';
