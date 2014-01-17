@@ -110,7 +110,7 @@ if($set_result) {
 		if(!$set_result) { ?>
 		<div class="intro">
 			<h1><img src="img/logo.svg" alt="repeaterrrr" width="200" onerror="this.onerror=null; this.src='img/logo.png'"></h1>
-			<h5>The clean and easy repeating timer.</h5>
+			<h5>The clean and easy repeating timerrrr.</h5>
 			
 			<p>Repeaterrrr lets you create no-frills timers for any activity that requires keeping track of time in regular intervals.</p>
 			<p>Plus, all your timer settings are stored in the URL, so it's easy to create, customize and share.</p>
@@ -134,7 +134,7 @@ if($set_result) {
 			<h2><?php echo $set['info']['title']; ?></h2>
 			<h5><?php echo $set['info']['description']; ?></h5>
 			<h4><br>Duration: <b><?php echo $duration; ?></b></h4>
-			<div class="start button" role="button">Start</div>
+			<button class="start button" role="button">Start</button>
 		</div>
 	
 	
@@ -150,14 +150,14 @@ if($set_result) {
 			<h3 class="clock"><span class="seconds"></span>/<span class="total"></span> seconds</h3>
 			<h5>Up Next:</h5>
 			<h4 class="next_activity"></h4>
-			<span class="pause button" role="button"><i class="icon-pause"></i> pause</span> <span class="skip button" role="button"><i class="icon-fast-fw"></i> skip step</span>
+			<button class="pause button" role="button"><i class="icon-pause"></i> pause</button> <button class="skip button" role="button"><i class="icon-fast-fw"></i> skip step</button>
 		</div>
 	
 		<!-- TIMER COMPLETION SCREEN -->	
 		<div class="complete">
 			<h2>All done!</h2>
 			<h4>Well, you can check that off your list for today.<br>Or you could...</h4>
-			<div class="start button" role="button">Do it again</div>
+			<button class="start button" role="button">Do it again</button>
 			<!-- SHOW SAVE TO HOMEPAGE INFO FOR IOS DEVICES -->
 			<h6 class="ios">Like the timer? Add it to your home screen for easy access and to use it full screen!</h6>
 		</div>

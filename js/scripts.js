@@ -329,7 +329,8 @@ $(function() {
 		
 		// CHANGE COLOR OF ROW IF COLOR SELECTOR IS CHANGED
 		$(document).on('change', 'select.color', function() {
-			$(this).closest('tr').attr('class', $(this).val());
+			$(this).closest('li').attr('class', 'step '+$(this).val());
+			verifyForm();
 		});
 		
 		// INPUT BOX CHARACTER LIMITS
@@ -343,41 +344,21 @@ $(function() {
 			$('.description_char_count').html($('.description').val().length);
 		});
 		
-			
-		// SELECT CONTENTS OF TIMER URL INPUT BOX WHEN FOCUSED ON
-		$('.timer_url').on('focus, click', function() {
-			this.select();
+		// ENABLE DRAG AND DROP ON MOBILE DEVICES
+		$('.steps').sortable({
+		    handle: '.drag_handle'
 		});
-		
-		// MAKE TIMER STEPS SORTABLE VIA DRAG AND DROP
-		if($('.steps').size()) {
-			$('.steps').tableDnD({
-			    dragHandle: ".drag_handle",
-			    onDragClass: 'dragging',
-			    onDrop: function(table, row) {
-			       //updateLinks();
-					verifyForm();
-			    }
-			});
-		} 
-		
+	
 		
 		// ADD NEW STEP ROW
 		$('.add_step').click(function() {
-			$('.row_template').clone().insertBefore($(this).closest('tr')).removeClass('row_template');
-			$('.steps').tableDnD({
-			    dragHandle: ".drag_handle",
-			    onDragClass: 'dragging',
-			    onDrop: function(table, row) {
-			       //updateLinks();
-					verifyForm();
-			    }
-			});
+			$('.row_template').clone().appendTo('.steps').removeClass('row_template');
+			$('.incomplete .name').focus();
 		});
 		
 		// DELETE STEP ROW
 		$(document).on('click', '.delete_step', function() {
-			$(this).closest('tr').fadeOut(300, function() {
+			$(this).closest('li').fadeOut(300, function() {
 				$(this).remove();
 				//updateLinks();
 				verifyForm();
@@ -417,9 +398,24 @@ $(function() {
 		var error_msg = "";
 		
 		var valid_row = false
-		$('table tr').each(function() {
-			if($(this).find('.name').val() && $(this).find('.time').val()) {
+		$('li').each(function() {
+			var row = $(this);
+			var rname = row.find('.name').val();
+			var rtime = row.find('.time').val();
+			if(rname && rtime > 0) {
 				valid_row = true;
+				$(this).removeClass('incomplete');
+				row.find('.field_error').removeClass('has_error');
+			} else {
+				row.addClass('incomplete');
+				console.log("i time "+rname);
+				console.log("i name "+rtime);
+				
+				if(!rname) row.find('.name_error').addClass('has_error');
+				else row.find('.name_error').removeClass('has_error');
+				
+				if(!rtime || rtime < 1) row.find('.time_error').addClass('has_error');
+				else row.find('.time_error').removeClass('has_error');
 			}
 		});
 		if(!valid_row) error_msg = 'This timer needs at least one working step!';
@@ -437,7 +433,7 @@ $(function() {
 	function makeJson(title, description, steps) {
 		var json = '{"info":{"title":"'+encodeUrlEntities($('.title').val())+'","description":"'+encodeUrlEntities($('.description').val())+'","repeat":'+encodeUrlEntities($('.repeat').val())+'},"steps":[';
 		var valid_row = false
-		$('table tr').each(function() {
+		$('li').each(function() {
 			if($(this).find('.name').val() && $(this).find('.time').val()) {
 				json += '{"title":"'+encodeUrlEntities($(this).find('.name').val())+'","time":'+$(this).find('.time').val()+',"color":"'+$(this).find('.color').val()+'","sound":"'+$(this).find('.tone').val()+'"},';
 				valid_row = true;

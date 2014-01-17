@@ -14,6 +14,7 @@
 $white: #eee;
 $black: #333;
 $semi-black: rgba(50,50,50,.2);
+$clear: rgba(0,0,0,0);
 $gray: $white / 1.2;
 $red: #ee9494;
 $blue: #94d7ea;
@@ -240,7 +241,7 @@ footer {
 }
 
 label {
-	display: block;
+	display: inline-block;
 	font-size: .8em;
 	clear: both;
 }
@@ -260,12 +261,13 @@ input, textarea, select {
 		font-size: 1.3em;
 	}
 	&.name {
-		width: 150px;
+		width: 180px;
 	}
 	&.time {
 		width: 70px;
 		text-align: center;
 	}
+	
 	
 	&.repeat {
 		display: inline-block;
@@ -303,57 +305,96 @@ option {
 	background: $white;
 }
 
-table {
-	width: 100%;
-	margin: 0 0 15px;
-	padding: 0 0 15px;
-	text-align: center;
-	border-collapse:collapse;
+.steps_labels {
+	height: 1.2em;
+	position: relative;
+
+	label {
+		position: absolute;
+		font-weight: bold;
+	}
+	.name_label {
+		left: 132px;
+	}
+	.time_label {
+		left: 267px;
+	}
+	.color_label {
+		left: 346px;
+	}
+	.tone_label {
+		left: 433px;
+	}
+}
+
+.step {
+	&.incomplete {
+		input, select {
+			background-color: #ccc;
+		}
+	}
+}
+
+.field_error {
+	display: none;
+	margin: 0 0 0 -30px;
+	color: $red;
 	
-	input, select {
+	&.has_error {
 		display: inline-block;
-		width: 80px;
-		margin: 0;
-	}
-	input[type='text'] {
-		width: 200px;
 	}
 }
 
-.dragging {
-	top: -10px;
-	left: -10px;
-	background-color: $semi-black;
-}
-
-th, td {
+ul, li {
+	list-style: none;
 	margin: 0;
+	padding: 0;
+}
+li {
+	position: relative;
 	padding: 2px 0 2px 3px;
-	vertical-align: top;
-	@include user-select();
-	border: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	input, select {
+		display: inline;
+	}
 	
-	&:nth-child(1) {
-		width: 50px;
-	}
-	&:nth-child(3) {
-		width: 200px;
-	}
-	span {
-		display: block;
-		margin-top: -3px;
-		font-size: 0.6em;
+	select {
+		width: 80px;
+	}	
+	
+	label {
+		position: absolute;
+		left: 55%;
+		bottom: 20%;
+		width: 0;
+		height: 0;
+		line-height: 0;
+		display: inline-block;
 	}
 }
 
-th {
-	font-size: .7em;
+.ui-sortable-helper {//.slip-reordering {
+	background: $clear;
+	input, select, .button {
+		box-shadow: 0 2px 10px rgba(0,0,0,0.45);
+	}
 }
 
 .drag_handle {
-	padding: 0.6em 0;
+	padding: .5em;
 	font-family: "fontello";
 	font-size: .7em;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: move;
 }
 
 .editor .repeat_container {
@@ -365,7 +406,6 @@ th {
 	float: right;
 	margin-top: .7em;
 }
-
 .error_message {
 	display: block;
 	float: right;
@@ -415,6 +455,7 @@ th {
 	line-height: 1em;
 	cursor: pointer;
 	border-radius: 3px;
+	border: none;
 	text-decoration: none;
 	vertical-align: middle;
 	@include user-select();
@@ -443,7 +484,7 @@ th {
 	&.special {
 		background: $orange;/* saturate($blue*.6, 20%); */
 		color: $white;
-		&:hover {
+		&:hover, &:focus {
 			background: $orange * 1.1;/* saturate($blue*.7, 20%); */
 			color: $white;
 		}
@@ -454,7 +495,7 @@ th {
 	&.error {
 		background: $red*.8;
 	}
-	&.disabled, &.disabled:hover {
+	&.disabled, &.disabled:hover, &.disabled:focus {
 		opacity: .3;
 		cursor: default;
 		pointer-events: none;		
@@ -467,7 +508,7 @@ th {
 .pause i, .skip i {
 	font-size: .7em;
 }
-.button:hover, .button.button_hover, .zeroclipboard-is-hover {
+.button:hover, .button:focus, .button.button_hover {
 	color: $black;
 	background: $semi-black;
 }
@@ -479,8 +520,8 @@ th {
 		background-color: $white;
 	}
 	
-	tr& {
-		background-color: $white;
+	li& {
+		background-color: $clear;
 		input, select {
 			background-color: white;
 		}
@@ -495,8 +536,8 @@ th {
 		background-color: $red * 1.6;
 	}
 	
-	tr& {
-		background-color: $white;
+	li& {
+		background-color: $clear;
 		input, select {
 			background-color: $red;
 		}
@@ -510,8 +551,8 @@ th {
 		background-color: $yellow * 1.6;
 	}
 	
-	tr& {
-		background-color: $white;
+	li& {
+		background-color: $clear;
 		input, select {
 			background-color: $yellow;
 		}
@@ -525,8 +566,8 @@ th {
 		background-color: $green * 1.6;
 	}
 	
-	tr& {
-		background-color: $white;
+	li& {
+		background-color: $clear;
 		input, select {
 			background-color: $green;
 		}
@@ -540,8 +581,8 @@ th {
 		background-color: $blue * 1.6;
 	}
 	
-	tr& {
-		background-color: $white;
+	li& {
+		background-color: $clear;
 		input, select {
 			background-color: $blue;
 		}
@@ -570,7 +611,16 @@ th {
 	}
 }
 
-
+.clearfix:before, .clearfix:after {
+    content: " ";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+    *zoom: 1;
+}
 
 
 
@@ -582,12 +632,18 @@ th {
 	.progress_bar {
 		width: 100%;
 	}
+	.button.delete_step {
+		margin: 1.5em 1em;
+	}
+	.drag_handle {
+		padding: 1.5em 1em;
+	}
 }
 
 // DEAL WITH SHORT OR LANDSCAPE BROWSERS
 @media screen and (max-height: 600px){
 	html, body {
-		font-size: 14px;
+		font-size: 11px;
 	}
 	h2 {
 		height: 30px;
@@ -614,11 +670,13 @@ th {
 			width: 70%;
 		}
 	}
-}
-
-
-@media screen and (max-height: 600px){
-	html, body {
-		font-size: 11px;
+	.button.delete_step {
+		margin: 1.5em 1em;
+	}
+	.drag_handle {
+		padding: 1.5em 1em;
+	}
+	input.name {
+		width: 186px;
 	}
 }
