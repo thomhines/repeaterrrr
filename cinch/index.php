@@ -59,11 +59,12 @@ $libraries= array( // array(library URL, default version number, css/js)
 
 
 
-if($_GET['min'] === "false") $_GET['min'] = false;
+if(isset($_GET['min']) && $_GET['min'] === "false") $_GET['min'] = false;
 
 
 // USE CORRECT CONTENT TYPE 
-if($_GET['t']=='auto' || !isset($_GET['t'])) { // auto detect content type
+$library_info = array('', '', '');
+if(isset($_GET['t']) && $_GET['t']=='auto' || !isset($_GET['t'])) { // auto detect content type
 	if(substr($file_array[0], 0, 1) == '[') {
 		preg_match("/\[([^\/]*)\/?(.*)?\]/", $file_array[0], $library_array);
 		$library_info = $libraries[$library_array[1]];
@@ -104,7 +105,7 @@ else {
 
 
 // IF NEW CHANGES HAVE BEEN DETECTED, REBUILD CACHE FILE
-if($new_changes || $_GET['force'] || $_GET['clearcache']) {
+if(isset($new_changes) || isset($_GET['force']) || isset($_GET['clearcache'])) {
 
 	$content = '';
 	foreach($file_array as $file) { // combine files
@@ -288,7 +289,7 @@ function loadExternalLibrary($file) {
 	
 	preg_match("/\[([^\/]*)\/?(.*)?\]/", $file, $file_array);
 	$library_name = strtolower($file_array[1]);
-	$version = $file_array[2] ? $file_array[2] : $library[1];
+	$version = isset($file_array[2]) ? $file_array[2] : $library[1];
 	
 	$library = $libraries[$library_name];
 	$library_url =  str_replace('{version}', $version, $library[0]);

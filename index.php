@@ -12,13 +12,15 @@
 	
 *----------------------------------------------------------------------*/
 
+
 if($_GET['set']) {
-	// LOAD JSON FROM SERVER
 	include_once('db.php');
-	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$_GET['set']."';");
+	// LOAD JSON FROM SERVER
+	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$get['set']."';");
+	
 	
 	// COUNT HOW MANY TIMES TIMER IS USED
-	if($set_result) sql("UPDATE `sets` SET `use_counter` = use_counter + 1 WHERE `slug` = '".$_GET['set']."';");
+	if($set_result) sql("UPDATE `sets` SET `use_counter` = use_counter + 1 WHERE `slug` = '".$get['set']."';");
 }
 
 
@@ -37,9 +39,9 @@ if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])==$lastModified || $etagHeader
 }
 */
 	
-if($set_result) {
+if(isset($set_result)) {
 	// COUNT HOW MANY TIMES TIMER IS USED
-	sql("UPDATE `sets` SET `use_counter` = use_counter + 1 WHERE `slug` = '".$_GET['set']."';");
+	sql("UPDATE `sets` SET `use_counter` = use_counter + 1 WHERE `slug` = '".$get['set']."';");
 	
 	// CONVERT JSON INTO PHP ARRAY
 	$set = json_decode($set_result['json'], true);
@@ -70,7 +72,7 @@ if($set_result) {
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-<title>repeaterrrr | <?php if($set['info']['title']) echo $set['info']['title']; else echo 'The simple, clean, and easy repeating timer.'; ?></title>
+<title>repeaterrrr | <?php if(isset($set['info']['title'])) echo $set['info']['title']; else echo 'The simple, clean, and easy repeating timer.'; ?></title>
 <meta charset="utf-8" />
 <meta name="description" content="The clean and easy repeating timer." />
 <meta name="viewport" content="user-scalable=no, width=500">
@@ -97,17 +99,17 @@ if($set_result) {
 
 <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css'> -->
 <link rel="Stylesheet" href="/cinch/?files=/css/fonts.css,/css/style.scss&debug=true" type="text/css" media="all" />
-<script src="/cinch/?files=[jquery],[html5shiv],!/js/jquery.noclickdelay.js,/js/scripts.js&debug=true"></script>
+<script src="/cinch/?files=[jquery],[html5shiv],!/js/jquery.noclickdelay.js,!/js/soundjs.min.js,/js/scripts.js&debug=false"></script>
 <script type="text/javascript">
 	// SAVE STEPS TO JAVASCRIPT VAR
 	<?php if($set_result) { ?>var steps = <?php echo $json; ?>;<?php } ?>
 </script>
 </head>
 
-<body <?php if(!$set_result) echo 'class="blue"'; ?>>
+<body <?php if(!isset($set_result)) echo 'class="red"'; ?>>
 	<div class="container">
 		<?php // IF NO SET IS GIVEN IN URL, PROVIDE SPLASH SCREEN
-		if(!$set_result) { ?>
+		if(!isset($set_result)) { ?>
 		<div class="intro">
 			<h1><img src="img/logo.svg" alt="repeaterrrr" width="200" onerror="this.onerror=null; this.src='img/logo.png'"></h1>
 			<h5>The clean and easy repeating timerrrr.</h5>
@@ -168,18 +170,11 @@ if($set_result) {
 	
 	<footer>
 		<a class="title" href="/"><h1><img src="img/logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/logo.png'"></h1></a>
-		<a href='/edit/<?php echo $_GET['set']; ?>'><i class="icon-edit"></i></a>
-		<a class="email_timer" target="_blank" href="mailto:?subject=<?php echo $set['info']['title']; ?> [repeaterrrr]&body=<?php echo $set['info']['title']; ?>%0d%0a<?php echo $set['info']['description']; ?>%0d%0a%0d%0ahttp://repeaterrrr.com/<?php echo $_GET['set']; ?>%0d%0a%0d%0a--%0d%0aRepeating timers by repeaterrrr%0d%0ahttp://repeaterrrr.com/"><i class="icon-mail"></i></a>
+		<a href='/edit/<?php echo $get['set']; ?>'><i class="icon-edit"></i></a>
+		<a href='/copy/<?php echo $get['set']; ?>'><i class="icon-docs"></i></a>
+		<a class="email_timer" target="_blank" href="mailto:?subject=<?php echo $set['info']['title']; ?> [repeaterrrr]&body=<?php echo $set['info']['title']; ?>%0d%0a<?php echo $set['info']['description']; ?>%0d%0a%0d%0ahttp://repeaterrrr.com/<?php echo $get['set']; ?>%0d%0a%0d%0a--%0d%0aRepeating timers by repeaterrrr%0d%0ahttp://repeaterrrr.com/"><i class="icon-mail"></i></a>
 		<span class="icon-volume-up mute"></span>
 	</footer>
-	
-	<!-- INVISIBLE ELEMENTS -->
-<!-- 	<audio class="sounds" preload="auto"><source src="/audio/sounds.mp3" type="audio/mpeg" /><source src="/audio/sounds.ogg" type="audio/ogg" /></audio> -->
-	<audio class="sounds">
-		<source src="/audio/sounds.mp3" type='audio/mpeg; codecs="mp3"'>
-		<source src="/audio/sounds.ogg" type='audio/ogg; codecs="vorbis"'>
-		Sorry, but your browser failed to load the audio file!
-	</audio>
 	
 	<div class="ajax"></div>
 	

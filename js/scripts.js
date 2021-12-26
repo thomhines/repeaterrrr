@@ -15,7 +15,21 @@
 var timer_interval, current_step, current_seconds, prev_seconds, next_step, step_seconds = 0, prev_time, total_seconds = 0, total_seconds_so_far = 0, sound_start, sound_length;
 
 
+
+
+
 $(function() {
+	
+	// Load sound files
+	if(typeof createjs != "undefined") {
+		createjs.Sound.registerSound("audio/tick.mp3", 'tick');
+		createjs.Sound.registerSound("audio/single.mp3", 'single');
+		createjs.Sound.registerSound("audio/double.mp3", 'double');
+		createjs.Sound.registerSound("audio/triple.mp3", 'triple');
+		createjs.Sound.registerSound("audio/long.mp3", 'short');
+		createjs.Sound.registerSound("audio/finished.mp3", 'long');
+	}
+	
 
 	/*----------------------------------------------------------------------*
 	
@@ -59,8 +73,6 @@ $(function() {
 		
 	
 	$('.start').click(function() {
-		$('.sounds')[0].play(); // PRE-LOAD AUDIO FILE
-		$('.sounds')[0].pause();
 		init();
 	});
 	
@@ -164,7 +176,7 @@ $(function() {
 
 		// PLAY SHORT BEEP AT 1 AND 2 SECOND REMAINING MARK
 		if(Math.ceil(current_seconds) != Math.ceil(prev_seconds) && (Math.ceil(current_seconds) == 2 || Math.ceil(current_seconds) == 1)) {
-			playSound('tock');
+			playSound('tick');
 		}
 		prev_seconds = current_seconds;
 		
@@ -263,27 +275,7 @@ $(function() {
 
 	// PLAY SOUND
 	function playSound(sound) {
-		// IN ORDER TO WORK ON MOBILE DEVICES, A SINGLE AUDIO FILE IS USED FOR ALL SOUNDS
-		// BELOW ARE THE START AND LENGTH VALUES FOR EACH SOUND USED WITHIN THE AUDIO
-		// SPRITE. VALUES ARE IN SECONDS.
-		
-		var audio = $('.sounds').get(0);
-		
-		if(sound == 'none' || $('.mute').hasClass('muted')) { return null; }
-		else if(sound == 'tock') { sound_start = .07; sound_length = .2; }
-		else if(sound == 'single') { sound_start = .9; sound_length = .2; }
-		else if(sound == 'double') { sound_start = 1.65; sound_length = .3; }
-		else if(sound == 'triple') { sound_start = 2.53; sound_length = .5; }
-		else if(sound == 'short') { sound_start = 3.63; sound_length = .6; }
-		else if(sound == 'long') { sound_start = 5; sound_length = 1.2; }
-		else { sound_start = 0; sound_length = 0; }
-		
-		console.log(audio.readyState); // HELPS MOBILE SAFARI NOT ERROR OUT (WTF???)
-		
-		if(audio.readyState == 4) {
-			audio.currentTime = sound_start;
-			audio.play();
-		}
+		createjs.Sound.play(sound);
 	}
 	
 	// STOP SOUND AFTER IT HAS PLAYED ITS ENTIRE LENGTH
@@ -294,7 +286,6 @@ $(function() {
 	}
 	if($('.sounds').size()) {
 		$('.sounds').get(0).addEventListener('timeupdate', stopSound, false);
-
 	}
 
 
@@ -351,13 +342,16 @@ $(function() {
 	
 		
 		// ADD NEW STEP ROW
-		$('.add_step').click(function() {
+		$('.add_step').click(function(e) {
+			e.preventDefault();
 			$('.row_template').clone().appendTo('.steps').removeClass('row_template');
 			$('.incomplete .name').focus();
+			verifyForm()
 		});
 		
 		// DELETE STEP ROW
-		$(document).on('click', '.delete_step', function() {
+		$(document).on('click', '.delete_step', function(e) {
+			e.preventDefault();
 			$(this).closest('li').fadeOut(300, function() {
 				$(this).remove();
 				//updateLinks();
@@ -367,7 +361,25 @@ $(function() {
 	
 	
 		// ON SAVE, CREATE SHORT LINK AND DIRECT USER TO NEW TIMER
-		$(document).on('click', '.save', function(e) {
+		$(document).on('click', '.save:not(.disabled)', function(e) {
+			e.preventDefault();
+			var json_url = makeJson();
+			$(this).addClass('working').html('Saving...');
+			
+			$.ajax({
+				type: "POST",
+				url: "/ajax.php", // shortens URL and stores it to database
+				data: { json: json_url, slug: window.location.pathname.substr(6) }
+			})
+			.done(function(response) {
+				window.location = "/"+response;
+			});
+		});
+	
+	
+/*
+		// ON SAVE, CREATE SHORT LINK AND DIRECT USER TO NEW TIMER
+		$(document).on('click', '.save_as_new', function(e) {
 			e.preventDefault();
 			var json_url = makeJson();
 			$(this).addClass('working').html('Saving...');
@@ -380,9 +392,8 @@ $(function() {
 			.done(function(response) {
 				window.location = "/"+response;
 			});
-			
-			
 		});
+*/
 			
 	}
 	
@@ -397,16 +408,16 @@ $(function() {
 	function verifyForm() {
 		var error_msg = "";
 		
-		var valid_row = false
-		$('li').each(function() {
+		var invalid_row = false
+		$('.steps li').each(function() {
 			var row = $(this);
 			var rname = row.find('.name').val();
 			var rtime = row.find('.time').val();
 			if(rname && rtime > 0) {
-				valid_row = true;
 				$(this).removeClass('incomplete');
 				row.find('.field_error').removeClass('has_error');
 			} else {
+				invalid_row = true;
 				row.addClass('incomplete');
 				console.log("i time "+rname);
 				console.log("i name "+rtime);
@@ -418,20 +429,22 @@ $(function() {
 				else row.find('.time_error').removeClass('has_error');
 			}
 		});
-		if(!valid_row) error_msg = 'This timer needs at least one working step!';
-		if($('.title').val() == "") error_msg = 'This timer needs a title!';
 		
-		
+		if(invalid_row) error_msg = 'Make sure all of your steps are filled in.';
+		else if($('.title').val() == "") error_msg = 'This timer needs a title!';
+		$('.error_message').html(error_msg);
+					
 		if(error_msg) {
-			$('.error_message').html(error_msg);
-			$('.save, .short_url, .copy_url, .email_timer').addClass('disabled');
+			$('.save, .save_as_new, .short_url, .copy_url, .email_timer').addClass('disabled');
 		}
-		else $('.save, .short_url, .copy_url, .email_timer').removeClass('disabled');
+		else $('.save, .save_as_new, .short_url, .copy_url, .email_timer').removeClass('disabled');
 	}
 
 	// CREATE JSON BASED ON FORM DATA
 	function makeJson(title, description, steps) {
-		var json = '{"info":{"title":"'+encodeUrlEntities($('.title').val())+'","description":"'+encodeUrlEntities($('.description').val())+'","repeat":'+encodeUrlEntities($('.repeat').val())+'},"steps":[';
+		repeats_x_times = $('.repeat').val();
+		if(!repeats_x_times) repeats_x_times = 1;
+		var json = '{"info":{"title":"'+encodeUrlEntities($('.title').val())+'","description":"'+encodeUrlEntities($('.description').val())+'","repeat":'+repeats_x_times+'},"steps":[';
 		var valid_row = false
 		$('li').each(function() {
 			if($(this).find('.name').val() && $(this).find('.time').val()) {

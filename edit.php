@@ -13,16 +13,42 @@
 *----------------------------------------------------------------------*/
 
 
-if($_GET['set']) {
+include_once('common.php');
+include_once('db.php');
+
+if(@$get['copy']) {
 	// LOAD JSON FROM SERVER
-	include_once('db.php');
-	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$_GET['set']."';");
+	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$get['copy']."';");
 	// CONVERT JSON INTO PHP ARRAY
 	$set = json_decode($set_result['json'], true);
-} else {
-	// FOR THE SAKE OF GIVING A BLANK STEP ROW ON NEW TIMERS
-	$set['steps'] = array('name' => '');
+	$set['info']['title'] = $set['info']['title'] . " (copy)";
+	$set = json_encode($set);
+	print_r($set);
+	
+	$slug = makeSlug();
+	
+	
+	if(sql("INSERT INTO `sets` (`slug`, `json`, `created`) VALUES ('$slug', '".$set."', NOW())")) echo $slug;
+	else echo 'Error: There was an problem saving the timer to the database';
+
+	header('Location: https://repeaterrrr.com/edit/'.$slug);
+	
+	die;
 }
+
+$set = array();
+if(@$get['set']) {
+	// LOAD JSON FROM SERVER
+	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$get['set']."';");
+	// CONVERT JSON INTO PHP ARRAY
+	$set = json_decode($set_result['json'], true);
+} 
+else {
+	// FOR THE SAKE OF GIVING A BLANK STEP ROW ON NEW TIMERS
+	$set['info'] = array('title' => '','description' => '');
+	$set['steps'] = array(array('title' => '', 'time' => '', 'color' => '', 'sound' => ''));
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en-us">
@@ -58,77 +84,79 @@ if($_GET['set']) {
 
 
 	<h4>Timer Info</h4>
-	<label for='title'>Title* (<span class="title_char_count">0</span>/40 chars.)</label>
-	<input type="text" id="title" class="title" maxlength="40" placeholder="Timer Name" value="<?php echo htmlspecialchars($set['info']['title']); ?>">
+	<form>
+		<label for='title'>Title* (<span class="title_char_count">0</span>/40 chars.)</label>
+		<input type="text" id="title" class="title" maxlength="40" placeholder="Timer Name" value="<?php echo htmlspecialchars($set['info']['title']); ?>">
+		
+		<label for='description'>Description (<span class="description_char_count">0</span>/140 chars.)</label>
+		<textarea type="text" id="description" class="description" maxlength="140" placeholder="A little bit about your timer..."><?php echo htmlspecialchars($set['info']['description']); ?></textarea>
+		
 	
-	<label for='description'>Description (<span class="description_char_count">0</span>/140 chars.)</label>
-	<textarea type="text" id="description" class="description" maxlength="140" placeholder="A little bit about your timer..."><?php echo htmlspecialchars($set['info']['description']); ?></textarea>
+		<h4>Steps</h4>
 	
-
-	<h4>Steps</h4>
-
-	<div class="steps_labels">
-		<label class="name_label">Name</label>
-		<label class="time_label">Time</label>
-		<label class="color_label">Color</label>
-		<label class="tone_label">Tone</label>
-	</div>
+		<div class="steps_labels">
+			<label class="name_label">Name</label>
+			<label class="time_label">Time</label>
+			<label class="color_label">Color</label>
+			<label class="tone_label">Tone</label>
+		</div>
+		
+		<ul class="steps">
+		<?php if($set['steps']) foreach($set['steps'] as $step) { ?>
+		
 	
-	<ul class="steps">
-	<?php if($set['steps']) foreach($set['steps'] as $step) { ?>
+		<li class="step <?php echo $step['color']; ?>">
+			<span class="drag_handle">&#xe805;</span>
+			<i class="delete_step smaller button icon-cancel" role="button"></i>
+			<input type="text" class="name" value="<?php echo $step['title'] ?>"><span class="icon-cancel field_error name_error"></span>
+			<input type="number" class="time" value="<?php echo $step['time'] ?>"><span class="icon-cancel field_error number_error"></span><label>sec</label>
+			<select class="color">
+				<option value="white" <?php if($step['color'] == 'white') echo 'selected="selected"'; ?>>White</option>
+				<option value="red" <?php if($step['color'] == 'red') echo 'selected="selected"'; ?>>Red</option>
+				<option value="yellow" <?php if($step['color'] == 'yellow') echo 'selected="selected"'; ?>>Yellow</option>
+				<option value="green" <?php if($step['color'] == 'green') echo 'selected="selected"'; ?>>Green</option>
+				<option value="blue" <?php if($step['color'] == 'blue') echo 'selected="selected"'; ?>>Blue</option>
+			</select>
+			<select class="tone">
+				<option value="">None</option>
+				<option value="single" <?php if($step['sound'] == 'single') echo 'selected="selected"'; ?>>Single</option>
+				<option value="double" <?php if($step['sound'] == 'double') echo 'selected="selected"'; ?>>Double</option>
+				<option value="triple" <?php if($step['sound'] == 'triple') echo 'selected="selected"'; ?>>Triple</option>
+				<option value="short" <?php if($step['sound'] == 'short') echo 'selected="selected"'; ?>>Long</option>
+			</select>
+		</li>
+		<?php } ?>
+		</ul>
+		<div><button class="medium button add_step" role="button">+ Add New Row</button></div>
 	
-
-	<li class="step <?php echo $step['color']; ?>">
-		<span class="drag_handle">&#xe805;</span>
-		<i class="delete_step smaller button icon-cancel" role="button"></i>
-		<input type="text" class="name" value="<?php echo $step['title'] ?>"><span class="icon-cancel field_error name_error"></span>
-		<input type="number" class="time" value="<?php echo $step['time'] ?>"><span class="icon-cancel field_error number_error"></span><label>sec</label>
-		<select class="color">
-			<option value="white" <?php if($step['color'] == 'white') echo 'selected="selected"'; ?>>White</option>
-			<option value="red" <?php if($step['color'] == 'red') echo 'selected="selected"'; ?>>Red</option>
-			<option value="yellow" <?php if($step['color'] == 'yellow') echo 'selected="selected"'; ?>>Yellow</option>
-			<option value="green" <?php if($step['color'] == 'green') echo 'selected="selected"'; ?>>Green</option>
-			<option value="blue" <?php if($step['color'] == 'blue') echo 'selected="selected"'; ?>>Blue</option>
-		</select>
-		<select class="tone">
-			<option value="">None</option>
-			<option value="single" <?php if($step['sound'] == 'single') echo 'selected="selected"'; ?>>Single</option>
-			<option value="double" <?php if($step['sound'] == 'double') echo 'selected="selected"'; ?>>Double</option>
-			<option value="triple" <?php if($step['sound'] == 'triple') echo 'selected="selected"'; ?>>Triple</option>
-			<option value="short" <?php if($step['sound'] == 'short') echo 'selected="selected"'; ?>>Long</option>
-		</select>
-	</li>
-	<?php } ?>
-	</ul>
-	<div><button class="medium button add_step" role="button">+ Add New Row</button></div>
-
-	<!-- EMPTY ROW TEMPLATE FOR ADDING NEW STEP ROWS -->
-	<li class="step row_template">
-		<span class="drag_handle">&#xe805;</span>
-		<i class="delete_step smaller button icon-cancel" role="button"></i>
-		<input type="text" class="name"><span class="icon-cancel field_error name_error"></span>
-		<input type="number" class="time"><span class="icon-cancel field_error time_error"></span><label>sec</label>
-		<select class="color">
-			<option value="white">White</option>
-			<option value="red">Red</option>
-			<option value="yellow">Yellow</option>
-			<option value="green">Green</option>
-			<option value="blue">Blue</option>
-		</select>
-		<select class="tone">
-			<option value="">None</option>
-			<option value="single">Single</option>
-			<option value="double">Double</option>
-			<option value="triple">Triple</option>
-			<option value="short">Long</option>
-		</select>
-	</li>
+		<!-- EMPTY ROW TEMPLATE FOR ADDING NEW STEP ROWS -->
+		<li class="step row_template">
+			<span class="drag_handle">&#xe805;</span>
+			<i class="delete_step smaller button icon-cancel" role="button"></i>
+			<input type="text" class="name"><span class="icon-cancel field_error name_error"></span>
+			<input type="number" class="time"><span class="icon-cancel field_error time_error"></span><label>sec</label>
+			<select class="color">
+				<option value="white">White</option>
+				<option value="red">Red</option>
+				<option value="yellow">Yellow</option>
+				<option value="green">Green</option>
+				<option value="blue">Blue</option>
+			</select>
+			<select class="tone">
+				<option value="">None</option>
+				<option value="single">Single</option>
+				<option value="double">Double</option>
+				<option value="triple">Triple</option>
+				<option value="short">Long</option>
+			</select>
+		</li>
+		
 	
-
-	<h5 class="repeat_container">Repeat all steps <input type="number" class="repeat" min="1" value="<?php if($set['info']['repeat']) echo $set['info']['repeat']; else echo '1'; ?>"> times</h5>
+		<h5 class="repeat_container">Repeat all steps <input type="number" class="repeat" min="1" value="<?php if(isset($set['info']['repeat'])) echo $set['info']['repeat']; else echo '1'; ?>"> times</h5>
 	
-	<button class="special button save disabled" role="button">Save</button>
-	<span class="error_message"></span>
+		<button class="special button save disabled" role="button">Save</button>
+		<span class="error_message"></span>
+	</form>
 	
 	<div class="ajax"></div>
 </body>
