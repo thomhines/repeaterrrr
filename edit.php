@@ -78,7 +78,7 @@ else {
 <meta name="msapplication-TileImage" content="/img/favicons/mstile-144x144.png" />
 
 <link rel="Stylesheet" href="/css/style.css" type="text/css" media="all" />
-<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="/js/jquery.noclickdelay.js"></script>
 <script src="/js/soundjs.min.js"></script>
 <script src="/js/scripts.js"></script>

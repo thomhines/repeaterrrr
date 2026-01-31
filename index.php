@@ -13,7 +13,7 @@
 *----------------------------------------------------------------------*/
 
 
-if($_GET['set']) {
+if(isset($_GET['set']) && $_GET['set']) {
 	include_once('db.php');
 	// LOAD JSON FROM SERVER
 	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$get['set']."';");
@@ -99,7 +99,7 @@ if(isset($set_result)) {
 
 <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css'> -->
 <link rel="Stylesheet" href="css/style.css" type="text/css" media="all" />
-<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="js/jquery.noclickdelay.js"></script>
 <script src="js/soundjs.min.js"></script>
 <script src="js/scripts.js"></script>
@@ -122,7 +122,11 @@ if(isset($set_result)) {
 			<p>Plus, all your timer settings are stored in the URL, so it's easy to create, customize and share.</p>
 			<br>
 			<h6>You can try out one of these example timers:</h6>
-			<a class="small button" href="http://repeaterrrr.com/6LeTMUM">Pomodoro</a> <a class="small button" href="http://repeaterrrr.com/PKLaZA0">7-min Circuit Training</a> <a class="small button" href="http://repeaterrrr.com/FAC0IS3">10-20-30 Intervals</a> <a class="small button" href="http://repeaterrrr.com/uunoYIU">1 Minute Timer</a> <a class="small button" href="http://repeaterrrr.com/lGzsxUl">Tabata Interval Training</a> 
+			<a class="small button" href="/6LeTMUM">Pomodoro</a>
+			<a class="small button" href="/PKLaZA0">7-min Circuit Training</a>
+			<a class="small button" href="/FAC0IS3">10-20-30 Intervals</a>
+			<a class="small button" href="/uunoYIU">1 Minute Timer</a>
+			<a class="small button" href="/lGzsxUl">Tabata Interval Training</a> 
 
 			<h6>OR</h6>		
 			<a class="special button" href="/edit/">Make a timer</a>
@@ -184,18 +188,7 @@ if(isset($set_result)) {
 	
 	
 	<?php } // if($set_result) ?>
-	
-	
-	<!-- GOOGLE ANALYTICS -->
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	
-	  ga('create', 'UA-46546607-1', 'thomhines.com');
-	  ga('send', 'pageview');
-	</script>
+
 
 </body>
 

@@ -36,7 +36,7 @@ $(function() {
 		TIMER PAGE SCRIPTS
 	
 	*----------------------------------------------------------------------*/
-	if($('.timer').size()) {
+	if($('.timer').length) {
 	
 		// OPTIMIZE FOR TOUCH SCREENS
 		$('body').on('touchmove', function(e) { // DISABLE SCROLLING ON TOUCH DEVICES
@@ -50,7 +50,7 @@ $(function() {
 		});
 		
 		// CALCULATE TOTAL TIME OF TIMER
-		if($('.timer').size()) {
+		if($('.timer').length) {
 			for(var x = 0; x < steps.length; x++) {
 				total_seconds += parseInt(steps[x]['time']);
 			}
@@ -297,7 +297,7 @@ $(function() {
 			$('.sounds').get(0).pause();
 		}
 	}
-	if($('.sounds').size()) {
+	if($('.sounds').length) {
 		$('.sounds').get(0).addEventListener('timeupdate', stopSound, false);
 	}
 
@@ -315,7 +315,7 @@ $(function() {
 	
 	*----------------------------------------------------------------------*/
 	
-	if($('.editor').size()) {
+	if($('.editor').length) {
 	
 		// UPDATE LINKS ON LOAD
 		//updateLinks();
