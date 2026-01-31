@@ -124,6 +124,29 @@ footer span[href*=edit], footer span[href*=thomhines], footer a[href*=edit], foo
   transition: all 1s ease-in-out;
 }
 
+.home {
+  background: #c22026;
+  color: #eee;
+}
+.home h1 img {
+  width: 100%;
+}
+.home .container {
+  background: #c22026;
+  color: #eee;
+}
+.home .button {
+  background: none;
+  color: #eee;
+  border: 2px solid #eee;
+  font-weight: bold;
+}
+.home .special.button {
+  background: #eee;
+  color: #c22026;
+  font-size: 1.2em;
+}
+
 .intro h1, .intro h2, .intro h3, .intro h4, .intro h5, .intro h6, .intro p {
   float: none;
   width: auto;

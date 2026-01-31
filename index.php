@@ -110,13 +110,13 @@ if(isset($set_result)) {
 </script>
 </head>
 
-<body <?php if(!isset($set_result)) echo 'class="red"'; ?>>
+<body <?php if(!isset($set_result)) echo 'class="home"'; ?>>
 	<div class="container">
 		<?php // IF NO SET IS GIVEN IN URL, PROVIDE SPLASH SCREEN
 		if(!isset($set_result)) { ?>
 		<div class="intro">
-			<h1><img src="img/logo.svg" alt="repeaterrrr" width="200" onerror="this.onerror=null; this.src='img/logo.png'"></h1>
-			<h5>The clean and easy repeating timerrrr.</h5>
+			<h1><img src="img/repeaterrrr_wordmark.svg" alt="repeaterrrr" width="200" onerror="this.onerror=null; this.src='img/logo.png'"></h1>
+			<h5>The super easy repeating timerrrr.</h5>
 			
 			<p>Repeaterrrr lets you create no-frills timers for any activity that requires keeping track of time in regular intervals.</p>
 			<p>Plus, all your timer settings are stored in the URL, so it's easy to create, customize and share.</p>
