@@ -1,5 +1,4 @@
 <?php 
-// echo "asdfasdf";
 include_once('common.php');
 include_once('db.php');
 
@@ -11,7 +10,7 @@ if(@$post['json'] && $previous_set = sql("SELECT * FROM `sets` WHERE `json` = '"
 }
 
 
-if(@$post['slug']) {
+if(@$post['slug']) {	
 	if(sql("UPDATE `sets` SET `json` = '".$post['json']."' WHERE `slug` = '".$post['slug']."'")) echo $post['slug'];
 	else echo 'Error: There was an problem saving the timer to the database';
 	exit;

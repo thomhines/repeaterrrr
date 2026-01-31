@@ -200,7 +200,7 @@ $(function() {
 		// MOVE STEP PROGRESS BAR BACK TO 0
 		$('.current_progress span').stop().animate({width: '0'}, 30);
 
-		// IF WE JUST COMPLETED THE LAST STEP, TURN OFF TIMER, CLEAR EVERYTHING AND SHOW 'COMPLETED' SCREEN
+		// IF WE JUST COMPLETED THE FINAL STEP, TURN OFF TIMER, CLEAR EVERYTHING AND SHOW 'COMPLETED' SCREEN
 		if(current_step == steps.length-1) {
 			playSound('long');
 			clearInterval(timer_interval);
@@ -208,6 +208,15 @@ $(function() {
 			$('body').attr('class', '');
 			$('body').addClass('white');
 			$('.progress_bar span').stop().css({width: '100%'});
+			if(step_seconds > 99) {
+				var step_min = Math.floor(step_seconds/60);
+				var step_sec = Math.ceil(step_seconds%60);
+				if(step_sec < 10) step_sec = "0"+step_sec;				
+				$('.clock').html('<span class="seconds">0:00</span>/<span class="total">'+step_min+':'+step_sec+'</span>');
+			}
+			else {
+				$('.clock').html('<span class="seconds">0</span>/<span class="total">'+step_seconds+'</span> seconds');
+			}
 			$('.timer').fadeOut(1000, function() {
 				$('.complete').fadeIn(300);
 				fixHeaderFontSize();
@@ -243,17 +252,21 @@ $(function() {
 		// IF STEP IS MORE THAN 2 MIN, USE CLOCK STYLE TIMER
 		if(step_seconds > 99) {
 	 		var curr_min = Math.floor(current_seconds/60);
-	 		var curr_sec = Math.ceil(current_seconds%60);
+	 		var curr_sec = Math.floor(current_seconds%60);
 
 	 		if(curr_sec < 10) curr_sec = "0"+curr_sec;
 	 		var step_min = Math.floor(step_seconds/60);
 	 		var step_sec = Math.ceil(step_seconds%60);
 	 		if(step_sec < 10) step_sec = "0"+step_sec;
+			 
+			
 	 		
 		 	$('.clock').html('<span class="seconds">'+curr_min+':'+curr_sec+'</span>/<span class="total">'+step_min+':'+step_sec+'</span>');
 		 	
 		// OTHERWISE, JUST SHOW REMAINING SECONDS
-		} else $('.clock').html('<span class="seconds">'+remaining_seconds+'</span>/<span class="total">'+step_seconds+'</span> seconds');
+		} else {
+			$('.clock').html('<span class="seconds">'+remaining_seconds+'</span>/<span class="total">'+step_seconds+'</span> seconds');
+		}
 		
 		
 		$('title').html($('.seconds').text()+" | "+steps[current_step]['title']);
@@ -349,6 +362,19 @@ $(function() {
 			verifyForm()
 		});
 		
+		
+		// DUPLICATE STEP
+		$(document).on('click', '.copy_step', function(e) {
+			e.preventDefault();
+			$li = $(this).closest('li');
+			$clone = $li.clone();
+			$clone.insertAfter($li);
+			$clone.find('.name').focus();
+			// $('.row_template').clone().appendTo('.steps').removeClass('row_template');
+			// $('.incomplete .name').focus();
+			verifyForm();
+		});
+		
 		// DELETE STEP ROW
 		$(document).on('click', '.delete_step', function(e) {
 			e.preventDefault();
@@ -419,8 +445,6 @@ $(function() {
 			} else {
 				invalid_row = true;
 				row.addClass('incomplete');
-				console.log("i time "+rname);
-				console.log("i name "+rtime);
 				
 				if(!rname) row.find('.name_error').addClass('has_error');
 				else row.find('.name_error').removeClass('has_error');

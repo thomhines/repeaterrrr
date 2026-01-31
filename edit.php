@@ -16,6 +16,9 @@
 include_once('common.php');
 include_once('db.php');
 
+
+error_reporting(E_ALL);
+
 if(@$get['copy']) {
 	// LOAD JSON FROM SERVER
 	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$get['copy']."';");
@@ -23,13 +26,13 @@ if(@$get['copy']) {
 	$set = json_decode($set_result['json'], true);
 	$set['info']['title'] = $set['info']['title'] . " (copy)";
 	$set = json_encode($set);
-	print_r($set);
+	$set = str_replace("'", "\'", $set);
+	// print_r($set);
 	
 	$slug = makeSlug();
 	
-	
-	if(sql("INSERT INTO `sets` (`slug`, `json`, `created`) VALUES ('$slug', '".$set."', NOW())")) echo $slug;
-	else echo 'Error: There was an problem saving the timer to the database';
+	$result = sql("INSERT INTO `sets` (`slug`, `json`, `created`) VALUES ('$slug', '".$set."', NOW())", 1);
+	if(!$result) echo 'Error: There was an problem saving the timer to the database';
 
 	header('Location: https://repeaterrrr.com/edit/'.$slug);
 	
@@ -107,7 +110,7 @@ else {
 	
 		<li class="step <?php echo $step['color']; ?>">
 			<span class="drag_handle">&#xe805;</span>
-			<i class="delete_step smaller button icon-cancel" role="button"></i>
+			<i class="copy_step smaller button icon-docs" role="button"></i>
 			<input type="text" class="name" value="<?php echo $step['title'] ?>"><span class="icon-cancel field_error name_error"></span>
 			<input type="number" class="time" value="<?php echo $step['time'] ?>"><span class="icon-cancel field_error number_error"></span><label>sec</label>
 			<select class="color">
@@ -124,6 +127,7 @@ else {
 				<option value="triple" <?php if($step['sound'] == 'triple') echo 'selected="selected"'; ?>>Triple</option>
 				<option value="short" <?php if($step['sound'] == 'short') echo 'selected="selected"'; ?>>Long</option>
 			</select>
+			<i class="delete_step smaller button icon-cancel" role="button"></i>
 		</li>
 		<?php } ?>
 		</ul>
@@ -132,7 +136,7 @@ else {
 		<!-- EMPTY ROW TEMPLATE FOR ADDING NEW STEP ROWS -->
 		<li class="step row_template">
 			<span class="drag_handle">&#xe805;</span>
-			<i class="delete_step smaller button icon-cancel" role="button"></i>
+			<i class="copy_step smaller button icon-docs" role="button"></i>
 			<input type="text" class="name"><span class="icon-cancel field_error name_error"></span>
 			<input type="number" class="time"><span class="icon-cancel field_error time_error"></span><label>sec</label>
 			<select class="color">
@@ -149,6 +153,7 @@ else {
 				<option value="triple">Triple</option>
 				<option value="short">Long</option>
 			</select>
+			<i class="delete_step smaller button icon-cancel" role="button"></i>
 		</li>
 		
 	
