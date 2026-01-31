@@ -98,8 +98,12 @@ if(isset($set_result)) {
 <meta name="msapplication-TileImage" content="img/favicons/mstile-144x144.png" />
 
 <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css'> -->
-<link rel="Stylesheet" href="/cinch/?files=/css/fonts.css,/css/style.scss&debug=true" type="text/css" media="all" />
-<script src="/cinch/?files=[jquery],[html5shiv],!/js/jquery.noclickdelay.js,!/js/soundjs.min.js,/js/scripts.js&debug=false"></script>
+<link rel="Stylesheet" href="css/style.css" type="text/css" media="all" />
+<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+<script src="js/jquery.noclickdelay.js"></script>
+<script src="js/soundjs.min.js"></script>
+<script src="js/scripts.js"></script>
+
 <script type="text/javascript">
 	// SAVE STEPS TO JAVASCRIPT VAR
 	<?php if($set_result) { ?>var steps = <?php echo $json; ?>;<?php } ?>

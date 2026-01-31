@@ -1,0 +1,617 @@
+/*----------------------------------------------------------------------*
+
+	REPEATERRRR
+	http://repeaterrrr.com/
+	https://github.com/thomhines/repeaterrrr
+
+	The clean and easy repeating timer.
+
+	Copyright 2014, Thom Hines
+	MIT License
+
+*----------------------------------------------------------------------*/
+/*----------------------------------------------------------------------*
+
+	STANDARD ELEMENTS
+
+*----------------------------------------------------------------------*/
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #eee;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  text-align: center;
+  transition: all 1s ease-in-out;
+}
+
+h3, h4, h5 {
+  font-weight: 300;
+  margin: 0;
+}
+
+h1 {
+  float: right;
+  margin: 0 0 0 0.5em;
+  font-size: 1.7em;
+}
+
+h2 {
+  display: table-cell;
+  width: 500px;
+  height: 60px;
+  margin: auto;
+  font-size: 14px;
+  line-height: 60px;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+h3 {
+  font-size: 1.9em;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+h5 {
+  margin: 1em 0 0;
+  font-size: 1.1em;
+}
+
+h6 {
+  text-transform: uppercase;
+}
+
+p {
+  margin: 0 auto 3em;
+}
+
+a {
+  color: #666;
+}
+a:hover {
+  color: #333;
+}
+
+footer {
+  position: fixed;
+  width: 100%;
+  padding: 15px 35px;
+  bottom: 0;
+  right: 0;
+  text-align: right;
+}
+footer span, footer a {
+  display: inline-block;
+  margin-right: 0.3em;
+  font-size: 1.1em;
+  color: #333;
+  opacity: 0.6;
+  cursor: pointer;
+  text-decoration: none;
+}
+footer span:hover, footer a:hover {
+  opacity: 1;
+}
+footer span.title, footer a.title {
+  float: right;
+}
+footer span[href*=edit], footer span[href*=thomhines], footer a[href*=edit], footer a[href*=thomhines] {
+  margin-top: 0.35em;
+}
+/*----------------------------------------------------------------------*
+
+	TIMER PAGE
+
+*----------------------------------------------------------------------*/
+.container {
+  /* center container vertically and horizontally in page */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 500px;
+  padding: 60px 30px;
+  color: #333;
+  transition: all 1s ease-in-out;
+}
+
+.intro h1, .intro h2, .intro h3, .intro h4, .intro h5, .intro h6, .intro p {
+  float: none;
+  width: auto;
+  text-align: center;
+  margin: 0 auto 1em;
+}
+.intro h1 {
+  margin-bottom: 0;
+}
+.intro h5 {
+  padding: 0 0 20px;
+  border-bottom: 1px solid #000;
+}
+.intro p {
+  font-size: 0.8em;
+}
+.intro .button {
+  margin: 0 0 1em;
+}
+
+.timer, .complete {
+  display: none;
+}
+
+.progress_bar {
+  display: block;
+  width: 300px;
+  height: 40px;
+  margin: 1em auto 0;
+  padding: 6px;
+  background: #333;
+  border-radius: 3px;
+  text-align: left;
+}
+.progress_bar span {
+  display: block;
+  height: 28px;
+  border-radius: 2px;
+  overflow: hidden;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.total_progress {
+  margin: 6px auto;
+  padding: 0;
+  height: 8px;
+  background: rgba(50, 50, 50, 0.2);
+}
+.total_progress span {
+  height: 8px;
+  background: #333;
+  border-radius: 3px;
+}
+
+.seconds {
+  font-weight: 700;
+}
+
+/*----------------------------------------------------------------------*
+
+	EDIT PAGE
+
+*----------------------------------------------------------------------*/
+.editor {
+  height: auto;
+  width: 80%;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px 20px 40px;
+  text-align: left;
+}
+.editor h4 {
+  margin: 1em 0 0.6em;
+  clear: both;
+  font-size: 1.2em;
+  border-bottom: 1px solid #333;
+}
+.editor h5 {
+  margin: 0 0 0.2em;
+  font-size: 1em;
+}
+.editor p {
+  margin: 0.2em 0;
+  font-size: 0.6em;
+}
+
+label {
+  display: inline-block;
+  font-size: 0.8em;
+  clear: both;
+}
+
+input, textarea, select {
+  font-family: "Open Sans", sans-serif;
+  display: block;
+  width: 100%;
+  margin: 0 0 15px;
+  padding: 5px 9px;
+  font-size: 0.8em;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+input.title, textarea.title, select.title {
+  font-size: 1.3em;
+}
+input.name, textarea.name, select.name {
+  flex: 3;
+}
+input.time, textarea.time, select.time {
+  width: 70px;
+  text-align: center;
+}
+input.repeat, textarea.repeat, select.repeat {
+  display: inline-block;
+  width: 58px;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  text-align: center;
+}
+input.timer_url, textarea.timer_url, select.timer_url {
+  display: inline-block;
+  width: 55%;
+  padding: 0.7em;
+  font-size: 0.5em;
+}
+
+textarea {
+  height: 150px;
+  width: 100%;
+}
+
+select {
+  padding: 5px;
+  font-size: 0.8em;
+  background: url(/img/dropdown.svg), #fff;
+  background-position: 93% 53%;
+  background-repeat: no-repeat;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 0.01px;
+  text-overflow: "";
+}
+
+option {
+  background: #eee;
+}
+
+.steps_labels {
+  height: 1.2em;
+  position: relative;
+  display: flex;
+}
+.steps_labels label {
+  font-weight: bold;
+}
+.steps_labels .name_label {
+  margin-left: 68px;
+  flex: 3;
+}
+.steps_labels .time_label {
+  width: 130px;
+}
+.steps_labels .color_label {
+  flex: 1;
+}
+.steps_labels .tone_label {
+  flex: 1;
+}
+
+.step.incomplete input, .step.incomplete select {
+  background-color: #ccc;
+}
+
+.field_error {
+  display: none;
+  margin: 0 0 0 -30px;
+  color: #ee9494;
+}
+.field_error.has_error {
+  display: inline-block;
+}
+
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  position: relative;
+  padding: 2px 0 2px 3px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+li .button,
+li .button.smaller {
+  margin: 0;
+}
+li input, li select {
+  display: inline;
+}
+li select {
+  flex: 1;
+}
+li label {
+  display: block;
+  margin: 0 1em 0 0;
+}
+
+.ui-sortable-helper {
+  background: rgba(0, 0, 0, 0);
+}
+.ui-sortable-helper input, .ui-sortable-helper select, .ui-sortable-helper .button {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+
+.drag_handle {
+  padding: 0.5em;
+  font-family: "fontello";
+  font-size: 0.7em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: move;
+}
+
+.editor .repeat_container {
+  margin: 1em 0 0.5em;
+}
+
+/*
+.save.button {
+	float: right;
+	margin-top: .7em;
+}
+*/
+.error_message {
+  display: inline-block;
+  padding: 0.5em 1em;
+  font-size: 0.7em;
+  background: #ee9494;
+  color: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+}
+.error_message:empty {
+  padding: 0;
+}
+
+.share_container {
+  clear: both;
+  margin: 20px 0;
+}
+
+.ajax, .row_template {
+  display: none;
+}
+
+/*----------------------------------------------------------------------*
+
+	COMMON CLASSES
+
+*----------------------------------------------------------------------*/
+.button {
+  display: inline-block;
+  margin: 2em 0.2em;
+  padding: 0.4em 1em;
+  background: #333;
+  color: #eee;
+  font-size: 1.2em;
+  line-height: 1em;
+  cursor: pointer;
+  border-radius: 3px;
+  border: none;
+  text-decoration: none;
+  vertical-align: middle;
+  user-select: none;
+  transition: all 0.1s ease-in-out;
+}
+.button.medium {
+  font-size: 0.7em;
+  margin: 0 0 0 0.3em;
+  padding: 0.55em;
+}
+.button.small {
+  font-size: 0.7em;
+  margin: 0 0 0.5em 0.3em;
+  padding: 0.4em 0.6em;
+}
+.button.smaller {
+  font-size: 0.7em;
+  margin: 0 0 0 0.3em;
+  padding: 0.55em 0.3em;
+}
+.button.smallest {
+  font-size: 0.6em;
+  margin: 0 0 0 0.3em;
+  padding: 0.1em;
+}
+.button.special {
+  margin: 0.4em 0.2em 0.4em 0;
+  padding: 0.5em 1em;
+  font-size: 17px;
+  background: #cf7127; /* saturate($blue*.6, 20%); */
+  color: #eee;
+}
+.button.special:hover, .button.special:focus {
+  background: rgb(221.2317073171, 139.8414634146, 75.7682926829);
+  color: #eee;
+}
+.button.success {
+  background: rgb(65.6688741722, 191.3311258278, 75.7218543046);
+}
+.button.error {
+  background: rgb(224.0161290323, 59.9838709677, 59.9838709677);
+}
+.button.disabled, .button.disabled:hover, .button.disabled:focus {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+.button.working {
+  background: rgb(65.6688741722, 191.3311258278, 75.7218543046);
+  pointer-events: none;
+}
+
+.pause i, .skip i {
+  font-size: 0.7em;
+}
+
+.button:hover, .button:focus, .button.button_hover {
+  color: #333;
+  background: rgba(50, 50, 50, 0.2);
+}
+
+.white {
+  background-color: #eee;
+}
+.white .current_progress span {
+  background-color: #eee;
+}
+.whiteli {
+  background-color: rgba(0, 0, 0, 0);
+}
+.whiteli input, .whiteli select {
+  background-color: white;
+}
+
+.red {
+  background-color: #ee9494;
+}
+.red .current_progress span {
+  background-color: hsl(0, 72.5806451613%, 135.6862745098%);
+}
+.redli {
+  background-color: rgba(0, 0, 0, 0);
+}
+.redli input, .redli select {
+  background-color: #ee9494;
+}
+
+.yellow {
+  background-color: #ecf298;
+}
+.yellow .current_progress span {
+  background-color: hsl(64, 77.5862068966%, 137.2549019608%);
+}
+.yellowli {
+  background-color: rgba(0, 0, 0, 0);
+}
+.yellowli input, .yellowli select {
+  background-color: #ecf298;
+}
+
+.green {
+  background-color: #8ed994;
+}
+.green .current_progress span {
+  background-color: hsl(124.8, 49.6688741722%, 130.3921568627%);
+}
+.greenli {
+  background-color: rgba(0, 0, 0, 0);
+}
+.greenli input, .greenli select {
+  background-color: #8ed994;
+}
+
+.blue {
+  background-color: #94d7ea;
+}
+.blue .current_progress span {
+  background-color: hsl(193.2558139535, 67.1875%, 134.9019607843%);
+}
+.blueli {
+  background-color: rgba(0, 0, 0, 0);
+}
+.blueli input, .blueli select {
+  background-color: #94d7ea;
+}
+
+.left {
+  text-align: left;
+}
+
+.ios {
+  display: none;
+  /* iPad */
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .ios {
+    display: block;
+  }
+}
+.ios {
+  /* iPhone 2G-4S */
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .ios {
+    display: block;
+  }
+}
+.ios {
+  /* iPhone 5 */
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+  .ios {
+    display: block;
+  }
+}
+
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+@media screen and (max-device-width: 800px) {
+  html, body {
+    font-size: 24px;
+  }
+  .progress_bar {
+    width: 100%;
+  }
+  .editor {
+    width: 100%;
+  }
+}
+@media screen and (max-height: 600px) {
+  html, body {
+    font-size: 11px;
+  }
+  h2 {
+    height: 30px;
+    line-height: 30px;
+  }
+  .button {
+    font-size: 1.3em;
+    margin: 1em 0.2em;
+  }
+  .current_progress {
+    height: 20px;
+    padding: 3px;
+  }
+  .current_progress span {
+    height: 14px;
+  }
+  footer {
+    bottom: auto;
+    top: 0;
+    padding: 5px 0 0 15px;
+    text-align: left;
+  }
+  footer img {
+    width: 70%;
+  }
+}

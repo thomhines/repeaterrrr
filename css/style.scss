@@ -11,11 +11,13 @@
 	
 *----------------------------------------------------------------------*/
 
+@use "sass:color";
+
 $white: #eee;
 $black: #333;
 $semi-black: rgba(50,50,50,.2);
 $clear: rgba(0,0,0,0);
-$gray: $white / 1.2;
+$gray: #ccc;
 $red: #ee9494;
 $blue: #94d7ea;
 $green: #8ed994;
@@ -23,7 +25,6 @@ $yellow: #ecf298;
 $orange: #cf7127;
 $width: 500px;
 
-@import '../cinch/libraries/bourbon/_bourbon.scss';
 
 /*----------------------------------------------------------------------*
 
@@ -93,7 +94,7 @@ p {
 }
 
 a {
-	color: $black - 90;
+	color: #666;
 	&:hover {
 		color: $black;
 	}
@@ -265,8 +266,8 @@ input, textarea, select {
 	margin: 0 0 15px;
 	padding: 5px 9px;
 	font-size: .8em;
-	background: $fff;
-	border: 1px solid $white*.8;
+	background: #fff;
+	border: 1px solid $gray;
 	border-radius: 3px;
 	
 	&.title {
@@ -485,7 +486,7 @@ li {
 	border: none;
 	text-decoration: none;
 	vertical-align: middle;
-	@include user-select();
+	user-select: none;
 	transition: all .1s ease-in-out;
 		
 	&.medium {
@@ -515,15 +516,15 @@ li {
 		background: $orange;/* saturate($blue*.6, 20%); */
 		color: $white;
 		&:hover, &:focus {
-			background: $orange * 1.1;/* saturate($blue*.7, 20%); */
+			background: color.adjust($orange, $lightness: 10%);
 			color: $white;
 		}
 	}
 	&.success {
-		background: $green*.8;
+		background: color.adjust($green, $lightness: -20%);
 	}
 	&.error {
-		background: $red*.8;
+		background: color.adjust($red, $lightness: -20%);
 	}
 	&.disabled, &.disabled:hover, &.disabled:focus {
 		opacity: .3;
@@ -531,7 +532,7 @@ li {
 		pointer-events: none;		
 	}
 	&.working {
-		background: $green*.8;
+		background: color.adjust($green, $lightness: -20%);
 		pointer-events: none;
 	}
 }
@@ -550,7 +551,7 @@ li {
 		background-color: $white;
 	}
 	
-	li& {
+	&li {
 		background-color: $clear;
 		input, select {
 			background-color: white;
@@ -563,10 +564,10 @@ li {
 	background-color: $red;
 	
 	.current_progress span {
-		background-color: $red * 1.6;
+		background-color: color.adjust($red, $lightness: 60%);
 	}
 	
-	li& {
+	&li {
 		background-color: $clear;
 		input, select {
 			background-color: $red;
@@ -578,10 +579,10 @@ li {
 	background-color: $yellow;
 	
 	.current_progress span {
-		background-color: $yellow * 1.6;
+		background-color: color.adjust($yellow, $lightness: 60%);
 	}
 	
-	li& {
+	&li {
 		background-color: $clear;
 		input, select {
 			background-color: $yellow;
@@ -593,10 +594,10 @@ li {
 	background-color: $green;
 	
 	.current_progress span  {
-		background-color: $green * 1.6;
+		background-color: color.adjust($green, $lightness: 60%);
 	}
 	
-	li& {
+	&li {
 		background-color: $clear;
 		input, select {
 			background-color: $green;
@@ -608,10 +609,10 @@ li {
 	background-color: $blue;
 	
 	.current_progress span  {
-		background-color: $blue * 1.6;
+		background-color: color.adjust($blue, $lightness: 60%);
 	}
 	
-	li& {
+	&li {
 		background-color: $clear;
 		input, select {
 			background-color: $blue;

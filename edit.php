@@ -77,8 +77,11 @@ else {
 <meta name="msapplication-TileColor" content="#b91d47" />
 <meta name="msapplication-TileImage" content="/img/favicons/mstile-144x144.png" />
 
-<link rel="Stylesheet" href="/cinch/?files=/css/fonts.css,/css/style.scss" type="text/css" media="all" />
-<script src="/cinch/?files=[jquery],[html5shiv],!/js/jquery.noclickdelay.js,!/js/jquery-ui-1.10.3.custom.min.js,!/js/jquery.ui.touch-punch.min.js,/js/scripts.js&debug=true"></script>
+<link rel="Stylesheet" href="/css/style.css" type="text/css" media="all" />
+<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+<script src="/js/jquery.noclickdelay.js"></script>
+<script src="/js/soundjs.min.js"></script>
+<script src="/js/scripts.js"></script>
 
 </head>
 
