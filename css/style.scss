@@ -217,8 +217,8 @@ footer {
 	
 	h5 {
 		font-size: 1.2em;
-		padding: 0 0 20px;
-		border-bottom: 1px solid #000;
+		// padding: 0 0 20px;
+		// border-bottom: 4px solid #000;
 	}
 
 	h6 {
@@ -227,9 +227,23 @@ footer {
 	}
 	
 	p {
-		font-size: 1em;
+		font-size: .9em;
 		font-weight: 300;
 	}
+
+	hr {
+		height: 5px;
+		margin: 1.4em 0;
+		border: none;
+		background: repeating-linear-gradient(
+			135deg,
+			transparent,
+			transparent 4px,
+			$white 5px,
+			$white 7px
+		);
+	}
+
 	.button {
 		margin: 0 0 1em;
 	}

@@ -172,16 +172,20 @@ footer span[href*=edit], footer span[href*=thomhines], footer a[href*=edit], foo
 }
 .intro h5 {
   font-size: 1.2em;
-  padding: 0 0 20px;
-  border-bottom: 1px solid #000;
 }
 .intro h6 {
   font-weight: 800;
   letter-spacing: 0.08em;
 }
 .intro p {
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: 300;
+}
+.intro hr {
+  height: 5px;
+  margin: 1.4em 0;
+  border: none;
+  background: repeating-linear-gradient(135deg, transparent, transparent 4px, #eee 5px, #eee 7px);
 }
 .intro .button {
   margin: 0 0 1em;

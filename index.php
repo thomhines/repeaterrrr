@@ -120,6 +120,8 @@ if(isset($set_result)) {
 		<div class="intro">
 			<h1><img src="img/repeaterrrr_combo_white.svg" alt="repeaterrrr" width="200" onerror="this.onerror=null; this.src='img/repeaterrrr_wordmark.svg'"></h1>
 			<h5>The super easy repeating timerrrr.</h5>
+
+			<hr>
 			
 			<p>Repeaterrrr lets you create no-frills timers for any activity that requires keeping track of time in regular intervals.</p>
 			<p>Plus, all your timer settings are stored in the URL, so it's easy to create, customize and share.</p>
