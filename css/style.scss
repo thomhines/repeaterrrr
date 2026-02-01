@@ -124,6 +124,10 @@ footer {
 		
 		&.title {
 			float: right;
+
+			img {
+				width: 80px;
+			}
 		}
 		
 		&[href*="edit"], &[href*="thomhines"] {
@@ -173,12 +177,28 @@ footer {
 		color: $white;
 		border: 2px solid $white;
 		font-weight: bold;
+
+		&:hover,
+		&:focus,
+		&:active {
+			background: $white;
+			color: $dk-red;
+			border-color: $white;
+		}
 	}
 
 	.special.button {
 		background: $white;
 		color: $dk-red;
 		font-size: 1.2em;
+
+		&:hover,
+		&:focus,
+		&:active {	
+			background: $dk-red;
+			color: $white;
+			border-color: $white;
+		}
 	}
 }
 
@@ -188,6 +208,7 @@ footer {
 		width: auto;
 		text-align: center;
 		margin: 0 auto 1em;
+		font-weight: 500;
 	}
 	
 	h1 {
@@ -195,12 +216,19 @@ footer {
 	}
 	
 	h5 {
+		font-size: 1.2em;
 		padding: 0 0 20px;
 		border-bottom: 1px solid #000;
 	}
+
+	h6 {
+		font-weight: 800;
+		letter-spacing: 0.08em;
+	}
 	
 	p {
-		font-size: .8em;
+		font-size: 1em;
+		font-weight: 300;
 	}
 	.button {
 		margin: 0 0 1em;

@@ -97,7 +97,10 @@ if(isset($set_result)) {
 <meta name="msapplication-TileColor" content="#b91d47" />
 <meta name="msapplication-TileImage" content="img/favicons/mstile-144x144.png" />
 
-<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css'> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
 <link rel="Stylesheet" href="css/style.css" type="text/css" media="all" />
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="js/jquery.noclickdelay.js"></script>
@@ -115,7 +118,7 @@ if(isset($set_result)) {
 		<?php // IF NO SET IS GIVEN IN URL, PROVIDE SPLASH SCREEN
 		if(!isset($set_result)) { ?>
 		<div class="intro">
-			<h1><img src="img/repeaterrrr_wordmark.svg" alt="repeaterrrr" width="200" onerror="this.onerror=null; this.src='img/logo.png'"></h1>
+			<h1><img src="img/repeaterrrr_combo_white.svg" alt="repeaterrrr" width="200" onerror="this.onerror=null; this.src='img/repeaterrrr_wordmark.svg'"></h1>
 			<h5>The super easy repeating timerrrr.</h5>
 			
 			<p>Repeaterrrr lets you create no-frills timers for any activity that requires keeping track of time in regular intervals.</p>
@@ -177,7 +180,7 @@ if(isset($set_result)) {
 	
 	
 	<footer>
-		<a class="title" href="/"><h1><img src="img/logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/logo.png'"></h1></a>
+		<a class="title" href="/"><h1><img src="img/repeaterrrr_logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/repeaterrrr_logo.svg'"></h1></a>
 		<a href='/edit/<?php echo $get['set']; ?>'><i class="icon-edit"></i></a>
 		<a href='/copy/<?php echo $get['set']; ?>'><i class="icon-docs"></i></a>
 		<a class="email_timer" target="_blank" href="mailto:?subject=<?php echo $set['info']['title']; ?> [repeaterrrr]&body=<?php echo $set['info']['title']; ?>%0d%0a<?php echo $set['info']['description']; ?>%0d%0a%0d%0ahttp://repeaterrrr.com/<?php echo $get['set']; ?>%0d%0a%0d%0a--%0d%0aRepeating timers by repeaterrrr%0d%0ahttp://repeaterrrr.com/"><i class="icon-mail"></i></a>
