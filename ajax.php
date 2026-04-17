@@ -4,8 +4,12 @@ include_once('db.php');
 
 
 // CHECK TO SEE IF TIMER ALREADY EXISTS
-if(@$post['json'] && $previous_set = sql("SELECT * FROM `sets` WHERE `json` = '".@$post['json']."'")) {
-	echo $previous_set['slug'];
+if (@$post['json'] && $previous_set = sql("SELECT * FROM `sets` WHERE `json` = '".@$post['json']."'")) {
+	$out = $previous_set['slug'];
+	if (!empty($previous_set['edit_slug'])) {
+		$out .= "\n" . $previous_set['edit_slug'];
+	}
+	echo $out;
 	exit;
 }
 

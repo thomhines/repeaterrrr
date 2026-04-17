@@ -211,7 +211,8 @@ body:not(.home) footer .timer_footer_actions {
 	text-align: right;
 
 	a,
-	span {
+	span,
+	button.share_timer {
 		display: inline-block;
 		margin-right: 0;
 		font-size: 1.1em;
@@ -227,9 +228,136 @@ body:not(.home) footer .timer_footer_actions {
 		}
 	}
 
+	button.share_timer {
+		font-family: inherit;
+		border: none;
+		background: transparent;
+		padding: 0;
+		line-height: inherit;
+	}
+
 	a[href*="edit"],
 	a[href*="thomhines"] {
 		margin-top: 0.35em;
+	}
+}
+
+body.share_popup_open {
+	overflow: hidden;
+}
+
+.share_popup {
+	display: none;
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+
+	&.is_open {
+		display: flex;
+	}
+}
+
+.share_popup_backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.45);
+}
+
+.share_popup_panel {
+	position: relative;
+	z-index: 1;
+	max-width: 22rem;
+	width: 100%;
+	padding: 1.25rem 2.25rem 1.25rem 1.25rem;
+	background: $white;
+	border-radius: 8px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+	text-align: left;
+	color: $black;
+}
+
+.share_popup_close {
+	position: absolute;
+	top: 0.4rem;
+	right: 0.35rem;
+	padding: 0.35rem;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	line-height: 0;
+	color: $black;
+	opacity: 0.55;
+
+	&:hover,
+	&:focus {
+		opacity: 1;
+	}
+
+	i {
+		font-size: 0.85em;
+	}
+}
+
+.share_popup_panel h3 {
+	margin: 0 0 0.75rem;
+	font-size: 1.05rem;
+	font-weight: 700;
+}
+
+.share_popup_note {
+	margin: 0 0 1rem;
+	font-size: 0.8rem;
+	line-height: 1.5;
+	color: rgba(50, 50, 50, 0.9);
+}
+
+.share_popup_label {
+	display: block;
+	margin: 0 0 0.35rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.share_popup_url_wrap {
+	position: relative;
+	margin: 0 0 1rem;
+}
+
+.share_popup_url_wrap .share_popup_url {
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0.45em 3.75rem 0.45em 9px;
+	box-sizing: border-box;
+	font-size: 0.75rem;
+}
+
+.share_popup_url_wrap .share_popup_copy {
+	position: absolute;
+	top: 50%;
+	right: 6px;
+	transform: translateY(-50%);
+	padding: .4em .7em;
+	margin: 0;
+	border: none;
+	border-radius: 3px;
+	background: $primary-color;
+	color: $white;
+	font-family: inherit;
+	font-size: 0.65rem;
+	font-weight: 600;
+	line-height: 1.15;
+	cursor: pointer;
+
+	&:hover,
+	&:focus {
+		background: $secondary-color;
+		color: $primary-color;
 	}
 }
 

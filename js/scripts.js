@@ -64,6 +64,66 @@ $(function() {
 		if(window.navigator.standalone) {
 			$('.ios').remove();
 		}
+
+		function closeSharePopup() {
+			$('#share_timer_popup').removeClass('is_open').attr('aria-hidden', 'true');
+			$('.share_timer').attr('aria-expanded', 'false');
+			$('body').removeClass('share_popup_open');
+		}
+
+		function openSharePopup() {
+			$('#share_timer_popup').addClass('is_open').attr('aria-hidden', 'false');
+			$('.share_timer').attr('aria-expanded', 'true');
+			$('body').addClass('share_popup_open');
+			setTimeout(function() {
+				var el = document.getElementById('share_timer_url_field');
+				if (el) {
+					el.focus();
+					el.select();
+				}
+			}, 50);
+		}
+
+		$('.share_timer').on('click', function() {
+			openSharePopup();
+		});
+
+		$(document).on('click', '.share_popup_backdrop, .share_popup_close', function() {
+			closeSharePopup();
+		});
+
+		$('.share_popup_copy').on('click', function() {
+			var el = document.getElementById('share_timer_url_field');
+			if (!el) {
+				return;
+			}
+			var text = el.value;
+			var $btn = $(this);
+			var done = function() {
+				$btn.text('Copied');
+				setTimeout(function() {
+					$btn.text('Copy');
+				}, 2000);
+			};
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(text).then(done).catch(function() {
+					el.select();
+					document.execCommand('copy');
+					done();
+				});
+			}
+			else {
+				el.select();
+				document.execCommand('copy');
+				done();
+			}
+		});
+
+		$(document).on('keydown', function(e) {
+			if (e.keyCode === 27 && $('#share_timer_popup').hasClass('is_open')) {
+				closeSharePopup();
+			}
+		});
 	
 	}	
 		
@@ -93,11 +153,6 @@ $(function() {
 		}
 	});
 	
-	// CREATE SHORT LINK TO TIMER AND ADD TO MAILTO LINK
-	$('.email_timer').click(function(e) {
-		e.preventDefault();
-		emailLink();
-	});
 	
 	// ENABLE/DISABLE SOUNDS
 	$('.mute').click(function() {
@@ -418,9 +473,8 @@ $(function() {
 				var lines = String(response).trim().split('\n');
 				var slug = lines[0] || '';
 				var editSlug = (lines.length > 1) ? lines[1].trim() : '';
-				var pathTail = window.location.pathname.substr(6);
-				var isNewFromBlankEditor = !pathTail || pathTail.length < 1;
-				if (isNewFromBlankEditor && editSlug) {
+				// New INSERT (and duplicate-json hit when server sends two lines): open editor via edit_slug.
+				if (editSlug) {
 					window.location = '/edit/' + editSlug;
 				}
 				else {
@@ -515,9 +569,9 @@ $(function() {
 		$('.error_message').html(error_msg);
 					
 		if(error_msg) {
-			$('.save, .save_as_new, .short_url, .copy_url, .email_timer').addClass('disabled');
+			$('.save, .save_as_new, .short_url, .copy_url').addClass('disabled');
 		}
-		else $('.save, .save_as_new, .short_url, .copy_url, .email_timer').removeClass('disabled');
+		else $('.save, .save_as_new, .short_url, .copy_url').removeClass('disabled');
 	}
 
 	// CREATE JSON BASED ON FORM DATA
