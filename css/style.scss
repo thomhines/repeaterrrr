@@ -13,17 +13,19 @@
 
 @use "sass:color";
 
-$white: #eee;
-$black: #333;
+$white: #fff;
+$black: #222;
 $semi-black: rgba(50,50,50,.2);
 $clear: rgba(0,0,0,0);
 $gray: #ccc;
+$lt-gray: #eee;
 $dk-red: #c22026;
+$lt-red: #fdcdcd;
 $red: #ee9494;
 $blue: #94d7ea;
 $green: #8ed994;
 $yellow: #ecf298;
-$orange: #cf7127;
+// $orange: #cf7127;
 $width: 500px;
 
 
@@ -138,6 +140,73 @@ footer {
 	}
 }
 
+// Run timer view (index without .home): logo fixed top-left; controls fixed bottom-right
+body:not(.home) footer {
+	position: static;
+	width: auto;
+	padding: 0;
+	bottom: auto;
+	top: auto;
+	right: auto;
+	text-align: left;
+}
+
+// Timer footer logo + editor page logo (same asset, fixed top-left)
+body:not(.home) footer a.title,
+body.editor > a.title {
+	position: fixed;
+	top: 18px;
+	left: 18px;
+	width: 60px;
+	z-index: 10;
+	float: none;
+	margin: 0;
+
+	h1 {
+		float: none;
+		margin: 0;
+		line-height: 0;
+	}
+
+	img {
+		width: 100%;
+	}
+}
+
+body:not(.home) footer .timer_footer_actions {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+	padding: 15px 35px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 0 0.3em;
+	text-align: right;
+
+	a,
+	span {
+		display: inline-block;
+		margin-right: 0;
+		font-size: 1.1em;
+		color: $black;
+		opacity: 0.6;
+		cursor: pointer;
+		text-decoration: none;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	a[href*="edit"],
+	a[href*="thomhines"] {
+		margin-top: 0.35em;
+	}
+}
+
 
 
 /*----------------------------------------------------------------------*
@@ -160,92 +229,119 @@ footer {
 
 
 .home {
-	background: $dk-red;
-	color: $white;
-
-	h1 img {
-		width: 100%;
-	}
+	background: #6ec6e6;
+	color: #1a3d4f;
 
 	.container {
-		background: $dk-red;
-		color: $white;
+		width: 100%;
+		max-width: 500px;
+		padding: 48px 24px 72px;
+		color: #1a3d4f;
 	}
 
 	.button {
-		background: none;
-		color: $white;
-		border: 2px solid $white;
-		font-weight: bold;
+		color: #1a3d4f;
+	}
+
+	.special.button {
+		display: block;
+		width: 100%;
+		max-width: 340px;
+		margin: 0 auto 56px;
+		padding: 1rem 2.5rem;
+		border-radius: 8px;
+		background: #1a3d4f;
+		color: #6ec6e6;
+		font-size: 18px;
+		font-weight: 600;
+		letter-spacing: 0.01em;
 
 		&:hover,
 		&:focus,
 		&:active {
 			background: $white;
-			color: $dk-red;
-			border-color: $white;
-		}
-	}
-
-	.special.button {
-		background: $white;
-		color: $dk-red;
-		font-size: 1.2em;
-
-		&:hover,
-		&:focus,
-		&:active {	
-			background: $dk-red;
-			color: $white;
-			border-color: $white;
+			color: #1a3d4f;
 		}
 	}
 }
 
 .intro {
-	h1, h2, h3, h4, h5, h6, p {
-		float: none;
+	float: none;
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	color: #1a3d4f;
+
+	.logo {
+		margin-bottom: 56px;
+
+		img {
+			display: block;
+			height: 40px;
+			width: auto;
+			margin: 0 auto;
+		}
+	}
+
+	.hero {
+		max-width: 420px;
+		margin: 0 auto 48px;
+	}
+
+	h2 {
+		display: block;
 		width: auto;
+		height: auto;
+		margin: 0 0 1rem;
+		font-size: 42px;
+		font-weight: 700;
+		line-height: 1.1;
 		text-align: center;
-		margin: 0 auto 1em;
+		letter-spacing: -0.5px;
+	}
+
+	p {
+		margin: 0;
+		font-size: 17px;
+		line-height: 1.6;
+		font-weight: 400;
+		opacity: 0.8;
+	}
+
+	.examples_label {
+		margin: 0 0 12px;
+		font-size: 12px;
+		font-weight: 800;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		opacity: 0.55;
+	}
+
+	.examples {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		justify-content: center;
+		max-width: 380px;
+		margin: 0 auto;
+	}
+
+	.button.small {
+		margin: 0;
+		padding: 6px 14px;
+		border: 1px solid rgba(26,61,79,0.18);
+		border-radius: 100px;
+		background: rgba(26,61,79,0.12);
+		color: $black;
+		font-size: 13px;
 		font-weight: 500;
 	}
-	
-	h1 {
-		margin-bottom: 0;
-	}
-	
-	h5 {
-		font-size: 1.2em;
-		// padding: 0 0 20px;
-		// border-bottom: 4px solid #000;
-	}
 
-	h6 {
-		font-weight: 800;
-		letter-spacing: 0.08em;
-	}
-	
-	p {
-		font-size: .9em;
-		font-weight: 300;
-	}
-
-	hr {
-		height: 5px;
-		margin: 1.4em 0;
-		border: none;
-		background: repeating-linear-gradient(
-			135deg,
-			transparent,
-			transparent 4px,
-			$white 5px,
-			$white 7px
-		);
-	}
-
-	.button {
-		margin: 0 0 1em;
+	.button.small:hover,
+	.button.small:focus,
+	.button.small:active {
+		background: rgba(26,61,79,0.22);
+		color: #1a3d4f;
 	}
 }
 
@@ -299,13 +395,18 @@ footer {
 *----------------------------------------------------------------------*/
 
 
+html:has(.editor) {
+	background: $lt-gray;
+}
+
 .editor {
 	height: auto;
 	width: 80%;
 	max-width: 900px;
 	margin: auto;
-	padding: 20px 20px 40px;
+	padding: calc(18px + 60px + 1.25rem) 20px 40px;
 	text-align: left;
+	background: $lt-gray;
 	
 	h4 {
 		margin: 1em 0 .6em;
@@ -416,20 +517,19 @@ option {
 }
 
 .step {
-	&.incomplete {
-		input, select {
-			background-color: #ccc;
-		}
+	margin: 0 0 20px;
+	input, textarea, select {
+		margin: 0;
 	}
 }
 
-.field_error {
-	display: none;
-	margin: 0 0 0 -30px;
-	color: $red;
-	
-	&.has_error {
-		display: inline-block;
+.editor ul.steps > li.step,
+.editor .row_template,
+li.step.gu-mirror {
+	input.name.has_error,
+	input.time.has_error {
+		border: 1px solid $dk-red;
+		border-left: 4px solid $dk-red;
 	}
 }
 
@@ -479,7 +579,7 @@ li {
 	}
 }
 
-.ui-sortable-helper {//.slip-reordering {
+.editor .gu-mirror {
 	background: $clear;
 	input, select, .button {
 		box-shadow: 0 2px 10px rgba(0,0,0,0.45);
@@ -583,10 +683,10 @@ li {
 		margin: .4em .2em .4em 0;
 	    padding: 0.5em 1em;
 	    font-size: 17px;
-		background: $orange;/* saturate($blue*.6, 20%); */
-		color: $white;
+		background: $green;
+		color: $black;
 		&:hover, &:focus {
-			background: color.adjust($orange, $lightness: 10%);
+			background: color.adjust($green, $lightness: 10%);
 			color: $white;
 		}
 	}
@@ -694,6 +794,121 @@ li {
 	text-align: left;
 }
 
+
+
+
+
+// RESPONSIVE STYLES
+@media screen and (max-width: 600px) {
+	.container {
+		width: 100%;
+	}
+
+	.editor {
+		width: 100%;
+
+		.steps_labels {
+			display: none;
+		}
+	}
+
+	// Step rows (second selector: drag mirror is on body, not inside .editor)
+	.editor ul.steps > li.step,
+	li.step.gu-mirror {
+		--step-handle-gutter: 2.65rem;
+
+		flex-wrap: wrap;
+		align-items: center;
+		row-gap: 4px;
+		margin: 0 0 20px;
+		padding: 2px 3px 2px var(--step-handle-gutter);
+
+		// Full-width flex break between row 1 and row 2 (order groups row 1, then ::before, then row 2)
+		&::before {
+			content: '';
+			order: 4;
+			flex-basis: 100%;
+			width: 0;
+			height: 0;
+			overflow: hidden;
+			pointer-events: none;
+		}
+
+		.drag_handle {
+			position: absolute;
+			left: 3px;
+			top: 0.35em;
+			z-index: 1;
+			order: 1;
+			flex: 0 0 auto;
+			width: calc(var(--step-handle-gutter) - 6px);
+			max-width: calc(var(--step-handle-gutter) - 6px);
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0.5em 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+		}
+
+		input.name {
+			order: 2;
+			flex: 1 1 0;
+			min-width: 0;
+			width: auto;
+			margin-bottom: 0;
+		}
+
+		.delete_step {
+			order: 3;
+			flex: 0 0 auto;
+		}
+
+		input.time {
+			order: 5;
+			flex: 0 0 auto;
+			width: 4.25em;
+			margin-bottom: 0;
+		}
+
+		label {
+			order: 6;
+			flex: 0 0 auto;
+			margin: 0 0.35em 0 0;
+			display: inline-block;
+			white-space: nowrap;
+		}
+
+		select.color {
+			order: 7;
+			flex: 1 1 0;
+			min-width: 0;
+			margin-bottom: 0;
+		}
+
+		select.tone {
+			order: 8;
+			flex: 1 1 0;
+			min-width: 0;
+			margin-bottom: 0;
+		}
+	}
+
+	.editor ul.steps > li.step .copy_step,
+	li.step.gu-mirror .copy_step {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.container {
+		width: 100%;
+	}
+}
+
+
+
 // SHOW "SAVE TO HOMEPAGE" INFO FOR IOS DEVICES
 .ios {
 	display: none;
@@ -769,10 +984,19 @@ li {
 		top: 0;
 		padding: 5px 0 0 15px;
 		text-align: left;
-		
+
 		img {
 			width: 70%;
 		}
+	}
+
+	body:not(.home) footer a.title img,
+	body.editor > a.title img {
+		width: 72px;
+	}
+
+	body:not(.home) footer .timer_footer_actions {
+		padding: 8px 14px;
 	}
 	// .button.delete_step {
 	// 	margin: 1.5em 1em;

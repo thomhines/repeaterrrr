@@ -22,12 +22,12 @@ $(function() {
 	
 	// Load sound files
 	if(typeof createjs != "undefined") {
-		createjs.Sound.registerSound("audio/tick.mp3", 'tick');
-		createjs.Sound.registerSound("audio/single.mp3", 'single');
-		createjs.Sound.registerSound("audio/double.mp3", 'double');
-		createjs.Sound.registerSound("audio/triple.mp3", 'triple');
-		createjs.Sound.registerSound("audio/long.mp3", 'short');
-		createjs.Sound.registerSound("audio/finished.mp3", 'long');
+		createjs.Sound.registerSound("/audio/tick.mp3", 'tick');
+		createjs.Sound.registerSound("/audio/single.mp3", 'single');
+		createjs.Sound.registerSound("/audio/double.mp3", 'double');
+		createjs.Sound.registerSound("/audio/triple.mp3", 'triple');
+		createjs.Sound.registerSound("/audio/long.mp3", 'short');
+		createjs.Sound.registerSound("/audio/finished.mp3", 'long');
 	}
 	
 
@@ -348,10 +348,17 @@ $(function() {
 			$('.description_char_count').html($('.description').val().length);
 		});
 		
-		// ENABLE DRAG AND DROP ON MOBILE DEVICES
-		$('.steps').sortable({
-		    handle: '.drag_handle'
-		});
+		// Step reordering (dragula; only the handle starts a drag — works on touch)
+		var $steps = $('.steps');
+		if ($steps.length && typeof dragula !== 'undefined') {
+			dragula([$steps[0]], {
+				moves: function (el, container, handle) {
+					return handle && $(handle).closest('.drag_handle').length > 0;
+				}
+			}).on('drop', function () {
+				verifyForm();
+			});
+		}
 	
 		
 		// ADD NEW STEP ROW
@@ -441,16 +448,22 @@ $(function() {
 			var rtime = row.find('.time').val();
 			if(rname && rtime > 0) {
 				$(this).removeClass('incomplete');
-				row.find('.field_error').removeClass('has_error');
+				row.find('.name, .time').removeClass('has_error');
 			} else {
 				invalid_row = true;
 				row.addClass('incomplete');
-				
-				if(!rname) row.find('.name_error').addClass('has_error');
-				else row.find('.name_error').removeClass('has_error');
-				
-				if(!rtime || rtime < 1) row.find('.time_error').addClass('has_error');
-				else row.find('.time_error').removeClass('has_error');
+
+				if(!rname) {
+					row.find('.name').addClass('has_error');
+				} else {
+					row.find('.name').removeClass('has_error');
+				}
+
+				if(!rtime || rtime < 1) {
+					row.find('.time').addClass('has_error');
+				} else {
+					row.find('.time').removeClass('has_error');
+				}
 			}
 		});
 		

@@ -77,16 +77,19 @@ else {
 <meta name="msapplication-TileColor" content="#b91d47" />
 <meta name="msapplication-TileImage" content="/img/favicons/mstile-144x144.png" />
 
+<link rel="stylesheet" href="/css/fonts.css" type="text/css" media="all" />
+<link rel="stylesheet" href="/css/dragula.min.css" type="text/css" media="all" />
 <link rel="Stylesheet" href="/css/style.css" type="text/css" media="all" />
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="/js/jquery.noclickdelay.js"></script>
 <script src="/js/soundjs.min.js"></script>
+<script src="/js/dragula.min.js"></script>
 <script src="/js/scripts.js"></script>
 
 </head>
 
 <body class="editor clearfix">
-	<a href="/"><h1><img src="/img/logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/logo.png'"></h1></a>
+	<a class="title" href="/"><h1><img src="/img/repeaterrrr_logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='/img/repeaterrrr_logo.svg'"></h1></a>
 
 
 	<h4>Timer Info</h4>
@@ -114,8 +117,8 @@ else {
 		<li class="step <?php echo $step['color']; ?>">
 			<span class="drag_handle">&#xe805;</span>
 			<i class="copy_step smaller button icon-docs" role="button"></i>
-			<input type="text" class="name" value="<?php echo $step['title'] ?>"><span class="icon-cancel field_error name_error"></span>
-			<input type="number" class="time" value="<?php echo $step['time'] ?>"><span class="icon-cancel field_error number_error"></span><label>sec</label>
+			<input type="text" class="name" value="<?php echo $step['title'] ?>">
+			<input type="number" class="time" value="<?php echo $step['time'] ?>" min="1" step="1"><label>sec</label>
 			<select class="color">
 				<option value="white" <?php if($step['color'] == 'white') echo 'selected="selected"'; ?>>White</option>
 				<option value="red" <?php if($step['color'] == 'red') echo 'selected="selected"'; ?>>Red</option>
@@ -140,8 +143,8 @@ else {
 		<li class="step row_template">
 			<span class="drag_handle">&#xe805;</span>
 			<i class="copy_step smaller button icon-docs" role="button"></i>
-			<input type="text" class="name"><span class="icon-cancel field_error name_error"></span>
-			<input type="number" class="time"><span class="icon-cancel field_error time_error"></span><label>sec</label>
+			<input type="text" class="name">
+			<input type="number" class="time" value="1" min="1" step="1"><label>sec</label>
 			<select class="color">
 				<option value="white">White</option>
 				<option value="red">Red</option>

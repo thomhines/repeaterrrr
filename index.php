@@ -101,6 +101,7 @@ if(isset($set_result)) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="css/fonts.css" type="text/css" media="all" />
 <link rel="Stylesheet" href="css/style.css" type="text/css" media="all" />
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="js/jquery.noclickdelay.js"></script>
@@ -118,23 +119,25 @@ if(isset($set_result)) {
 		<?php // IF NO SET IS GIVEN IN URL, PROVIDE SPLASH SCREEN
 		if(!isset($set_result)) { ?>
 		<div class="intro">
-			<h1><img src="img/repeaterrrr_combo_white.svg" alt="repeaterrrr" width="200" onerror="this.onerror=null; this.src='img/repeaterrrr_wordmark.svg'"></h1>
-			<h5>The super easy repeating timerrrr.</h5>
+			<div class="logo">
+				<img src="img/repeaterrrr_combo_dark.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/repeaterrrr_logo.svg'">
+			</div>
 
-			<hr>
-			
-			<p>Repeaterrrr lets you create no-frills timers for any activity that requires keeping track of time in regular intervals.</p>
-			<p>Plus, all your timer settings are stored in the URL, so it's easy to create, customize and share.</p>
-			<br>
-			<h6>You can try out one of these example timers:</h6>
-			<a class="small button" href="/6LeTMUM">Pomodoro</a>
-			<a class="small button" href="/PKLaZA0">7-min Circuit Training</a>
-			<a class="small button" href="/FAC0IS3">10-20-30 Intervals</a>
-			<a class="small button" href="/uunoYIU">1 Minute Timer</a>
-			<a class="small button" href="/lGzsxUl">Tabata Interval Training</a> 
+			<div class="hero">
+				<h2>Your timer,<br>on repeat.</h2>
+				<p>Build a simple repeating timer for workouts, focus sessions, or anything that runs in intervals. Share it with a link.</p>
+			</div>
 
-			<h6>OR</h6>		
 			<a class="special button" href="/edit/">Make a timer</a>
+
+			<div class="examples_label">or try an example</div>
+			<div class="examples">
+				<a class="small button" href="/6LeTMUM">Pomodoro</a>
+				<a class="small button" href="/PKLaZA0">7-min Circuit</a>
+				<a class="small button" href="/FAC0IS3">10-20-30 Intervals</a>
+				<a class="small button" href="/uunoYIU">1 Minute Timer</a>
+				<a class="small button" href="/lGzsxUl">Tabata</a>
+			</div>
 		</div>
 	</div>
 	<footer>
@@ -183,10 +186,12 @@ if(isset($set_result)) {
 	
 	<footer>
 		<a class="title" href="/"><h1><img src="img/repeaterrrr_logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/repeaterrrr_logo.svg'"></h1></a>
-		<a href='/edit/<?php echo $get['set']; ?>'><i class="icon-edit"></i></a>
-		<a href='/copy/<?php echo $get['set']; ?>'><i class="icon-docs"></i></a>
-		<a class="email_timer" target="_blank" href="mailto:?subject=<?php echo $set['info']['title']; ?> [repeaterrrr]&body=<?php echo $set['info']['title']; ?>%0d%0a<?php echo $set['info']['description']; ?>%0d%0a%0d%0ahttp://repeaterrrr.com/<?php echo $get['set']; ?>%0d%0a%0d%0a--%0d%0aRepeating timers by repeaterrrr%0d%0ahttp://repeaterrrr.com/"><i class="icon-mail"></i></a>
-		<span class="icon-volume-up mute"></span>
+		<div class="timer_footer_actions">
+			<a href='/edit/<?php echo $get['set']; ?>'><i class="icon-edit"></i></a>
+			<a href='/copy/<?php echo $get['set']; ?>'><i class="icon-docs"></i></a>
+			<a class="email_timer" target="_blank" href="mailto:?subject=<?php echo $set['info']['title']; ?> [repeaterrrr]&body=<?php echo $set['info']['title']; ?>%0d%0a<?php echo $set['info']['description']; ?>%0d%0a%0d%0ahttp://repeaterrrr.com/<?php echo $get['set']; ?>%0d%0a%0d%0a--%0d%0aRepeating timers by repeaterrrr%0d%0ahttp://repeaterrrr.com/"><i class="icon-mail"></i></a>
+			<span class="icon-volume-up mute"></span>
+		</div>
 	</footer>
 	
 	<div class="ajax"></div>

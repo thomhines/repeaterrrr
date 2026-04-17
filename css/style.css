@@ -24,7 +24,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #eee;
+  background-color: #fff;
   font-family: "Open Sans", sans-serif;
   font-size: 20px;
   text-align: center;
@@ -78,7 +78,7 @@ a {
   color: #666;
 }
 a:hover {
-  color: #333;
+  color: #222;
 }
 
 footer {
@@ -93,7 +93,7 @@ footer span, footer a {
   display: inline-block;
   margin-right: 0.3em;
   font-size: 1.1em;
-  color: #333;
+  color: #222;
   opacity: 0.6;
   cursor: pointer;
   text-decoration: none;
@@ -110,6 +110,69 @@ footer span.title img, footer a.title img {
 footer span[href*=edit], footer span[href*=thomhines], footer a[href*=edit], footer a[href*=thomhines] {
   margin-top: 0.35em;
 }
+body:not(.home) footer {
+  position: static;
+  width: auto;
+  padding: 0;
+  bottom: auto;
+  top: auto;
+  right: auto;
+  text-align: left;
+}
+
+body:not(.home) footer a.title,
+body.editor > a.title {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 60px;
+  z-index: 10;
+  float: none;
+  margin: 0;
+}
+body:not(.home) footer a.title h1,
+body.editor > a.title h1 {
+  float: none;
+  margin: 0;
+  line-height: 0;
+}
+body:not(.home) footer a.title img,
+body.editor > a.title img {
+  width: 100%;
+}
+
+body:not(.home) footer .timer_footer_actions {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  padding: 15px 35px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0 0.3em;
+  text-align: right;
+}
+body:not(.home) footer .timer_footer_actions a,
+body:not(.home) footer .timer_footer_actions span {
+  display: inline-block;
+  margin-right: 0;
+  font-size: 1.1em;
+  color: #222;
+  opacity: 0.6;
+  cursor: pointer;
+  text-decoration: none;
+}
+body:not(.home) footer .timer_footer_actions a:hover,
+body:not(.home) footer .timer_footer_actions span:hover {
+  opacity: 1;
+}
+body:not(.home) footer .timer_footer_actions a[href*=edit],
+body:not(.home) footer .timer_footer_actions a[href*=thomhines] {
+  margin-top: 0.35em;
+}
+
 /*----------------------------------------------------------------------*
 
 	TIMER PAGE
@@ -123,72 +186,110 @@ footer span[href*=edit], footer span[href*=thomhines], footer a[href*=edit], foo
   transform: translateX(-50%) translateY(-50%);
   width: 500px;
   padding: 60px 30px;
-  color: #333;
+  color: #222;
   transition: all 1s ease-in-out;
 }
 
 .home {
-  background: #c22026;
-  color: #eee;
-}
-.home h1 img {
-  width: 100%;
+  background: #6ec6e6;
+  color: #1a3d4f;
 }
 .home .container {
-  background: #c22026;
-  color: #eee;
+  width: 100%;
+  max-width: 500px;
+  padding: 48px 24px 72px;
+  color: #1a3d4f;
 }
 .home .button {
-  background: none;
-  color: #eee;
-  border: 2px solid #eee;
-  font-weight: bold;
-}
-.home .button:hover, .home .button:focus, .home .button:active {
-  background: #eee;
-  color: #c22026;
-  border-color: #eee;
+  color: #1a3d4f;
 }
 .home .special.button {
-  background: #eee;
-  color: #c22026;
-  font-size: 1.2em;
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto 56px;
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  background: #1a3d4f;
+  color: #6ec6e6;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 .home .special.button:hover, .home .special.button:focus, .home .special.button:active {
-  background: #c22026;
-  color: #eee;
-  border-color: #eee;
+  background: #fff;
+  color: #1a3d4f;
 }
 
-.intro h1, .intro h2, .intro h3, .intro h4, .intro h5, .intro h6, .intro p {
+.intro {
   float: none;
-  width: auto;
+  width: 100%;
+  margin: 0 auto;
   text-align: center;
-  margin: 0 auto 1em;
-  font-weight: 500;
+  color: #1a3d4f;
 }
-.intro h1 {
-  margin-bottom: 0;
+.intro .logo {
+  margin-bottom: 56px;
 }
-.intro h5 {
-  font-size: 1.2em;
+.intro .logo img {
+  display: block;
+  height: 40px;
+  width: auto;
+  margin: 0 auto;
 }
-.intro h6 {
-  font-weight: 800;
-  letter-spacing: 0.08em;
+.intro .hero {
+  max-width: 420px;
+  margin: 0 auto 48px;
+}
+.intro h2 {
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0 0 1rem;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+  letter-spacing: -0.5px;
 }
 .intro p {
-  font-size: 0.9em;
-  font-weight: 300;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 400;
+  opacity: 0.8;
 }
-.intro hr {
-  height: 5px;
-  margin: 1.4em 0;
-  border: none;
-  background: repeating-linear-gradient(135deg, transparent, transparent 4px, #eee 5px, #eee 7px);
+.intro .examples_label {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.55;
 }
-.intro .button {
-  margin: 0 0 1em;
+.intro .examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 380px;
+  margin: 0 auto;
+}
+.intro .button.small {
+  margin: 0;
+  padding: 6px 14px;
+  border: 1px solid rgba(26, 61, 79, 0.18);
+  border-radius: 100px;
+  background: rgba(26, 61, 79, 0.12);
+  color: #222;
+  font-size: 13px;
+  font-weight: 500;
+}
+.intro .button.small:hover,
+.intro .button.small:focus,
+.intro .button.small:active {
+  background: rgba(26, 61, 79, 0.22);
+  color: #1a3d4f;
 }
 
 .timer, .complete {
@@ -201,7 +302,7 @@ footer span[href*=edit], footer span[href*=thomhines], footer a[href*=edit], foo
   height: 40px;
   margin: 1em auto 0;
   padding: 6px;
-  background: #333;
+  background: #222;
   border-radius: 3px;
   text-align: left;
 }
@@ -221,7 +322,7 @@ footer span[href*=edit], footer span[href*=thomhines], footer a[href*=edit], foo
 }
 .total_progress span {
   height: 8px;
-  background: #333;
+  background: #222;
   border-radius: 3px;
 }
 
@@ -234,19 +335,24 @@ footer span[href*=edit], footer span[href*=thomhines], footer a[href*=edit], foo
 	EDIT PAGE
 
 *----------------------------------------------------------------------*/
+html:has(.editor) {
+  background: #eee;
+}
+
 .editor {
   height: auto;
   width: 80%;
   max-width: 900px;
   margin: auto;
-  padding: 20px 20px 40px;
+  padding: calc(78px + 1.25rem) 20px 40px;
   text-align: left;
+  background: #eee;
 }
 .editor h4 {
   margin: 1em 0 0.6em;
   clear: both;
   font-size: 1.2em;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #222;
 }
 .editor h5 {
   margin: 0 0 0.2em;
@@ -316,7 +422,7 @@ select {
 }
 
 option {
-  background: #eee;
+  background: #fff;
 }
 
 .steps_labels {
@@ -341,17 +447,21 @@ option {
   flex: 1;
 }
 
-.step.incomplete input, .step.incomplete select {
-  background-color: #ccc;
+.step {
+  margin: 0 0 20px;
+}
+.step input, .step textarea, .step select {
+  margin: 0;
 }
 
-.field_error {
-  display: none;
-  margin: 0 0 0 -30px;
-  color: #ee9494;
-}
-.field_error.has_error {
-  display: inline-block;
+.editor ul.steps > li.step input.name.has_error,
+.editor ul.steps > li.step input.time.has_error,
+.editor .row_template input.name.has_error,
+.editor .row_template input.time.has_error,
+li.step.gu-mirror input.name.has_error,
+li.step.gu-mirror input.time.has_error {
+  border: 1px solid #c22026;
+  border-left: 4px solid #c22026;
 }
 
 ul, li {
@@ -388,10 +498,10 @@ li label {
   margin: 0 1em 0 0;
 }
 
-.ui-sortable-helper {
+.editor .gu-mirror {
   background: rgba(0, 0, 0, 0);
 }
-.ui-sortable-helper input, .ui-sortable-helper select, .ui-sortable-helper .button {
+.editor .gu-mirror input, .editor .gu-mirror select, .editor .gu-mirror .button {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
 }
 
@@ -446,8 +556,8 @@ li label {
   display: inline-block;
   margin: 2em 0.2em;
   padding: 0.4em 1em;
-  background: #333;
-  color: #eee;
+  background: #222;
+  color: #fff;
   font-size: 1.2em;
   line-height: 1em;
   cursor: pointer;
@@ -482,12 +592,12 @@ li label {
   margin: 0.4em 0.2em 0.4em 0;
   padding: 0.5em 1em;
   font-size: 17px;
-  background: #cf7127; /* saturate($blue*.6, 20%); */
-  color: #eee;
+  background: #8ed994;
+  color: #222;
 }
 .button.special:hover, .button.special:focus {
-  background: rgb(221.2317073171, 139.8414634146, 75.7682926829);
-  color: #eee;
+  background: rgb(180.1655629139, 229.8344370861, 184.1390728477);
+  color: #fff;
 }
 .button.success {
   background: rgb(65.6688741722, 191.3311258278, 75.7218543046);
@@ -510,15 +620,15 @@ li label {
 }
 
 .button:hover, .button:focus, .button.button_hover {
-  color: #333;
+  color: #222;
   background: rgba(50, 50, 50, 0.2);
 }
 
 .white {
-  background-color: #eee;
+  background-color: #fff;
 }
 .white .current_progress span {
-  background-color: #eee;
+  background-color: #fff;
 }
 .whiteli {
   background-color: rgba(0, 0, 0, 0);
@@ -583,6 +693,105 @@ li label {
   text-align: left;
 }
 
+@media screen and (max-width: 600px) {
+  .container {
+    width: 100%;
+  }
+  .editor {
+    width: 100%;
+  }
+  .editor .steps_labels {
+    display: none;
+  }
+  .editor ul.steps > li.step,
+  li.step.gu-mirror {
+    --step-handle-gutter: 2.65rem;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 4px;
+    margin: 0 0 20px;
+    padding: 2px 3px 2px var(--step-handle-gutter);
+  }
+  .editor ul.steps > li.step::before,
+  li.step.gu-mirror::before {
+    content: "";
+    order: 4;
+    flex-basis: 100%;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .editor ul.steps > li.step .drag_handle,
+  li.step.gu-mirror .drag_handle {
+    position: absolute;
+    left: 3px;
+    top: 0.35em;
+    z-index: 1;
+    order: 1;
+    flex: 0 0 auto;
+    width: calc(var(--step-handle-gutter) - 6px);
+    max-width: calc(var(--step-handle-gutter) - 6px);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.5em 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .editor ul.steps > li.step input.name,
+  li.step.gu-mirror input.name {
+    order: 2;
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    margin-bottom: 0;
+  }
+  .editor ul.steps > li.step .delete_step,
+  li.step.gu-mirror .delete_step {
+    order: 3;
+    flex: 0 0 auto;
+  }
+  .editor ul.steps > li.step input.time,
+  li.step.gu-mirror input.time {
+    order: 5;
+    flex: 0 0 auto;
+    width: 4.25em;
+    margin-bottom: 0;
+  }
+  .editor ul.steps > li.step label,
+  li.step.gu-mirror label {
+    order: 6;
+    flex: 0 0 auto;
+    margin: 0 0.35em 0 0;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .editor ul.steps > li.step select.color,
+  li.step.gu-mirror select.color {
+    order: 7;
+    flex: 1 1 0;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+  .editor ul.steps > li.step select.tone,
+  li.step.gu-mirror select.tone {
+    order: 8;
+    flex: 1 1 0;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+  .editor ul.steps > li.step .copy_step,
+  li.step.gu-mirror .copy_step {
+    display: none;
+  }
+}
+@media screen and (max-width: 400px) {
+  .container {
+    width: 100%;
+  }
+}
 .ios {
   display: none;
   /* iPad */
@@ -660,5 +869,12 @@ li label {
   }
   footer img {
     width: 70%;
+  }
+  body:not(.home) footer a.title img,
+  body.editor > a.title img {
+    width: 72px;
+  }
+  body:not(.home) footer .timer_footer_actions {
+    padding: 8px 14px;
   }
 }
