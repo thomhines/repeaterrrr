@@ -133,8 +133,7 @@ if(isset($set_result)) {
 		</div>
 	</div>
 	<footer>
-		<a href="http://thomhines.com/">th</a>
-		<a href="https://github.com/thomhines/repeaterrrr"><i class="icon-github-circled"></i></a>
+		<span class="copyright">&copy; <?php echo date('Y'); ?> <a href="https://thomhines.com/">Thom Hines</a></span>
 	</footer>
 		
 		<?php } else { ?>

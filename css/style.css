@@ -114,6 +114,10 @@ footer span.title img, footer a.title img {
 footer span[href*=edit], footer span[href*=thomhines], footer a[href*=edit], footer a[href*=thomhines] {
   margin-top: 0.35em;
 }
+footer .copyright {
+  font-size: 12px;
+  font-weight: 600;
+}
 body:not(.home) footer {
   position: static;
   width: auto;
@@ -223,6 +227,9 @@ body:not(.home) footer .timer_footer_actions a[href*=thomhines] {
 .home .special.button:hover, .home .special.button:focus, .home .special.button:active {
   background: #fff;
   color: #1a3d4f;
+}
+.home footer {
+  text-align: left;
 }
 
 .intro {
