@@ -123,7 +123,7 @@ else {
 		
 	
 		<li class="step <?php echo ($step['color']) ? $step['color'] : 'white'; ?>">
-			<span class="drag_handle">&#xe805;</span>
+			<span class="drag_handle">&#xf0dc;</span>
 			<i class="copy_step smaller button icon-docs" role="button"></i>
 			<input type="text" class="name" value="<?php echo $step['title'] ?>" placeholder="Step Name">
 			<input type="number" class="time" value="<?php echo $step['time'] ?>" min="1" step="1" placeholder="10"><label>sec</label>
@@ -141,7 +141,7 @@ else {
 				<option value="triple" <?php if($step['sound'] == 'triple') echo 'selected="selected"'; ?>>Triple</option>
 				<option value="short" <?php if($step['sound'] == 'short') echo 'selected="selected"'; ?>>Long</option>
 			</select>
-			<i class="delete_step smaller button icon-cancel" role="button"></i>
+			<i class="delete_step smaller button icon-trash-empty" role="button"></i>
 		</li>
 		<?php } ?>
 		</ul>

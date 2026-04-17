@@ -93,20 +93,22 @@ footer {
   right: 0;
   text-align: right;
 }
-footer span, footer a:not(.title) {
+footer i {
+  opacity: 0.6;
+  transition: opacity 0.1s ease-in-out;
+}
+footer span, footer button, footer .timer_action, footer a:not(.title) {
   display: inline-block;
   margin-right: 0.3em;
   font-size: 1.1em;
   color: #222;
-  opacity: 0.6;
   cursor: pointer;
   text-decoration: none;
-  transition: opacity 0.1s ease-in-out;
 }
-footer span:hover, footer span:focus, footer a:not(.title):hover, footer a:not(.title):focus {
+footer span:hover i, footer span:focus i, footer button:hover i, footer button:focus i, footer .timer_action:hover i, footer .timer_action:focus i, footer a:not(.title):hover i, footer a:not(.title):focus i {
   opacity: 1;
 }
-footer span[href*=edit], footer span[href*=thomhines], footer a:not(.title)[href*=edit], footer a:not(.title)[href*=thomhines] {
+footer span[href*=edit], footer span[href*=thomhines], footer button[href*=edit], footer button[href*=thomhines], footer .timer_action[href*=edit], footer .timer_action[href*=thomhines], footer a:not(.title)[href*=edit], footer a:not(.title)[href*=thomhines] {
   margin-top: 0.35em;
 }
 footer .copyright {
@@ -166,41 +168,54 @@ body:not(.home) footer .timer_footer_actions {
   z-index: 10;
   padding: 15px 35px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0 0.3em;
-  text-align: right;
+  gap: calc(0.35em + 10px) calc(0.65em + 10px);
+  text-align: center;
 }
-body:not(.home) footer .timer_footer_actions a,
-body:not(.home) footer .timer_footer_actions span,
-body:not(.home) footer .timer_footer_actions button.share_timer {
-  display: inline-block;
-  margin-right: 0;
-  font-size: 1.1em;
+body:not(.home) footer .timer_footer_actions .timer_action {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  font-size: 1.32em;
   color: #222;
-  opacity: 0.6;
   cursor: pointer;
   text-decoration: none;
-  transition: opacity 0.1s ease-in-out;
+  line-height: 1;
+  font-family: inherit;
+  background: transparent;
+  border: none;
 }
-body:not(.home) footer .timer_footer_actions a:hover, body:not(.home) footer .timer_footer_actions a:focus,
-body:not(.home) footer .timer_footer_actions span:hover,
-body:not(.home) footer .timer_footer_actions span:focus,
-body:not(.home) footer .timer_footer_actions button.share_timer:hover,
-body:not(.home) footer .timer_footer_actions button.share_timer:focus {
+body:not(.home) footer .timer_footer_actions .timer_action:hover, body:not(.home) footer .timer_footer_actions .timer_action:focus {
   opacity: 1;
 }
-body:not(.home) footer .timer_footer_actions button.share_timer {
-  font-family: inherit;
-  border: none;
-  background: transparent;
-  padding: 0;
-  line-height: inherit;
+body:not(.home) footer .timer_footer_actions a.timer_action {
+  color: #222;
 }
-body:not(.home) footer .timer_footer_actions a[href*=edit],
-body:not(.home) footer .timer_footer_actions a[href*=thomhines] {
-  margin-top: 0.35em;
+body:not(.home) footer .timer_footer_actions button.timer_action {
+  font-family: inherit;
+}
+body:not(.home) footer .timer_footer_actions .timer_action_label {
+  display: block;
+  max-width: 5.5em;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+body:not(.home) footer .timer_footer_actions .timer_action_mute {
+  cursor: pointer;
+  user-select: none;
+}
+body:not(.home) footer .timer_footer_actions a.timer_action[href*=edit],
+body:not(.home) footer .timer_footer_actions a.timer_action[href*=thomhines] {
+  margin-top: 0;
 }
 
 body.share_popup_open {
@@ -255,7 +270,7 @@ body.share_popup_open {
   opacity: 1;
 }
 .share_popup_close i {
-  font-size: 0.85em;
+  font-size: 1.2em;
 }
 
 .share_popup_panel h3 {
@@ -1052,6 +1067,15 @@ li.step.gu-mirror .drag_handle {
     width: 100%;
   }
 }
+@media screen and (max-width: 600px) {
+  body:not(.home) footer .timer_footer_actions {
+    left: 0;
+    right: 0;
+    justify-content: space-between;
+    gap: 0;
+    padding: 12px 10vw;
+  }
+}
 @media screen and (max-height: 600px) {
   html, body {
     font-size: 11px;
@@ -1085,6 +1109,10 @@ li.step.gu-mirror .drag_handle {
     width: 72px;
   }
   body:not(.home) footer .timer_footer_actions {
+    left: 0;
+    right: 0;
+    justify-content: space-between;
+    gap: 0;
     padding: 8px 14px;
   }
 }

@@ -118,20 +118,25 @@ footer {
 	bottom: 0;
 	right: 0;
 	text-align: right;
+
+	i {
+		opacity: .6;
+		transition: opacity .1s ease-in-out;
+	}
 	
-	span, a:not(.title) {
+	span, button, .timer_action, a:not(.title) {
 		display: inline-block;
 		margin-right: .3em;
 		font-size: 1.1em;
 		color: $black;
-		opacity: .6;
 		cursor: pointer;
 		text-decoration: none;
-		transition: opacity .1s ease-in-out;
 
 		&:hover,
 		&:focus {
-			opacity: 1;
+			i {
+				opacity: 1;
+			}
 		}
 
 		&[href*="edit"], &[href*="thomhines"] {
@@ -204,23 +209,28 @@ body:not(.home) footer .timer_footer_actions {
 	z-index: 10;
 	padding: 15px 35px;
 	display: flex;
-	align-items: center;
+	align-items: flex-end;
 	flex-wrap: wrap;
 	justify-content: flex-end;
-	gap: 0 0.3em;
-	text-align: right;
+	gap: calc(0.35em + 10px) calc(0.65em + 10px);
+	text-align: center;
 
-	a,
-	span,
-	button.share_timer {
-		display: inline-block;
-		margin-right: 0;
-		font-size: 1.1em;
+	.timer_action {
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 4px;
+		margin: 0;
+		padding: 0;
+		font-size: 1.32em;
 		color: $black;
-		opacity: 0.6;
 		cursor: pointer;
 		text-decoration: none;
-		transition: opacity .1s ease-in-out;
+		line-height: 1;
+		font-family: inherit;
+		background: transparent;
+		border: none;
 
 		&:hover,
 		&:focus {
@@ -228,17 +238,32 @@ body:not(.home) footer .timer_footer_actions {
 		}
 	}
 
-	button.share_timer {
-		font-family: inherit;
-		border: none;
-		background: transparent;
-		padding: 0;
-		line-height: inherit;
+	a.timer_action {
+		color: $black;
 	}
 
-	a[href*="edit"],
-	a[href*="thomhines"] {
-		margin-top: 0.35em;
+	button.timer_action {
+		font-family: inherit;
+	}
+
+	.timer_action_label {
+		display: block;
+		max-width: 5.5em;
+		font-size: 11px;
+		font-weight: 600;
+		line-height: 1.1;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+	}
+
+	.timer_action_mute {
+		cursor: pointer;
+		user-select: none;
+	}
+
+	a.timer_action[href*="edit"],
+	a.timer_action[href*="thomhines"] {
+		margin-top: 0;
 	}
 }
 
@@ -297,7 +322,7 @@ body.share_popup_open {
 	}
 
 	i {
-		font-size: 0.85em;
+		font-size: 1.2em;
 	}
 }
 
@@ -1189,6 +1214,17 @@ li.step.gu-mirror .drag_handle {
 	// }
 }
 
+// TIMER FOOTER: EVEN SPACING ACROSS THE WIDTH ON NARROW SCREENS
+@media screen and (max-width: 600px) {
+	body:not(.home) footer .timer_footer_actions {
+		left: 0;
+		right: 0;
+		justify-content: space-between;
+		gap: 0;
+		padding: 12px 10vw;
+	}
+}
+
 // DEAL WITH SHORT OR LANDSCAPE BROWSERS
 @media screen and (max-height: 600px){
 	html, body {
@@ -1226,6 +1262,10 @@ li.step.gu-mirror .drag_handle {
 	}
 
 	body:not(.home) footer .timer_footer_actions {
+		left: 0;
+		right: 0;
+		justify-content: space-between;
+		gap: 0;
 		padding: 8px 14px;
 	}
 	// .button.delete_step {

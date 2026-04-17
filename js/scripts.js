@@ -154,12 +154,30 @@ $(function() {
 	});
 	
 	
-	// ENABLE/DISABLE SOUNDS
-	$('.mute').click(function() {
-		if($(this).hasClass('muted')) {
-			$(this).attr('class', 'mute').addClass('icon-volume-up');
-		} else {
-			$(this).attr('class', 'mute muted').addClass('icon-volume-off');
+	// ENABLE/DISABLE SOUNDS (icon inside .timer_action_mute on timer page)
+	$('.timer_action_mute').click(function() {
+		var $wrap = $(this);
+		var $icon = $wrap.find('.mute').first();
+		var $label = $wrap.find('.timer_action_label').first();
+		if (!$icon.length) {
+			return;
+		}
+		if ($icon.hasClass('muted')) {
+			$icon.removeClass('muted icon-volume-off').addClass('icon-volume-up');
+			$label.text('Mute');
+			$wrap.attr('aria-label', 'Mute');
+		}
+		else {
+			$icon.removeClass('icon-volume-up').addClass('muted icon-volume-off');
+			$label.text('Unmute');
+			$wrap.attr('aria-label', 'Unmute');
+		}
+		if (typeof createjs != 'undefined' && createjs.Sound) {
+			var isMuted = $icon.hasClass('muted');
+			createjs.Sound.muted = isMuted;
+			if (isMuted) {
+				createjs.Sound.stop();
+			}
 		}
 	});
 	
@@ -343,6 +361,12 @@ $(function() {
 
 	// PLAY SOUND
 	function playSound(sound) {
+		if (typeof createjs == 'undefined' || !createjs.Sound) {
+			return;
+		}
+		if (createjs.Sound.muted) {
+			return;
+		}
 		createjs.Sound.play(sound);
 	}
 	
@@ -470,14 +494,18 @@ $(function() {
 				data: { json: json_url, edit_slug: window.location.pathname.substr(6) }
 			})
 			.done(function(response) {
-				var lines = String(response).trim().split('\n');
+				var raw = String(response).trim();
+				if (/^Error/i.test(raw)) {
+					return;
+				}
+				var lines = raw.split('\n');
 				var slug = lines[0] || '';
 				var editSlug = (lines.length > 1) ? lines[1].trim() : '';
-				// New INSERT (and duplicate-json hit when server sends two lines): open editor via edit_slug.
+				// Two-line response (INSERT, UPDATE, or duplicate-json): open run page /{edit_slug}.
 				if (editSlug) {
-					window.location = '/edit/' + editSlug;
+					window.location = '/' + editSlug;
 				}
-				else {
+				else if (slug) {
 					window.location = '/' + slug;
 				}
 			});

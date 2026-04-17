@@ -181,16 +181,28 @@ if ($set_result) {
 		<a class="title" href="/"><h1><img src="img/repeaterrrr_logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/repeaterrrr_logo.svg'"></h1></a>
 		<div class="timer_footer_actions">
 			<?php if ($show_edit_timer_button) { ?>
-			<a href="/edit/<?php echo htmlspecialchars($set_result['edit_slug'], ENT_QUOTES, 'UTF-8'); ?>"><i class="icon-edit"></i></a>
+			<a class="timer_action" href="/edit/<?php echo htmlspecialchars($set_result['edit_slug'], ENT_QUOTES, 'UTF-8'); ?>">
+				<i class="icon-edit" aria-hidden="true"></i>
+				<span class="timer_action_label">Edit</span>
+			</a>
 			<?php } ?>
-			<a href="/copy/<?php echo htmlspecialchars($set_result['slug'], ENT_QUOTES, 'UTF-8'); ?>"><i class="icon-docs"></i></a>
+			<a class="timer_action" href="/copy/<?php echo htmlspecialchars($set_result['slug'], ENT_QUOTES, 'UTF-8'); ?>">
+				<i class="icon-docs" aria-hidden="true"></i>
+				<span class="timer_action_label">Copy</span>
+			</a>
 			<?php
 			$share_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'repeaterrrr.com';
 			$share_scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 			$share_timer_url = $share_scheme . '://' . $share_host . '/' . $set_result['slug'];
 			?>
-			<button type="button" class="share_timer" aria-haspopup="dialog" aria-expanded="false" aria-controls="share_timer_popup">Share</button>
-			<span class="icon-volume-up mute"></span>
+			<button type="button" class="share_timer timer_action" aria-haspopup="dialog" aria-expanded="false" aria-controls="share_timer_popup" aria-label="Share timer">
+				<i class="icon-share" aria-hidden="true"></i>
+				<span class="timer_action_label">Share</span>
+			</button>
+			<div class="timer_action timer_action_mute" role="button" tabindex="0" aria-label="Mute">
+				<i class="mute icon-volume-up" aria-hidden="true"></i>
+				<span class="timer_action_label">Mute</span>
+			</div>
 		</div>
 	</footer>
 

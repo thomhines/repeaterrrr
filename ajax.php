@@ -16,9 +16,10 @@ if (@$post['json'] && $previous_set = sql("SELECT * FROM `sets` WHERE `json` = '
 
 if (@$post['edit_slug']) {
 	if (sql("UPDATE `sets` SET `json` = '".$post['json']."' WHERE `edit_slug` = '".$post['edit_slug']."'")) {
-		$row = sql("SELECT `slug` FROM `sets` WHERE `edit_slug` = '".$post['edit_slug']."'");
+		$row = sql("SELECT `slug`, `edit_slug` FROM `sets` WHERE `edit_slug` = '".$post['edit_slug']."'");
 		if ($row) {
-			echo $row['slug'];
+			// Line 1: public slug. Line 2: edit_slug (client redirects to /{edit_slug} run page).
+			echo $row['slug'] . "\n" . $row['edit_slug'];
 		}
 		else {
 			echo 'Error: There was an problem saving the timer to the database';
@@ -35,7 +36,7 @@ if (@$post['edit_slug']) {
 $slug = makeSlug();
 $edit_slug = makeEditSlug();
 if (@$post['json'] && sql("INSERT INTO `sets` (`slug`, `edit_slug`, `json`, `created`) VALUES ('$slug', '$edit_slug', '".$post['json']."', NOW())")) {
-	// Line 1: public slug. Line 2: edit_slug (so first save can redirect to /edit/{edit_slug}).
+	// Line 1: public slug. Line 2: edit_slug (client redirects to /{edit_slug} run page).
 	echo $slug . "\n" . $edit_slug;
 }
 else echo 'Error: There was an problem saving the timer to the database';

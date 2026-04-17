@@ -199,6 +199,14 @@
       "oAP" : "\/css\/fonts\/fontello.woff",
       "oF" : 0
     },
+    "\/css\/fonts\/fontello.woff2" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/css\/fonts\/fontello.woff2",
+      "oF" : 0
+    },
     "\/css\/fonts\/OpenSans-Bold-webfont.eot" : {
       "cB" : 0,
       "ft" : 8192,
@@ -359,6 +367,40 @@
       "oF" : 0,
       "oS" : 0,
       "pg" : 0
+    },
+    "\/css\/X\/fontello.eot" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/css\/X\/fontello.eot",
+      "oF" : 0
+    },
+    "\/css\/X\/fontello.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/css\/X\/fontello.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/css\/X\/fontello.ttf" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/css\/X\/fontello.ttf",
+      "oF" : 0
+    },
+    "\/css\/X\/fontello.woff" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/css\/X\/fontello.woff",
+      "oF" : 0
     },
     "\/db_info.sql" : {
       "cB" : 0,
