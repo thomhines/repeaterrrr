@@ -106,6 +106,10 @@ a {
 	}
 }
 
+input, select, button {
+	font-family: 'Open Sans', sans-serif;
+}
+
 footer {
 	position: fixed;
 	width: 100%;
@@ -351,6 +355,19 @@ body:not(.home) footer .timer_footer_actions {
 // HIDE TIMER AND COMPLETE SECTIONS
 .timer, .complete {
 	display: none;
+}
+
+.ready, .timer, .complete {
+	.button {
+		background: $black;
+		color: $white;
+		&:hover,
+		&:focus,
+		&:active {
+			background: $semi-black;
+			color: $black;
+		}
+	}
 }
 
 .progress_bar {

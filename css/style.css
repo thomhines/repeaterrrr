@@ -81,6 +81,10 @@ a:hover {
   color: #222;
 }
 
+input, select, button {
+  font-family: "Open Sans", sans-serif;
+}
+
 footer {
   position: fixed;
   width: 100%;
@@ -294,6 +298,15 @@ body:not(.home) footer .timer_footer_actions a[href*=thomhines] {
 
 .timer, .complete {
   display: none;
+}
+
+.ready .button, .timer .button, .complete .button {
+  background: #222;
+  color: #fff;
+}
+.ready .button:hover, .ready .button:focus, .ready .button:active, .timer .button:hover, .timer .button:focus, .timer .button:active, .complete .button:hover, .complete .button:focus, .complete .button:active {
+  background: rgba(50, 50, 50, 0.2);
+  color: #222;
 }
 
 .progress_bar {

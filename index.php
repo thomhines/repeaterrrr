@@ -80,22 +80,14 @@ if(isset($set_result)) {
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-<link rel="apple-touch-startup-image" href="img/favicons/startup.png" />
-<link rel="apple-touch-icon" sizes="57x57" href="img/favicons/apple-touch-icon-57x57.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="img/favicons/apple-touch-icon-114x114.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="img/favicons/apple-touch-icon-72x72.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="img/favicons/apple-touch-icon-144x144.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="img/favicons/apple-touch-icon-60x60.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="img/favicons/apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="img/favicons/apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="img/favicons/apple-touch-icon-152x152.png" />
-<link rel="icon" type="image/png" href="img/favicons/favicon-196x196.png" sizes="196x196" />
-<link rel="icon" type="image/png" href="img/favicons/favicon-160x160.png" sizes="160x160" />
-<link rel="icon" type="image/png" href="img/favicons/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/png" href="img/favicons/favicon-32x32.png" sizes="32x32" />
-<link rel="icon" type="image/png" href="img/favicons/favicon-16x16.png" sizes="16x16" />
-<meta name="msapplication-TileColor" content="#b91d47" />
-<meta name="msapplication-TileImage" content="img/favicons/mstile-144x144.png" />
+<link rel="icon" href="img/favicons/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" href="img/favicons/apple-touch-icon.png">
+<link rel="manifest" href="img/favicons/site.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="img/favicons/android-chrome-192x192.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
