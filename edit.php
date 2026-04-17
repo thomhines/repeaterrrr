@@ -167,7 +167,7 @@ else {
 	
 		<!-- EMPTY ROW TEMPLATE FOR ADDING NEW STEP ROWS -->
 		<li class="step row_template white">
-			<span class="drag_handle">&#xe805;</span>
+			<span class="drag_handle">&#xf0dc;</span>
 			<i class="copy_step smaller button icon-docs" role="button"></i>
 			<input type="text" class="name">
 			<input type="number" class="time" value="1" min="1" step="1"><label>sec</label>
@@ -185,7 +185,7 @@ else {
 				<option value="triple">Triple</option>
 				<option value="short">Long</option>
 			</select>
-			<i class="delete_step smaller button icon-cancel" role="button"></i>
+			<i class="delete_step smaller button icon-trash-empty" role="button"></i>
 		</li>
 		
 		<hr>
