@@ -93,7 +93,7 @@ footer {
   right: 0;
   text-align: right;
 }
-footer span, footer a {
+footer span, footer a:not(.title) {
   display: inline-block;
   margin-right: 0.3em;
   font-size: 1.1em;
@@ -101,17 +101,12 @@ footer span, footer a {
   opacity: 0.6;
   cursor: pointer;
   text-decoration: none;
+  transition: opacity 0.1s ease-in-out;
 }
-footer span:hover, footer a:hover {
+footer span:hover, footer span:focus, footer a:not(.title):hover, footer a:not(.title):focus {
   opacity: 1;
 }
-footer span.title, footer a.title {
-  float: right;
-}
-footer span.title img, footer a.title img {
-  width: 80px;
-}
-footer span[href*=edit], footer span[href*=thomhines], footer a[href*=edit], footer a[href*=thomhines] {
+footer span[href*=edit], footer span[href*=thomhines], footer a:not(.title)[href*=edit], footer a:not(.title)[href*=thomhines] {
   margin-top: 0.35em;
 }
 footer .copyright {
@@ -130,13 +125,16 @@ body:not(.home) footer {
 
 body:not(.home) footer a.title,
 body.editor > a.title {
-  position: fixed;
-  top: 18px;
-  left: 18px;
-  width: 50px;
-  z-index: 10;
-  float: none;
-  margin: 0;
+  display: block;
+  opacity: 0.6;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.1s ease-in-out;
+}
+body:not(.home) footer a.title:hover,
+body.editor > a.title:hover, body:not(.home) footer a.title:focus,
+body.editor > a.title:focus {
+  opacity: 1;
 }
 body:not(.home) footer a.title h1,
 body.editor > a.title h1 {
@@ -146,7 +144,19 @@ body.editor > a.title h1 {
 }
 body:not(.home) footer a.title img,
 body.editor > a.title img {
+  display: block;
   width: 100%;
+}
+
+body:not(.home) footer a.title,
+body.editor > a.title {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 50px;
+  z-index: 10;
+  float: none;
+  margin: 0;
 }
 
 body:not(.home) footer .timer_footer_actions {
@@ -171,9 +181,11 @@ body:not(.home) footer .timer_footer_actions span {
   opacity: 0.6;
   cursor: pointer;
   text-decoration: none;
+  transition: opacity 0.1s ease-in-out;
 }
-body:not(.home) footer .timer_footer_actions a:hover,
-body:not(.home) footer .timer_footer_actions span:hover {
+body:not(.home) footer .timer_footer_actions a:hover, body:not(.home) footer .timer_footer_actions a:focus,
+body:not(.home) footer .timer_footer_actions span:hover,
+body:not(.home) footer .timer_footer_actions span:focus {
   opacity: 1;
 }
 body:not(.home) footer .timer_footer_actions a[href*=edit],

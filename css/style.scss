@@ -119,7 +119,7 @@ footer {
 	right: 0;
 	text-align: right;
 	
-	span, a {
+	span, a:not(.title) {
 		display: inline-block;
 		margin-right: .3em;
 		font-size: 1.1em;
@@ -127,19 +127,13 @@ footer {
 		opacity: .6;
 		cursor: pointer;
 		text-decoration: none;
-		
-		&:hover {
+		transition: opacity .1s ease-in-out;
+
+		&:hover,
+		&:focus {
 			opacity: 1;
 		}
-		
-		&.title {
-			float: right;
 
-			img {
-				width: 80px;
-			}
-		}
-		
 		&[href*="edit"], &[href*="thomhines"] {
 			margin-top: .35em;
 		}
@@ -165,16 +159,18 @@ body:not(.home) footer {
 	text-align: left;
 }
 
-// Timer footer logo + editor page logo (same asset, fixed top-left)
-body:not(.home) footer a.title,
-body.editor > a.title {
-	position: fixed;
-	top: 18px;
-	left: 18px;
-	width: 50px;
-	z-index: 10;
-	float: none;
-	margin: 0;
+// Fixed top-left site logo (timer run view in footer + editor as body child)
+%corner-site-logo {
+	display: block;
+	opacity: 0.6;
+	text-decoration: none;
+	cursor: pointer;
+	transition: opacity .1s ease-in-out;
+
+	&:hover,
+	&:focus {
+		opacity: 1;
+	}
 
 	h1 {
 		float: none;
@@ -183,8 +179,22 @@ body.editor > a.title {
 	}
 
 	img {
+		display: block;
 		width: 100%;
 	}
+}
+
+body:not(.home) footer a.title,
+body.editor > a.title {
+	@extend %corner-site-logo;
+
+	position: fixed;
+	top: 18px;
+	left: 18px;
+	width: 50px;
+	z-index: 10;
+	float: none;
+	margin: 0;
 }
 
 body:not(.home) footer .timer_footer_actions {
@@ -209,8 +219,10 @@ body:not(.home) footer .timer_footer_actions {
 		opacity: 0.6;
 		cursor: pointer;
 		text-decoration: none;
+		transition: opacity .1s ease-in-out;
 
-		&:hover {
+		&:hover,
+		&:focus {
 			opacity: 1;
 		}
 	}

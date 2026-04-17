@@ -460,43 +460,58 @@ $(function() {
 	// MAKE SURE MINIMUM REQUIREMENTS ARE MET, OTHERWISE DISABLE SAVE BUTTON
 	function verifyForm() {
 		var error_msg = "";
-		
-		var invalid_row = false
+
+		var invalid_row = false;
+		var valid_task_count = 0;
+
 		$('.steps li').each(function() {
 			var row = $(this);
 			var rname = row.find('.name').val();
 			var rtime = row.find('.time').val();
-			if(rname && rtime > 0) {
+			if (rname && rtime > 0) {
+				valid_task_count++;
 				$(this).removeClass('incomplete');
 				row.find('.name, .time').removeClass('has_error');
-			} else {
+			}
+			else {
 				invalid_row = true;
 				row.addClass('incomplete');
 
-				if(!rname) {
-					if(row.find('.name').data('touched')) {
+				if (!rname) {
+					if (row.find('.name').data('touched')) {
 						row.find('.name').addClass('has_error');
-					} else {
+					}
+					else {
 						row.find('.name').removeClass('has_error');
 					}
-				} else {
+				}
+				else {
 					row.find('.name').removeClass('has_error');
 				}
 
-				if(!rtime || rtime < 1) {
-					if(row.find('.time').data('touched')) {
+				if (!rtime || rtime < 1) {
+					if (row.find('.time').data('touched')) {
 						row.find('.time').addClass('has_error');
-					} else {
+					}
+					else {
 						row.find('.time').removeClass('has_error');
 					}
-				} else {
+				}
+				else {
 					row.find('.time').removeClass('has_error');
 				}
 			}
 		});
-		
-		if(invalid_row) error_msg = 'Fill in all steps.';
-		else if($('#title').val() == "") error_msg = 'Give your timer a name.';
+
+		if (invalid_row) {
+			error_msg = 'Fill in all steps.';
+		}
+		else if (valid_task_count < 1) {
+			error_msg = 'Add at least one task.';
+		}
+		else if ($('#title').val() == "") {
+			error_msg = 'Give your timer a name.';
+		}
 		$('.error_message').html(error_msg);
 					
 		if(error_msg) {
@@ -517,7 +532,9 @@ $(function() {
 				valid_row = true;
 			}
 		});
-		if(!valid_row) $('.error_message').html('Add at least one step.');
+		if (!valid_row) {
+			$('.error_message').html('Add at least one task.');
+		}
 		json = json.substring(0, json.length - 1);
 		json += "]}";
 		return json;

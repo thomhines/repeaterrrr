@@ -115,7 +115,7 @@ else {
 			<label class="name_label">Name</label>
 			<label class="time_label">Time</label>
 			<label class="color_label">Color</label>
-			<label class="tone_label">Tone</label>
+			<label class="tone_label">Sound</label>
 		</div>
 		
 		<ul class="steps">
