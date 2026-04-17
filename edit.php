@@ -19,31 +19,46 @@ include_once('db.php');
 
 error_reporting(E_ALL);
 
-if(@$get['copy']) {
-	// LOAD JSON FROM SERVER
-	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$get['copy']."';");
-	// CONVERT JSON INTO PHP ARRAY
-	$set = json_decode($set_result['json'], true);
-	$set['info']['title'] = $set['info']['title'] . " (copy)";
-	$set = json_encode($set);
-	$set = str_replace("'", "\'", $set);
-	// print_r($set);
-	
-	$slug = makeSlug();
-	$edit_slug = makeEditSlug();
-
-	$result = sql("INSERT INTO `sets` (`slug`, `edit_slug`, `json`, `created`) VALUES ('$slug', '$edit_slug', '".$set."', NOW())", 1);
-	if(!$result) echo 'Error: There was an problem saving the timer to the database';
-
-	header('Location: https://repeaterrrr.com/edit/'.$edit_slug);
-	
-	die;
-}
-
 $set = array();
 $edit_timer_not_found = false;
+$editor_copy_prefill = false;
 
-if (@$get['set']) {
+// /copy/{slug}: same editor as a new timer, pre-filled from DB — no row until Save.
+if (@$get['copy']) {
+	$copy_key = $get['copy'];
+	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$copy_key."' OR `edit_slug` = '".$copy_key."';");
+
+	if (!$set_result) {
+		header('Location: /edit/', true, 302);
+		exit;
+	}
+
+	$set = json_decode($set_result['json'], true);
+	if (!is_array($set) || !isset($set['info'], $set['steps']) || !is_array($set['steps'])) {
+		header('Location: /edit/', true, 302);
+		exit;
+	}
+
+	if (!isset($set['info']['title'])) {
+		$set['info']['title'] = '';
+	}
+	if (!isset($set['info']['description'])) {
+		$set['info']['description'] = '';
+	}
+
+	$base_title = $set['info']['title'];
+	$suffix = ' (copy)';
+	$max_title = 40;
+	if (strlen($base_title . $suffix) > $max_title) {
+		$set['info']['title'] = substr($base_title, 0, $max_title - strlen($suffix)) . $suffix;
+	}
+	else {
+		$set['info']['title'] = $base_title . $suffix;
+	}
+
+	$editor_copy_prefill = true;
+}
+elseif (@$get['set']) {
 	// LOAD JSON FROM SERVER (edit_slug only — not public slug)
 	$set_result = sql("SELECT * FROM `sets` WHERE `edit_slug` = '".$get['set']."';");
 	if ($set_result) {
@@ -91,6 +106,9 @@ else {
 </head>
 
 <body class="editor clearfix">
+	<?php if (!empty($editor_copy_prefill)) { ?>
+	<script>history.replaceState(null, '', '/edit/');</script>
+	<?php } ?>
 	<a class="title" href="/"><h1><img src="/img/repeaterrrr_logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='/img/repeaterrrr_logo.svg'"></h1></a>
 
 	<?php if ($edit_timer_not_found) { ?>

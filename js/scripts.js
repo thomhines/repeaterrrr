@@ -395,6 +395,16 @@ $(function() {
 	*----------------------------------------------------------------------*/
 	
 	if($('.editor').length) {
+
+		// Only /edit/{edit_slug} updates an existing row; /edit/ and /copy/… are new saves (INSERT).
+		function getEditorSlugForAjax() {
+			var path = window.location.pathname || '';
+			if (/^\/edit\/?$/.test(path)) {
+				return '';
+			}
+			var m = path.match(/^\/edit\/([A-Za-z0-9]+)\/?$/);
+			return m ? m[1] : '';
+		}
 	
 		// UPDATE LINKS ON LOAD
 		//updateLinks();
@@ -491,7 +501,7 @@ $(function() {
 			$.ajax({
 				type: "POST",
 				url: "/ajax.php", // shortens URL and stores it to database
-				data: { json: json_url, edit_slug: window.location.pathname.substr(6) }
+				data: { json: json_url, edit_slug: getEditorSlugForAjax() }
 			})
 			.done(function(response) {
 				var raw = String(response).trim();

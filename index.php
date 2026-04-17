@@ -127,10 +127,8 @@ if ($set_result) {
 			<div class="examples_label">or try an example</div>
 			<div class="examples">
 				<a class="small button" href="/6LeTMUM">Pomodoro</a>
-				<a class="small button" href="/PKLaZA0">7-min Circuit</a>
 				<a class="small button" href="/FAC0IS3">10-20-30 Intervals</a>
 				<a class="small button" href="/uunoYIU">1 Minute Timer</a>
-				<a class="small button" href="/lGzsxUl">Tabata</a>
 			</div>
 		</div>
 	</div>
@@ -167,7 +165,8 @@ if ($set_result) {
 		<!-- TIMER COMPLETION SCREEN -->	
 		<div class="complete">
 			<h2>All done!</h2>
-			<h4>Well, you can check that off your list for today.<br>Or you could...</h4>
+			<h4>Well, you can check that off your list for today.</h4>
+			<h5>Or you could...</h5>
 			<button class="start button" role="button">Do it again</button>
 			<!-- SHOW SAVE TO HOMEPAGE INFO FOR IOS DEVICES -->
 			<h6 class="ios">Like the timer? Add it to your home screen for easy access and to use it full screen!</h6>
