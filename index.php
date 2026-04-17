@@ -126,9 +126,9 @@ if ($set_result) {
 
 			<div class="examples_label">or try an example</div>
 			<div class="examples">
-				<a class="small button" href="/6LeTMUM">Pomodoro</a>
-				<a class="small button" href="/FAC0IS3">10-20-30 Intervals</a>
-				<a class="small button" href="/uunoYIU">1 Minute Timer</a>
+				<a class="small button" href="/oo4js8C">Pomodoro</a>
+				<a class="small button" href="/EwP2j2w">10-20-30 Intervals</a>
+				<a class="small button" href="/VvyLTYt">1 Minute Timer</a>
 			</div>
 		</div>
 	</div>
@@ -179,6 +179,9 @@ if ($set_result) {
 	<footer>
 		<a class="title" href="/"><h1><img src="img/repeaterrrr_logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/repeaterrrr_logo.svg'"></h1></a>
 		<div class="timer_footer_actions">
+			<a class="timer_action timer_action_new" href="/edit/">
+				New Timer
+			</a>
 			<?php if ($show_edit_timer_button) { ?>
 			<a class="timer_action" href="/edit/<?php echo htmlspecialchars($set_result['edit_slug'], ENT_QUOTES, 'UTF-8'); ?>">
 				<i class="icon-edit" aria-hidden="true"></i>

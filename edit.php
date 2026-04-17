@@ -22,6 +22,7 @@ error_reporting(E_ALL);
 $set = array();
 $edit_timer_not_found = false;
 $editor_copy_prefill = false;
+$editor_cancel_slug = '';
 
 // /copy/{slug}: same editor as a new timer, pre-filled from DB — no row until Save.
 if (@$get['copy']) {
@@ -63,6 +64,7 @@ elseif (@$get['set']) {
 	$set_result = sql("SELECT * FROM `sets` WHERE `edit_slug` = '".$get['set']."';");
 	if ($set_result) {
 		$set = json_decode($set_result['json'], true);
+		$editor_cancel_slug = isset($set_result['edit_slug']) ? $set_result['edit_slug'] : '';
 	}
 	else {
 		$edit_timer_not_found = true;
@@ -193,7 +195,12 @@ else {
 		<h5 class="repeat_container">Repeat all steps <input type="number" class="repeat" min="1" value="<?php if(isset($set['info']['repeat'])) echo $set['info']['repeat']; else echo '1'; ?>"> times</h5>
 	
 		<span class="error_message"></span>
-		<button class="special button save disabled" role="button">Save Timer</button>
+		<div class="editor_save_actions">
+			<button class="special button save disabled" role="button">Save Timer</button>
+			<?php if ($editor_cancel_slug !== '') { ?>
+			<a class="editor_cancel" href="/<?php echo htmlspecialchars($editor_cancel_slug, ENT_QUOTES, 'UTF-8'); ?>">Cancel</a>
+			<?php } ?>
+		</div>
 	</form>
 	
 	<div class="ajax"></div>

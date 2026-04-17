@@ -164,6 +164,7 @@ body.editor > a.title {
 body:not(.home) footer .timer_footer_actions {
   position: fixed;
   bottom: 0;
+  left: 0;
   right: 0;
   z-index: 10;
   padding: 15px 35px;
@@ -184,17 +185,61 @@ body:not(.home) footer .timer_footer_actions .timer_action {
   padding: 0;
   font-size: 1.32em;
   color: #222;
+  opacity: 0.6;
   cursor: pointer;
   text-decoration: none;
   line-height: 1;
   font-family: inherit;
   background: transparent;
   border: none;
+  transition: opacity 0.1s ease-in-out;
 }
 body:not(.home) footer .timer_footer_actions .timer_action:hover, body:not(.home) footer .timer_footer_actions .timer_action:focus {
   opacity: 1;
 }
+body:not(.home) footer .timer_footer_actions .timer_action.timer_action_new {
+  margin-right: auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  padding: 0.85em 1.6em;
+  border-radius: 6px;
+  background: #1a3d4f;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.15;
+  opacity: 1;
+  text-decoration: none;
+  border: none;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out, opacity 0.1s ease-in-out;
+}
+body:not(.home) footer .timer_footer_actions .timer_action.timer_action_new i {
+  font-size: 1.1em;
+  line-height: 1;
+  color: inherit;
+}
+body:not(.home) footer .timer_footer_actions .timer_action.timer_action_new .timer_action_label {
+  font-size: 1em;
+  font-weight: 600;
+  max-width: none;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  color: inherit;
+}
+body:not(.home) footer .timer_footer_actions .timer_action.timer_action_new:hover, body:not(.home) footer .timer_footer_actions .timer_action.timer_action_new:focus {
+  opacity: 1;
+  background: #6ec6e6;
+  color: #222;
+}
 body:not(.home) footer .timer_footer_actions a.timer_action {
+  color: #222;
+}
+body:not(.home) footer .timer_footer_actions a.timer_action.timer_action_new {
+  color: #fff;
+}
+body:not(.home) footer .timer_footer_actions a.timer_action.timer_action_new:hover, body:not(.home) footer .timer_footer_actions a.timer_action.timer_action_new:focus {
   color: #222;
 }
 body:not(.home) footer .timer_footer_actions button.timer_action {
@@ -213,7 +258,7 @@ body:not(.home) footer .timer_footer_actions .timer_action_mute {
   cursor: pointer;
   user-select: none;
 }
-body:not(.home) footer .timer_footer_actions a.timer_action[href*=edit],
+body:not(.home) footer .timer_footer_actions a.timer_action[href*=edit]:not(.timer_action_new),
 body:not(.home) footer .timer_footer_actions a.timer_action[href*=thomhines] {
   margin-top: 0;
 }
@@ -713,10 +758,37 @@ li.step.gu-mirror .drag_handle {
   margin: 1em 0 0.5em;
 }
 
+.editor_save_actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin: 0.9em 0 0;
+  width: auto;
+  max-width: 100%;
+}
+@media screen and (max-width: 600px) {
+  .editor_save_actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+}
+.editor_save_actions .save.button {
+  margin: 0;
+  flex: 0 0 auto;
+}
+@media screen and (max-width: 600px) {
+  .editor_save_actions .save.button {
+    width: 100%;
+  }
+}
+
 .editor .save.button {
   display: block;
   width: 340px;
-  margin: 0.9em 0 0;
+  margin: 0;
   padding: 1rem 2.5rem;
   border-radius: 8px;
   background: #1a3d4f;
@@ -728,6 +800,34 @@ li.step.gu-mirror .drag_handle {
 @media screen and (max-width: 600px) {
   .editor .save.button {
     width: 100%;
+  }
+}
+
+.editor a.editor_cancel {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: #1a3d4f;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+  align-self: center;
+}
+.editor a.editor_cancel:hover, .editor a.editor_cancel:focus {
+  color: #222;
+  background: transparent;
+}
+@media screen and (max-width: 600px) {
+  .editor a.editor_cancel {
+    align-self: center;
+    text-align: center;
   }
 }
 
@@ -1073,7 +1173,25 @@ li.step.gu-mirror .drag_handle {
     right: 0;
     justify-content: space-between;
     gap: 0;
-    padding: 12px 10vw;
+    padding: 8px 4vw;
+  }
+  body:not(.home) footer .timer_footer_actions .timer_action {
+    font-size: 1.05em;
+    gap: 2px;
+  }
+  body:not(.home) footer .timer_footer_actions .timer_action_label {
+    font-size: 9px;
+    max-width: 4.25em;
+  }
+  body:not(.home) footer .timer_footer_actions .timer_action.timer_action_new {
+    margin-right: 0;
+    padding: 0.8em 0.65em;
+    font-size: 0.625rem;
+    gap: 0.28em;
+    border-radius: 5px;
+  }
+  body:not(.home) footer .timer_footer_actions .timer_action.timer_action_new i {
+    font-size: 0.95em;
   }
 }
 @media screen and (max-height: 600px) {
@@ -1113,6 +1231,24 @@ li.step.gu-mirror .drag_handle {
     right: 0;
     justify-content: space-between;
     gap: 0;
-    padding: 8px 14px;
+    padding: 6px 10px;
+  }
+  body:not(.home) footer .timer_footer_actions .timer_action {
+    font-size: 1em;
+    gap: 2px;
+  }
+  body:not(.home) footer .timer_footer_actions .timer_action_label {
+    font-size: 8px;
+    max-width: 4em;
+  }
+  body:not(.home) footer .timer_footer_actions .timer_action.timer_action_new {
+    margin-right: 0;
+    padding: 0.32em 0.55em;
+    font-size: 0.6rem;
+    gap: 0.25em;
+    border-radius: 4px;
+  }
+  body:not(.home) footer .timer_footer_actions .timer_action.timer_action_new i {
+    font-size: 0.9em;
   }
 }

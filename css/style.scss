@@ -205,6 +205,7 @@ body.editor > a.title {
 body:not(.home) footer .timer_footer_actions {
 	position: fixed;
 	bottom: 0;
+	left: 0;
 	right: 0;
 	z-index: 10;
 	padding: 15px 35px;
@@ -225,12 +226,14 @@ body:not(.home) footer .timer_footer_actions {
 		padding: 0;
 		font-size: 1.32em;
 		color: $black;
+		opacity: 0.6;
 		cursor: pointer;
 		text-decoration: none;
 		line-height: 1;
 		font-family: inherit;
 		background: transparent;
 		border: none;
+		transition: opacity .1s ease-in-out;
 
 		&:hover,
 		&:focus {
@@ -238,8 +241,58 @@ body:not(.home) footer .timer_footer_actions {
 		}
 	}
 
+	.timer_action.timer_action_new {
+		margin-right: auto;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 0.45em;
+		padding: 0.85em 1.6em;
+		border-radius: 6px;
+		background: $primary-color;
+		color: $white;
+		font-size: 0.75rem;
+		font-weight: 600;
+		line-height: 1.15;
+		opacity: 1;
+		text-decoration: none;
+		border: none;
+		transition: background-color .1s ease-in-out, color .1s ease-in-out, opacity .1s ease-in-out;
+
+		i {
+			font-size: 1.1em;
+			line-height: 1;
+			color: inherit;
+		}
+
+		.timer_action_label {
+			font-size: 1em;
+			font-weight: 600;
+			max-width: none;
+			text-transform: none;
+			letter-spacing: 0.01em;
+			color: inherit;
+		}
+
+		&:hover,
+		&:focus {
+			opacity: 1;
+			background: $secondary-color;
+			color: $black;
+		}
+	}
+
 	a.timer_action {
 		color: $black;
+	}
+
+	a.timer_action.timer_action_new {
+		color: $white;
+
+		&:hover,
+		&:focus {
+			color: $black;
+		}
 	}
 
 	button.timer_action {
@@ -261,7 +314,7 @@ body:not(.home) footer .timer_footer_actions {
 		user-select: none;
 	}
 
-	a.timer_action[href*="edit"],
+	a.timer_action[href*="edit"]:not(.timer_action_new),
 	a.timer_action[href*="thomhines"] {
 		margin-top: 0;
 	}
@@ -824,10 +877,36 @@ li.step.gu-mirror .drag_handle {
 	margin: 1em 0 .5em;
 }
 
+.editor_save_actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 1rem 1.5rem;
+	margin: 0.9em 0 0;
+	width: auto;
+	max-width: 100%;
+
+	@media screen and (max-width: 600px) {
+		width: 100%;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0.65rem;
+	}
+
+	.save.button {
+		margin: 0;
+		flex: 0 0 auto;
+
+		@media screen and (max-width: 600px) {
+			width: 100%;
+		}
+	}
+}
+
 .editor .save.button {
 	display: block;
 	width: 340px;
-	margin: 0.9em 0 0;
+	margin: 0;
 	padding: 1rem 2.5rem;
 	border-radius: 8px;
 	background: #1a3d4f;
@@ -838,6 +917,35 @@ li.step.gu-mirror .drag_handle {
 
 	@media screen and (max-width: 600px) {
 		width: 100%;
+	}
+}
+
+.editor a.editor_cancel {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	color: $primary-color;
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.2;
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
+	cursor: pointer;
+	align-self: center;
+
+	&:hover,
+	&:focus {
+		color: $black;
+		background: transparent;
+	}
+
+	@media screen and (max-width: 600px) {
+		align-self: center;
+		text-align: center;
 	}
 }
 
@@ -1221,7 +1329,29 @@ li.step.gu-mirror .drag_handle {
 		right: 0;
 		justify-content: space-between;
 		gap: 0;
-		padding: 12px 10vw;
+		padding: 8px 4vw;
+
+		.timer_action {
+			font-size: 1.05em;
+			gap: 2px;
+		}
+
+		.timer_action_label {
+			font-size: 9px;
+			max-width: 4.25em;
+		}
+
+		.timer_action.timer_action_new {
+			margin-right: 0;
+			padding: 0.8em 0.65em;
+			font-size: 0.625rem;
+			gap: 0.28em;
+			border-radius: 5px;
+
+			i {
+				font-size: 0.95em;
+			}
+		}
 	}
 }
 
@@ -1266,7 +1396,29 @@ li.step.gu-mirror .drag_handle {
 		right: 0;
 		justify-content: space-between;
 		gap: 0;
-		padding: 8px 14px;
+		padding: 6px 10px;
+
+		.timer_action {
+			font-size: 1em;
+			gap: 2px;
+		}
+
+		.timer_action_label {
+			font-size: 8px;
+			max-width: 4em;
+		}
+
+		.timer_action.timer_action_new {
+			margin-right: 0;
+			padding: 0.32em 0.55em;
+			font-size: 0.6rem;
+			gap: 0.25em;
+			border-radius: 4px;
+
+			i {
+				font-size: 0.9em;
+			}
+		}
 	}
 	// .button.delete_step {
 	// 	margin: 1.5em 1em;
