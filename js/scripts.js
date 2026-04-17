@@ -330,6 +330,12 @@ $(function() {
 			//updateLinks();
 			verifyForm();
 		});
+
+		// Mark step fields as "touched" after edit or blur, then validate.
+		$(document).on('input blur', '.steps .name, .steps .time', function() {
+			$(this).data('touched', true);
+			verifyForm();
+		});
 		
 		// CHANGE COLOR OF ROW IF COLOR SELECTOR IS CHANGED
 		$(document).on('change', 'select.color', function() {
@@ -338,9 +344,13 @@ $(function() {
 		});
 		
 		// INPUT BOX CHARACTER LIMITS
-		$('.title_char_count').html($('.title').val().length);
-		$('.title').keyup(function(e) {
-			$('.title_char_count').html($('.title').val().length);
+		function updateTitleCharCount() {
+			var titleValue = $('#title').val() || '';
+			$('.title_char_count').html(titleValue.length);
+		}
+		updateTitleCharCount();
+		$('#title').on('input change paste', function() {
+			updateTitleCharCount();
 		});
 
 		$('.description_char_count').html($('.description').val().length);
@@ -454,21 +464,29 @@ $(function() {
 				row.addClass('incomplete');
 
 				if(!rname) {
-					row.find('.name').addClass('has_error');
+					if(row.find('.name').data('touched')) {
+						row.find('.name').addClass('has_error');
+					} else {
+						row.find('.name').removeClass('has_error');
+					}
 				} else {
 					row.find('.name').removeClass('has_error');
 				}
 
 				if(!rtime || rtime < 1) {
-					row.find('.time').addClass('has_error');
+					if(row.find('.time').data('touched')) {
+						row.find('.time').addClass('has_error');
+					} else {
+						row.find('.time').removeClass('has_error');
+					}
 				} else {
 					row.find('.time').removeClass('has_error');
 				}
 			}
 		});
 		
-		if(invalid_row) error_msg = 'Make sure all of your steps are filled in.';
-		else if($('.title').val() == "") error_msg = 'This timer needs a title!';
+		if(invalid_row) error_msg = 'Fill in all steps.';
+		else if($('#title').val() == "") error_msg = 'Give your timer a name.';
 		$('.error_message').html(error_msg);
 					
 		if(error_msg) {
@@ -481,7 +499,7 @@ $(function() {
 	function makeJson(title, description, steps) {
 		repeats_x_times = $('.repeat').val();
 		if(!repeats_x_times) repeats_x_times = 1;
-		var json = '{"info":{"title":"'+encodeUrlEntities($('.title').val())+'","description":"'+encodeUrlEntities($('.description').val())+'","repeat":'+repeats_x_times+'},"steps":[';
+		var json = '{"info":{"title":"'+encodeUrlEntities($('#title').val())+'","description":"'+encodeUrlEntities($('.description').val())+'","repeat":'+repeats_x_times+'},"steps":[';
 		var valid_row = false
 		$('li').each(function() {
 			if($(this).find('.name').val() && $(this).find('.time').val()) {
@@ -489,7 +507,7 @@ $(function() {
 				valid_row = true;
 			}
 		});
-		if(!valid_row) $('.error_message').html('This timer needs at least one working step!');
+		if(!valid_row) $('.error_message').html('Add at least one step.');
 		json = json.substring(0, json.length - 1);
 		json += "]}";
 		return json;

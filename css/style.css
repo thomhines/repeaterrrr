@@ -125,7 +125,7 @@ body.editor > a.title {
   position: fixed;
   top: 18px;
   left: 18px;
-  width: 60px;
+  width: 50px;
   z-index: 10;
   float: none;
   margin: 0;
@@ -344,7 +344,7 @@ html:has(.editor) {
   width: 80%;
   max-width: 900px;
   margin: auto;
-  padding: calc(78px + 1.25rem) 20px 40px;
+  padding: 60px 20px 40px;
   text-align: left;
   background: #eee;
 }
@@ -461,7 +461,6 @@ option {
 li.step.gu-mirror input.name.has_error,
 li.step.gu-mirror input.time.has_error {
   border: 1px solid #c22026;
-  border-left: 4px solid #c22026;
 }
 
 ul, li {
@@ -520,22 +519,49 @@ li label {
   margin: 1em 0 0.5em;
 }
 
-/*
-.save.button {
-	float: right;
-	margin-top: .7em;
+.editor .save.button {
+  display: block;
+  width: 340px;
+  margin: 0.9em 0 0;
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  background: #1a3d4f;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
-*/
+@media screen and (max-width: 600px) {
+  .editor .save.button {
+    width: 100%;
+  }
+}
+
+.editor .save.button:hover,
+.editor .save.button:focus,
+.editor .save.button:active,
+.editor .save.button.button_hover {
+  background: #6ec6e6;
+  color: #1a3d4f;
+}
+
 .error_message {
-  display: inline-block;
-  padding: 0.5em 1em;
+  display: block;
+  width: 340px;
+  padding: 0.75em 1em;
   font-size: 0.7em;
-  background: #ee9494;
-  color: rgba(0, 0, 0, 0.6);
+  font-weight: 600;
+  background: #fdcdcd;
+  color: #222;
   border-radius: 4px;
 }
 .error_message:empty {
   padding: 0;
+}
+@media screen and (max-width: 600px) {
+  .error_message {
+    width: 100%;
+  }
 }
 
 .share_container {
@@ -556,9 +582,10 @@ li label {
   display: inline-block;
   margin: 2em 0.2em;
   padding: 0.4em 1em;
-  background: #222;
+  background: #1a3d4f;
   color: #fff;
   font-size: 1.2em;
+  font-weight: 600;
   line-height: 1em;
   cursor: pointer;
   border-radius: 3px;
@@ -571,7 +598,8 @@ li label {
 .button.medium {
   font-size: 0.7em;
   margin: 0 0 0 0.3em;
-  padding: 0.55em;
+  padding: 1em 2em;
+  border-radius: 6px;
 }
 .button.small {
   font-size: 0.7em;
@@ -589,14 +617,11 @@ li label {
   padding: 0.1em;
 }
 .button.special {
-  margin: 0.4em 0.2em 0.4em 0;
-  padding: 0.5em 1em;
-  font-size: 17px;
-  background: #8ed994;
-  color: #222;
+  background: #94d7ea;
+  color: #1a3d4f;
 }
 .button.special:hover, .button.special:focus {
-  background: rgb(180.1655629139, 229.8344370861, 184.1390728477);
+  background: #1a3d4f;
   color: #fff;
 }
 .button.success {
@@ -621,7 +646,7 @@ li label {
 
 .button:hover, .button:focus, .button.button_hover {
   color: #222;
-  background: rgba(50, 50, 50, 0.2);
+  background: #6ec6e6;
 }
 
 .white {

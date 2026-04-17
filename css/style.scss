@@ -25,7 +25,10 @@ $red: #ee9494;
 $blue: #94d7ea;
 $green: #8ed994;
 $yellow: #ecf298;
-// $orange: #cf7127;
+
+$primary-color: #1a3d4f;
+$secondary-color: #6ec6e6;
+
 $width: 500px;
 
 
@@ -157,7 +160,7 @@ body.editor > a.title {
 	position: fixed;
 	top: 18px;
 	left: 18px;
-	width: 60px;
+	width: 50px;
 	z-index: 10;
 	float: none;
 	margin: 0;
@@ -240,7 +243,7 @@ body:not(.home) footer .timer_footer_actions {
 	}
 
 	.button {
-		color: #1a3d4f;
+		color: $primary-color;
 	}
 
 	.special.button {
@@ -250,8 +253,8 @@ body:not(.home) footer .timer_footer_actions {
 		margin: 0 auto 56px;
 		padding: 1rem 2.5rem;
 		border-radius: 8px;
-		background: #1a3d4f;
-		color: #6ec6e6;
+		background: $primary-color;
+		color: $secondary-color;
 		font-size: 18px;
 		font-weight: 600;
 		letter-spacing: 0.01em;
@@ -260,7 +263,7 @@ body:not(.home) footer .timer_footer_actions {
 		&:focus,
 		&:active {
 			background: $white;
-			color: #1a3d4f;
+			color: $primary-color;
 		}
 	}
 }
@@ -404,7 +407,7 @@ html:has(.editor) {
 	width: 80%;
 	max-width: 900px;
 	margin: auto;
-	padding: calc(18px + 60px + 1.25rem) 20px 40px;
+	padding: 60px 20px 40px;
 	text-align: left;
 	background: $lt-gray;
 	
@@ -529,7 +532,7 @@ li.step.gu-mirror {
 	input.name.has_error,
 	input.time.has_error {
 		border: 1px solid $dk-red;
-		border-left: 4px solid $dk-red;
+		// border-left: 4px solid $dk-red;
 	}
 }
 
@@ -602,22 +605,47 @@ li {
 	margin: 1em 0 .5em;
 }
 
-/*
-.save.button {
-	float: right;
-	margin-top: .7em;
+.editor .save.button {
+	display: block;
+	width: 340px;
+	margin: 0.9em 0 0;
+	padding: 1rem 2.5rem;
+	border-radius: 8px;
+	background: #1a3d4f;
+	color: $white;
+	font-size: 18px;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+
+	@media screen and (max-width: 600px) {
+		width: 100%;
+	}
 }
-*/
+
+.editor .save.button:hover,
+.editor .save.button:focus,
+.editor .save.button:active,
+.editor .save.button.button_hover {
+	background: $secondary-color;
+	color: $primary-color;
+}
+
 .error_message {
-	display: inline-block;
-	padding: .5em 1em;
+	display: block;
+	width: 340px;
+	padding: 0.75em 1em;
 	font-size: .7em;
-	background: $red;
-	color: rgba(0,0,0,.6);
+	font-weight: 600;
+	background: $lt-red;
+	color: $black;
 	border-radius: 4px;
 	
 	&:empty {
 		padding: 0;
+	}
+
+	@media screen and (max-width: 600px) {
+		width: 100%;
 	}
 }
 
@@ -647,9 +675,10 @@ li {
 	display: inline-block;
 	margin: 2em .2em;
 	padding: .4em 1em;
-	background: $black;
+	background: $primary-color;
 	color: $white;
 	font-size: 1.2em;
+	font-weight: 600;
 	line-height: 1em;
 	cursor: pointer;
 	border-radius: 3px;
@@ -662,7 +691,8 @@ li {
 	&.medium {
 		font-size: .7em;
 		margin: 0 0 0 .3em;
-		padding: .55em;
+		padding: 1em 2em;
+		border-radius: 6px;
 	}
 	&.small {
 		font-size: .7em;
@@ -680,13 +710,13 @@ li {
 		padding: .1em;
 	}
 	&.special {
-		margin: .4em .2em .4em 0;
-	    padding: 0.5em 1em;
-	    font-size: 17px;
-		background: $green;
-		color: $black;
+		// margin: .4em .2em .4em 0;
+	    // padding: 0.5em 1em;
+	    // font-size: 17px;
+		background: $blue;
+		color: $primary-color;
 		&:hover, &:focus {
-			background: color.adjust($green, $lightness: 10%);
+			background: $primary-color;
 			color: $white;
 		}
 	}
@@ -711,7 +741,7 @@ li {
 }
 .button:hover, .button:focus, .button.button_hover {
 	color: $black;
-	background: $semi-black;
+	background: $secondary-color;
 }
 
 .white {

@@ -117,8 +117,8 @@ else {
 		<li class="step <?php echo $step['color']; ?>">
 			<span class="drag_handle">&#xe805;</span>
 			<i class="copy_step smaller button icon-docs" role="button"></i>
-			<input type="text" class="name" value="<?php echo $step['title'] ?>">
-			<input type="number" class="time" value="<?php echo $step['time'] ?>" min="1" step="1"><label>sec</label>
+			<input type="text" class="name" value="<?php echo $step['title'] ?>" placeholder="Step Name">
+			<input type="number" class="time" value="<?php echo $step['time'] ?>" min="1" step="1" placeholder="10"><label>sec</label>
 			<select class="color">
 				<option value="white" <?php if($step['color'] == 'white') echo 'selected="selected"'; ?>>White</option>
 				<option value="red" <?php if($step['color'] == 'red') echo 'selected="selected"'; ?>>Red</option>
@@ -162,11 +162,12 @@ else {
 			<i class="delete_step smaller button icon-cancel" role="button"></i>
 		</li>
 		
+		<hr>
 	
 		<h5 class="repeat_container">Repeat all steps <input type="number" class="repeat" min="1" value="<?php if(isset($set['info']['repeat'])) echo $set['info']['repeat']; else echo '1'; ?>"> times</h5>
 	
-		<button class="special button save disabled" role="button">Save</button>
 		<span class="error_message"></span>
+		<button class="special button save disabled" role="button">Save Timer</button>
 	</form>
 	
 	<div class="ajax"></div>
