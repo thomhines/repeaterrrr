@@ -187,7 +187,7 @@ if ($set_result) {
 			<?php } ?>
 			<a class="timer_action" href="/copy/<?php echo htmlspecialchars($set_result['slug'], ENT_QUOTES, 'UTF-8'); ?>">
 				<i class="icon-docs" aria-hidden="true"></i>
-				<span class="timer_action_label">Copy</span>
+				<span class="timer_action_label">Duplicate</span>
 			</a>
 			<?php
 			$share_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'repeaterrrr.com';
