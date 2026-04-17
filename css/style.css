@@ -382,6 +382,16 @@ html:has(.editor) {
   margin: 0.2em 0;
   font-size: 0.6em;
 }
+.editor .edit_not_found_notice {
+  margin: 0 0 1.25rem;
+  padding: 0.75em 1em;
+  font-size: 0.7em;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 600;
+  background: #fdcdcd;
+  border-radius: 4px;
+}
 
 label {
   display: inline-block;
@@ -430,7 +440,7 @@ textarea {
 }
 
 select {
-  padding: 5px;
+  padding: 5px 10px;
   font-size: 0.8em;
   background: url(/img/dropdown.svg), #fff;
   background-position: 93% 53%;
@@ -468,7 +478,11 @@ option {
 }
 
 .step {
-  margin: 0 0 20px;
+  margin: 0 0 10px;
+  border: 1px solid rgba(50, 50, 50, 0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
 }
 .step input, .step textarea, .step select {
   margin: 0;
@@ -491,7 +505,7 @@ ul, li {
 
 li {
   position: relative;
-  padding: 2px 0 2px 3px;
+  padding: 4px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -500,7 +514,7 @@ li {
   user-select: none;
   display: flex;
   gap: 8px;
-  align-items: flex-start;
+  align-items: center;
 }
 li .button,
 li .button.smaller {
@@ -533,6 +547,16 @@ li label {
   -ms-user-select: none;
   user-select: none;
   cursor: move;
+}
+
+.editor li.step .drag_handle,
+li.step.gu-mirror .drag_handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
 .editor .repeat_container {
@@ -572,7 +596,7 @@ li label {
   font-size: 0.7em;
   font-weight: 600;
   background: #fdcdcd;
-  color: #222;
+  color: rgba(0, 0, 0, 0.7);
   border-radius: 4px;
 }
 .error_message:empty {
@@ -754,8 +778,9 @@ li label {
     flex-wrap: wrap;
     align-items: center;
     row-gap: 4px;
-    margin: 0 0 20px;
-    padding: 2px 3px 2px var(--step-handle-gutter);
+    margin: 0 0 8px;
+    padding: 7px;
+    padding-left: var(--step-handle-gutter);
   }
   .editor ul.steps > li.step::before,
   li.step.gu-mirror::before {
@@ -771,14 +796,19 @@ li label {
   li.step.gu-mirror .drag_handle {
     position: absolute;
     left: 3px;
-    top: 0.35em;
+    top: 0;
+    bottom: 0;
     z-index: 1;
     order: 1;
     flex: 0 0 auto;
     width: calc(var(--step-handle-gutter) - 6px);
     max-width: calc(var(--step-handle-gutter) - 6px);
     box-sizing: border-box;
-    margin: 0;
+    height: max-content;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0;
+    margin-right: 0;
     padding: 0.5em 0;
     display: flex;
     align-items: center;

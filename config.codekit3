@@ -652,6 +652,14 @@
       "oAP" : "\/LICENSE",
       "oF" : 0
     },
+    "\/migrate_add_edit_slug.php" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/migrate_add_edit_slug.php",
+      "oF" : 0
+    },
     "\/README.md" : {
       "cB" : 0,
       "cS" : 0,

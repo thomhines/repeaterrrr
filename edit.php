@@ -30,22 +30,31 @@ if(@$get['copy']) {
 	// print_r($set);
 	
 	$slug = makeSlug();
-	
-	$result = sql("INSERT INTO `sets` (`slug`, `json`, `created`) VALUES ('$slug', '".$set."', NOW())", 1);
+	$edit_slug = makeEditSlug();
+
+	$result = sql("INSERT INTO `sets` (`slug`, `edit_slug`, `json`, `created`) VALUES ('$slug', '$edit_slug', '".$set."', NOW())", 1);
 	if(!$result) echo 'Error: There was an problem saving the timer to the database';
 
-	header('Location: https://repeaterrrr.com/edit/'.$slug);
+	header('Location: https://repeaterrrr.com/edit/'.$edit_slug);
 	
 	die;
 }
 
 $set = array();
-if(@$get['set']) {
-	// LOAD JSON FROM SERVER
-	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$get['set']."';");
-	// CONVERT JSON INTO PHP ARRAY
-	$set = json_decode($set_result['json'], true);
-} 
+$edit_timer_not_found = false;
+
+if (@$get['set']) {
+	// LOAD JSON FROM SERVER (edit_slug only — not public slug)
+	$set_result = sql("SELECT * FROM `sets` WHERE `edit_slug` = '".$get['set']."';");
+	if ($set_result) {
+		$set = json_decode($set_result['json'], true);
+	}
+	else {
+		$edit_timer_not_found = true;
+		$set['info'] = array('title' => '', 'description' => '');
+		$set['steps'] = array(array('title' => '', 'time' => '', 'color' => '', 'sound' => ''));
+	}
+}
 else {
 	// FOR THE SAKE OF GIVING A BLANK STEP ROW ON NEW TIMERS
 	$set['info'] = array('title' => '','description' => '');
@@ -84,6 +93,12 @@ else {
 <body class="editor clearfix">
 	<a class="title" href="/"><h1><img src="/img/repeaterrrr_logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='/img/repeaterrrr_logo.svg'"></h1></a>
 
+	<?php if ($edit_timer_not_found) { ?>
+	<div class="edit_not_found_notice" role="status">That timer is not in the database. Check the link or start a new timer below.</div>
+	<script>
+		history.replaceState(null, '', '/edit/');
+	</script>
+	<?php } ?>
 
 	<h4>Timer Info</h4>
 	<form>
@@ -107,7 +122,7 @@ else {
 		<?php if($set['steps']) foreach($set['steps'] as $step) { ?>
 		
 	
-		<li class="step <?php echo $step['color']; ?>">
+		<li class="step <?php echo ($step['color']) ? $step['color'] : 'white'; ?>">
 			<span class="drag_handle">&#xe805;</span>
 			<i class="copy_step smaller button icon-docs" role="button"></i>
 			<input type="text" class="name" value="<?php echo $step['title'] ?>" placeholder="Step Name">
@@ -133,7 +148,7 @@ else {
 		<div><button class="medium button add_step" role="button">+ Add New Row</button></div>
 	
 		<!-- EMPTY ROW TEMPLATE FOR ADDING NEW STEP ROWS -->
-		<li class="step row_template">
+		<li class="step row_template white">
 			<span class="drag_handle">&#xe805;</span>
 			<i class="copy_step smaller button icon-docs" role="button"></i>
 			<input type="text" class="name">

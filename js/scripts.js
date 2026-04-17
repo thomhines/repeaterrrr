@@ -412,10 +412,20 @@ $(function() {
 			$.ajax({
 				type: "POST",
 				url: "/ajax.php", // shortens URL and stores it to database
-				data: { json: json_url, slug: window.location.pathname.substr(6) }
+				data: { json: json_url, edit_slug: window.location.pathname.substr(6) }
 			})
 			.done(function(response) {
-				window.location = "/"+response;
+				var lines = String(response).trim().split('\n');
+				var slug = lines[0] || '';
+				var editSlug = (lines.length > 1) ? lines[1].trim() : '';
+				var pathTail = window.location.pathname.substr(6);
+				var isNewFromBlankEditor = !pathTail || pathTail.length < 1;
+				if (isNewFromBlankEditor && editSlug) {
+					window.location = '/edit/' + editSlug;
+				}
+				else {
+					window.location = '/' + slug;
+				}
 			});
 		});
 	

@@ -7,6 +7,9 @@
  * Run from CLI: php migrate_add_edit_slug.php
  * Or open once in a browser, then delete or protect this file.
  *
+ * If edit_slug was initially copied from slug, also run once:
+ *   php migrate_untie_edit_slugs.php
+ *
  *----------------------------------------------------------------------*/
 
 require_once __DIR__ . '/db.php';

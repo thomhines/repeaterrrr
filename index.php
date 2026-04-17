@@ -12,15 +12,20 @@
 	
 *----------------------------------------------------------------------*/
 
+$set_result = null;
+$show_edit_timer_button = false;
 
-if(isset($_GET['set']) && $_GET['set']) {
+if (isset($_GET['set']) && $_GET['set']) {
 	include_once('db.php');
-	// LOAD JSON FROM SERVER
-	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$get['set']."';");
-	
-	
-	// COUNT HOW MANY TIMES TIMER IS USED
-	if($set_result) sql("UPDATE `sets` SET `use_counter` = use_counter + 1 WHERE `slug` = '".$get['set']."';");
+	$set_result = sql("SELECT * FROM `sets` WHERE `slug` = '".$get['set']."' OR `edit_slug` = '".$get['set']."';");
+
+	if ($set_result) {
+		sql("UPDATE `sets` SET `use_counter` = `use_counter` + 1 WHERE `slug` = '".$set_result['slug']."';");
+
+		$edit_slug_val = isset($set_result['edit_slug']) ? $set_result['edit_slug'] : '';
+		$slug_val = isset($set_result['slug']) ? $set_result['slug'] : '';
+		$show_edit_timer_button = ($edit_slug_val !== '' && $get['set'] === $edit_slug_val);
+	}
 }
 
 
@@ -38,11 +43,8 @@ if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])==$lastModified || $etagHeader
    exit;
 }
 */
-	
-if(isset($set_result)) {
-	// COUNT HOW MANY TIMES TIMER IS USED
-	sql("UPDATE `sets` SET `use_counter` = use_counter + 1 WHERE `slug` = '".$get['set']."';");
-	
+
+if ($set_result) {
 	// CONVERT JSON INTO PHP ARRAY
 	$set = json_decode($set_result['json'], true);
 	
@@ -72,7 +74,7 @@ if(isset($set_result)) {
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-<title>repeaterrrr | <?php if(isset($set['info']['title'])) echo $set['info']['title']; else echo 'The simple, clean, and easy repeating timer.'; ?></title>
+<title>repeaterrrr | <?php if (!empty($set_result) && !empty($set['info']['title'])) { echo htmlspecialchars($set['info']['title'], ENT_QUOTES, 'UTF-8'); } else { echo 'The simple, clean, and easy repeating timer.'; } ?></title>
 <meta charset="utf-8" />
 <meta name="description" content="The clean and easy repeating timer." />
 <meta name="viewport" content="user-scalable=no, width=500">
@@ -102,14 +104,14 @@ if(isset($set_result)) {
 
 <script type="text/javascript">
 	// SAVE STEPS TO JAVASCRIPT VAR
-	<?php if($set_result) { ?>var steps = <?php echo $json; ?>;<?php } ?>
+	<?php if ($set_result) { ?>var steps = <?php echo $json; ?>;<?php } ?>
 </script>
 </head>
 
-<body <?php if(!isset($set_result)) echo 'class="home"'; ?>>
+<body <?php if (empty($set_result)) { echo 'class="home"'; } ?>>
 	<div class="container">
 		<?php // IF NO SET IS GIVEN IN URL, PROVIDE SPLASH SCREEN
-		if(!isset($set_result)) { ?>
+		if (empty($set_result)) { ?>
 		<div class="intro">
 			<div class="logo">
 				<img src="img/repeaterrrr_combo_dark.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/repeaterrrr_logo.svg'">
@@ -178,9 +180,15 @@ if(isset($set_result)) {
 	<footer>
 		<a class="title" href="/"><h1><img src="img/repeaterrrr_logo.svg" alt="repeaterrrr" onerror="this.onerror=null; this.src='img/repeaterrrr_logo.svg'"></h1></a>
 		<div class="timer_footer_actions">
-			<a href='/edit/<?php echo $get['set']; ?>'><i class="icon-edit"></i></a>
-			<a href='/copy/<?php echo $get['set']; ?>'><i class="icon-docs"></i></a>
-			<a class="email_timer" target="_blank" href="mailto:?subject=<?php echo $set['info']['title']; ?> [repeaterrrr]&body=<?php echo $set['info']['title']; ?>%0d%0a<?php echo $set['info']['description']; ?>%0d%0a%0d%0ahttp://repeaterrrr.com/<?php echo $get['set']; ?>%0d%0a%0d%0a--%0d%0aRepeating timers by repeaterrrr%0d%0ahttp://repeaterrrr.com/"><i class="icon-mail"></i></a>
+			<?php if ($show_edit_timer_button) { ?>
+			<a href="/edit/<?php echo htmlspecialchars($set_result['edit_slug'], ENT_QUOTES, 'UTF-8'); ?>"><i class="icon-edit"></i></a>
+			<?php } ?>
+			<a href="/copy/<?php echo htmlspecialchars($set_result['slug'], ENT_QUOTES, 'UTF-8'); ?>"><i class="icon-docs"></i></a>
+			<?php
+			$email_subject = $set['info']['title'] . ' [repeaterrrr]';
+			$email_body = $set['info']['title'] . "\r\n" . $set['info']['description'] . "\r\n\r\nhttps://repeaterrrr.com/" . $set_result['slug'] . "\r\n\r\n--\r\nRepeating timers by repeaterrrr\r\nhttps://repeaterrrr.com/";
+			?>
+			<a class="email_timer" target="_blank" href="mailto:?subject=<?php echo rawurlencode($email_subject); ?>&body=<?php echo rawurlencode($email_body); ?>"><i class="icon-mail"></i></a>
 			<span class="icon-volume-up mute"></span>
 		</div>
 	</footer>
