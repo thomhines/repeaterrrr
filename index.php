@@ -127,7 +127,7 @@ if ($set_result) {
 			<div class="examples_label">or try an example</div>
 			<div class="examples">
 				<a class="small button" href="/oo4js8C">Pomodoro</a>
-				<a class="small button" href="/EwP2j2w">10-20-30 Intervals</a>
+				<a class="small button" href="/EwP2j2w">30-20-10 Training</a>
 				<a class="small button" href="/VvyLTYt">1 Minute Timer</a>
 			</div>
 		</div>
@@ -184,7 +184,7 @@ if ($set_result) {
 			</a>
 			<?php if ($show_edit_timer_button) { ?>
 			<a class="timer_action" href="/edit/<?php echo htmlspecialchars($set_result['edit_slug'], ENT_QUOTES, 'UTF-8'); ?>">
-				<i class="icon-edit" aria-hidden="true"></i>
+				<i class="icon-pencil" aria-hidden="true"></i>
 				<span class="timer_action_label">Edit</span>
 			</a>
 			<?php } ?>
@@ -198,7 +198,7 @@ if ($set_result) {
 			$share_timer_url = $share_scheme . '://' . $share_host . '/' . $set_result['slug'];
 			?>
 			<button type="button" class="share_timer timer_action" aria-haspopup="dialog" aria-expanded="false" aria-controls="share_timer_popup" aria-label="Share timer">
-				<i class="icon-share" aria-hidden="true"></i>
+				<i class="icon-export" aria-hidden="true"></i>
 				<span class="timer_action_label">Share</span>
 			</button>
 			<div class="timer_action timer_action_mute" role="button" tabindex="0" aria-label="Mute">

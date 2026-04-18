@@ -154,7 +154,7 @@ body:not(.home) footer a.title,
 body.editor > a.title {
   position: fixed;
   top: 18px;
-  left: 18px;
+  right: 18px;
   width: 50px;
   z-index: 10;
   float: none;
@@ -588,6 +588,25 @@ html:has(.editor) {
   border-radius: 4px;
 }
 
+.back_button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  font-size: 0.8em;
+  text-decoration: none;
+  background: rgba(50, 50, 50, 0.2);
+  color: #222;
+  border-radius: 4px;
+  padding: 0.1em 0.5em;
+}
+.back_button i {
+  font-size: 0.7em;
+  vertical-align: middle;
+}
+
 label {
   display: inline-block;
   font-size: 0.8em;
@@ -840,14 +859,14 @@ li.step.gu-mirror .drag_handle {
 }
 
 .error_message {
-  display: block;
-  width: 340px;
+  display: inline-block;
   padding: 0.75em 1em;
   font-size: 0.7em;
   font-weight: 600;
   background: #fdcdcd;
   color: rgba(0, 0, 0, 0.7);
   border-radius: 4px;
+  text-align: center;
 }
 .error_message:empty {
   padding: 0;

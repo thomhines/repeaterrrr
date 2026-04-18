@@ -120,6 +120,8 @@ else {
 	</script>
 	<?php } ?>
 
+	<a class="back_button" href="/<?php echo htmlspecialchars($editor_cancel_slug, ENT_QUOTES, 'UTF-8'); ?>"><i class="icon-left-big"></i> Back</a>
+
 	<h4>Timer Info</h4>
 	<form>
 		<label for='title'>Title* (<span class="title_char_count">0</span>/40 chars.)</label>

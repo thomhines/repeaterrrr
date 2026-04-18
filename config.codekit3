@@ -165,6 +165,18 @@
       "oF" : 0,
       "pg" : 0
     },
+    "\/css\/fonts.min.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/css\/fonts.min.min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
     "\/css\/fonts\/fontello.eot" : {
       "cB" : 0,
       "ft" : 8192,
